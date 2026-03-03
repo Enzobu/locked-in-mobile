@@ -1,0 +1,13 @@
+{
+  "@@locale": "fr",
+  "appName": "Locked In",
+  "@appName": { "description": "Nom de l'application" },
+  "home": "Accueil",
+  "@home": { "description": "Label navigation accueil" },
+  "map": "Carte",
+  "@map": { "description": "Label navigation carte" },
+  "reservations": "Réservations",
+  "@reservations": { "description": "Label navigation réservations" },
+  "profile": "Profil",
+  "@profile": { "description": "Label navigation profil" }
+}
