@@ -22,4 +22,76 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get profile => 'Profilo';
+
+  @override
+  String get settings => 'Impostazioni';
+
+  @override
+  String get language => 'Lingua';
+
+  @override
+  String get theme => 'Tema';
+
+  @override
+  String get darkMode => 'Modalità scura';
+
+  @override
+  String get lightMode => 'Modalità chiara';
+
+  @override
+  String get systemMode => 'Sistema';
+
+  @override
+  String get login => 'Accedi';
+
+  @override
+  String get register => 'Registrati';
+
+  @override
+  String get logout => 'Esci';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get search => 'Cerca';
+
+  @override
+  String get cancel => 'Annulla';
+
+  @override
+  String get confirm => 'Conferma';
+
+  @override
+  String get save => 'Salva';
+
+  @override
+  String get delete => 'Elimina';
+
+  @override
+  String get retry => 'Riprova';
+
+  @override
+  String get loading => 'Caricamento...';
+
+  @override
+  String get error => 'Errore';
+
+  @override
+  String get noResults => 'Nessun risultato';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
 }

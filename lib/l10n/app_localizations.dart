@@ -131,6 +131,150 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Profil'**
   String get profile;
+
+  /// Label réglages
+  ///
+  /// In fr, this message translates to:
+  /// **'Réglages'**
+  String get settings;
+
+  /// Label choix de langue
+  ///
+  /// In fr, this message translates to:
+  /// **'Langue'**
+  String get language;
+
+  /// Label choix de thème
+  ///
+  /// In fr, this message translates to:
+  /// **'Thème'**
+  String get theme;
+
+  /// Label toggle dark mode
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode sombre'**
+  String get darkMode;
+
+  /// Label mode clair
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode clair'**
+  String get lightMode;
+
+  /// Label mode système
+  ///
+  /// In fr, this message translates to:
+  /// **'Système'**
+  String get systemMode;
+
+  /// Bouton connexion
+  ///
+  /// In fr, this message translates to:
+  /// **'Connexion'**
+  String get login;
+
+  /// Bouton inscription
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription'**
+  String get register;
+
+  /// Bouton déconnexion
+  ///
+  /// In fr, this message translates to:
+  /// **'Déconnexion'**
+  String get logout;
+
+  /// Label champ email
+  ///
+  /// In fr, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// Label champ mot de passe
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe'**
+  String get password;
+
+  /// Placeholder recherche
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher'**
+  String get search;
+
+  /// Bouton annuler
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get cancel;
+
+  /// Bouton confirmer
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer'**
+  String get confirm;
+
+  /// Bouton enregistrer
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get save;
+
+  /// Bouton supprimer
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get delete;
+
+  /// Bouton réessayer
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer'**
+  String get retry;
+
+  /// Texte de chargement
+  ///
+  /// In fr, this message translates to:
+  /// **'Chargement...'**
+  String get loading;
+
+  /// Titre erreur
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur'**
+  String get error;
+
+  /// Message aucun résultat
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun résultat'**
+  String get noResults;
+
+  /// Nom de la langue française
+  ///
+  /// In fr, this message translates to:
+  /// **'Français'**
+  String get french;
+
+  /// Nom de la langue anglaise
+  ///
+  /// In fr, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Nom de la langue allemande
+  ///
+  /// In fr, this message translates to:
+  /// **'Deutsch'**
+  String get german;
+
+  /// Nom de la langue italienne
+  ///
+  /// In fr, this message translates to:
+  /// **'Italiano'**
+  String get italian;
 }
 
 class _AppLocalizationsDelegate
