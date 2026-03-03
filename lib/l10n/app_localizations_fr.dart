@@ -73,6 +73,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le mot de passe doit contenir au moins 6 caractères';
 
   @override
+  String get loginTitle => 'Réservez vos casiers en toute simplicité';
+
+  @override
+  String get forgotPassword => 'Mot de passe oublié ?';
+
+  @override
+  String get noAccount => 'Pas encore de compte ?';
+
+  @override
   String get search => 'Rechercher';
 
   @override

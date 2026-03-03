@@ -74,6 +74,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das Passwort muss mindestens 6 Zeichen lang sein';
 
   @override
+  String get loginTitle => 'Buchen Sie Ihre Schließfächer ganz einfach';
+
+  @override
+  String get forgotPassword => 'Passwort vergessen?';
+
+  @override
+  String get noAccount => 'Noch kein Konto?';
+
+  @override
   String get search => 'Suchen';
 
   @override
