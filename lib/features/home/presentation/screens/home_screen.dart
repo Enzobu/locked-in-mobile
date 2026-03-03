@@ -86,14 +86,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 curve: Curves.easeInOut,
                 decoration: BoxDecoration(
                   color: colorScheme.brightness == Brightness.light
-                      ? Colors.grey.shade100
+                      ? Colors.white
                       : Colors.white.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: _isFocused
-                        ? colorScheme.outline.withValues(alpha: 0.4)
-                        : Colors.transparent,
-                    width: 1.5,
+                        ? colorScheme.outline.withValues(alpha: 0.3)
+                        : colorScheme.outlineVariant.withValues(alpha: 0.3),
                   ),
                 ),
                 child: TextField(
