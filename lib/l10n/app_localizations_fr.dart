@@ -22,4 +22,76 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profile => 'Profil';
+
+  @override
+  String get settings => 'Réglages';
+
+  @override
+  String get language => 'Langue';
+
+  @override
+  String get theme => 'Thème';
+
+  @override
+  String get darkMode => 'Mode sombre';
+
+  @override
+  String get lightMode => 'Mode clair';
+
+  @override
+  String get systemMode => 'Système';
+
+  @override
+  String get login => 'Connexion';
+
+  @override
+  String get register => 'Inscription';
+
+  @override
+  String get logout => 'Déconnexion';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Mot de passe';
+
+  @override
+  String get search => 'Rechercher';
+
+  @override
+  String get cancel => 'Annuler';
+
+  @override
+  String get confirm => 'Confirmer';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String get delete => 'Supprimer';
+
+  @override
+  String get retry => 'Réessayer';
+
+  @override
+  String get loading => 'Chargement...';
+
+  @override
+  String get error => 'Erreur';
+
+  @override
+  String get noResults => 'Aucun résultat';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
 }
