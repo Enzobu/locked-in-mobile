@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../core/models/reservation.dart';
@@ -39,13 +40,6 @@ class _ReservationsList extends ConsumerWidget {
 
   final List<Reservation> reservations;
 
-  bool _isCancellable(Reservation r) {
-    return (r.status == ReservationStatus.active ||
-            r.status == ReservationStatus.confirmed ||
-            r.status == ReservationStatus.pending) &&
-        r.endsAt.isAfter(DateTime.now());
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
@@ -83,9 +77,7 @@ class _ReservationsList extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: 10),
                 child: ReservationCard(
                   reservation: r,
-                  onCancel: _isCancellable(r)
-                      ? () => _showCancelDialog(context, ref, r)
-                      : null,
+                  onTap: () => context.push('/reservation/detail', extra: r),
                 ),
               ),
             ),
@@ -100,48 +92,16 @@ class _ReservationsList extends ConsumerWidget {
             ...past.map(
               (r) => Padding(
                 padding: const EdgeInsets.only(bottom: 10),
-                child: ReservationCard(reservation: r),
+                child: ReservationCard(
+                  reservation: r,
+                  onTap: () => context.push('/reservation/detail', extra: r),
+                ),
               ),
             ),
           ],
         ],
       ),
     );
-  }
-
-  void _showCancelDialog(
-    BuildContext context,
-    WidgetRef ref,
-    Reservation reservation,
-  ) {
-    final l10n = AppLocalizations.of(context)!;
-
-    showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.reservationCancelTitle),
-        content: Text(l10n.reservationCancelMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFFDC2626),
-            ),
-            child: Text(l10n.reservationCancelConfirm),
-          ),
-        ],
-      ),
-    ).then((confirmed) {
-      if (confirmed == true) {
-        ref
-            .read(reservationsProvider.notifier)
-            .cancelReservation(reservation.id);
-      }
-    });
   }
 }
 
