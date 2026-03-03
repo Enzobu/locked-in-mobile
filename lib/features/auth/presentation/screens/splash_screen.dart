@@ -13,11 +13,7 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              LucideIcons.lock,
-              size: 64,
-              color: theme.colorScheme.primary,
-            ),
+            Icon(LucideIcons.lock, size: 64, color: theme.colorScheme.primary),
             const SizedBox(height: 24),
             Text(
               'Locked In',
