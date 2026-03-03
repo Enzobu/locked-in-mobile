@@ -74,6 +74,38 @@ class _FakeAuthDatasource implements AuthDatasource {
     };
   }
 
+  bool updateShouldFail = false;
+
+  @override
+  Future<Map<String, dynamic>> updateCustomer({
+    required String firstname,
+    required String lastname,
+    required String email,
+    required String phone,
+  }) async {
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    if (updateShouldFail) {
+      throw Exception('Update failed');
+    }
+    return {
+      'id': 1,
+      'email': email,
+      'firstname': firstname,
+      'lastname': lastname,
+      'birth_date': '1995-06-15T00:00:00.000',
+      'address': {
+        'id': 1,
+        'number': '10',
+        'city': 'Paris',
+        'country': 'France',
+        'street': 'Rue de Test',
+        'complement': null,
+      },
+      'created_at': '2025-01-10T08:00:00.000',
+      'updated_at': DateTime.now().toIso8601String(),
+    };
+  }
+
   @override
   Future<void> logout() async {}
 }
@@ -294,6 +326,48 @@ void main() {
 
       final state = container.read(authProvider);
       expect(state.status, AuthStatus.error);
+    });
+  });
+
+  group('AuthNotifier - updateProfile', () {
+    test('updateProfile returns true and updates customer on success', () async {
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      await container
+          .read(authProvider.notifier)
+          .login('test@test.com', 'password123');
+      expect(container.read(authProvider).status, AuthStatus.authenticated);
+
+      final result = await container
+          .read(authProvider.notifier)
+          .updateProfile(
+            firstname: 'Updated',
+            lastname: 'Name',
+            email: 'updated@test.com',
+            phone: '+33600000000',
+          );
+
+      expect(result, isTrue);
+      final state = container.read(authProvider);
+      expect(state.customer!.firstname, 'Updated');
+      expect(state.customer!.lastname, 'Name');
+      expect(state.customer!.email, 'updated@test.com');
+    });
+
+    test('updateProfile returns false on failure', () async {
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+      fakeDatasource.updateShouldFail = true;
+
+      final result = await container
+          .read(authProvider.notifier)
+          .updateProfile(
+            firstname: 'Test',
+            lastname: 'User',
+            email: 'test@test.com',
+            phone: '',
+          );
+
+      expect(result, isFalse);
     });
   });
 
