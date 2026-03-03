@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../providers/auth_provider.dart';
+import '../widgets/auth_error_banner.dart';
+import '../widgets/auth_tab_selector.dart';
+import '../widgets/auth_text_field.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -52,7 +56,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 48),
-                        // Header
                         Text(
                           l10n.loginTitle,
                           textAlign: TextAlign.center,
@@ -70,68 +73,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: 32),
-                        // Tab selector
-                        _AuthTabSelector(
+                        AuthTabSelector(
+                          selectedIndex: 0,
                           loginLabel: l10n.login,
                           registerLabel: l10n.register,
+                          onTabChanged: (index) {
+                            if (index == 1) context.go('/register');
+                          },
                         ),
                         const SizedBox(height: 32),
-                        // Form
                         Form(
                           key: _formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              // Email
-                              Text(
-                                l10n.email,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: theme.colorScheme.onSurfaceVariant,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              TextFormField(
+                              AuthTextField(
+                                label: l10n.email,
                                 controller: _emailController,
                                 enabled: !isLoading,
+                                hintText: 'nom@exemple.com',
                                 keyboardType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
                                 autocorrect: false,
-                                decoration: InputDecoration(
-                                  hintText: 'nom@exemple.com',
-                                  hintStyle: TextStyle(
-                                    color: theme.colorScheme.onSurfaceVariant
-                                        .withValues(alpha: 0.5),
-                                  ),
-                                  filled: true,
-                                  fillColor: theme
-                                      .colorScheme
-                                      .surfaceContainerHighest
-                                      .withValues(alpha: 0.4),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: theme.colorScheme.outlineVariant,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: theme.colorScheme.outlineVariant,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: theme.colorScheme.primary,
-                                      width: 1.5,
-                                    ),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 14,
-                                  ),
-                                ),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
                                     return l10n.emailRequired;
@@ -146,69 +109,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 },
                               ),
                               const SizedBox(height: 20),
-                              // Password
-                              Text(
-                                l10n.password,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: theme.colorScheme.onSurfaceVariant,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              TextFormField(
+                              AuthTextField(
+                                label: l10n.password,
                                 controller: _passwordController,
                                 enabled: !isLoading,
+                                hintText: '••••••••',
                                 obscureText: _obscurePassword,
                                 textInputAction: TextInputAction.done,
                                 onFieldSubmitted: (_) => _onLogin(),
-                                decoration: InputDecoration(
-                                  hintText: '••••••••',
-                                  hintStyle: TextStyle(
-                                    color: theme.colorScheme.onSurfaceVariant
-                                        .withValues(alpha: 0.5),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscurePassword
+                                        ? LucideIcons.eyeOff
+                                        : LucideIcons.eye,
+                                    size: 20,
+                                    color: theme.colorScheme.onSurfaceVariant,
                                   ),
-                                  filled: true,
-                                  fillColor: theme
-                                      .colorScheme
-                                      .surfaceContainerHighest
-                                      .withValues(alpha: 0.4),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: theme.colorScheme.outlineVariant,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: theme.colorScheme.outlineVariant,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color: theme.colorScheme.primary,
-                                      width: 1.5,
-                                    ),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 14,
-                                  ),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      _obscurePassword
-                                          ? LucideIcons.eyeOff
-                                          : LucideIcons.eye,
-                                      size: 20,
-                                      color: theme.colorScheme.onSurfaceVariant,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _obscurePassword = !_obscurePassword;
-                                      });
-                                    },
-                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscurePassword = !_obscurePassword;
+                                    });
+                                  },
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -221,7 +142,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 },
                               ),
                               const SizedBox(height: 8),
-                              // Forgot password
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
@@ -244,38 +164,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ],
                           ),
                         ),
-                        // Error message
                         if (authState.status == AuthStatus.error &&
                             authState.errorMessage != null) ...[
                           const SizedBox(height: 8),
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: theme.colorScheme.errorContainer,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  LucideIcons.alertCircle,
-                                  color: theme.colorScheme.onErrorContainer,
-                                  size: 18,
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    authState.errorMessage!,
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      color: theme.colorScheme.onErrorContainer,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          AuthErrorBanner(
+                            message:
+                                authState.errorMessage == 'invalidCredentials'
+                                    ? l10n.invalidCredentials
+                                    : authState.errorMessage!,
                           ),
                         ],
                         const SizedBox(height: 24),
-                        // Login button
                         SizedBox(
                           width: double.infinity,
                           height: 52,
@@ -305,7 +204,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ),
                         const Spacer(),
-                        // Bottom: no account
                         Padding(
                           padding: const EdgeInsets.only(bottom: 24),
                           child: Row(
@@ -318,7 +216,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 ),
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () => context.go('/register'),
                                 style: TextButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 4,
@@ -346,62 +244,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class _AuthTabSelector extends StatelessWidget {
-  const _AuthTabSelector({
-    required this.loginLabel,
-    required this.registerLabel,
-  });
-
-  final String loginLabel;
-  final String registerLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      height: 48,
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(28),
-      ),
-      padding: const EdgeInsets.all(4),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.primary,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                loginLabel,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onPrimary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                registerLabel,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

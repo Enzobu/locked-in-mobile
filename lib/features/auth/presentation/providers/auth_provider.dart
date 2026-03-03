@@ -73,16 +73,18 @@ class AuthNotifier extends Notifier<AuthState> {
     try {
       final data = await _datasource.login(email, password);
       final token = data['token'] as String?;
-      if (token == null) {
+      if (token == null || token.isEmpty) {
         throw const ApiException(
           statusCode: 401,
-          message: 'Invalid response from server',
+          message: 'invalidCredentials',
         );
       }
       await _tokenStorage.saveTokens(accessToken: token);
       state = const AuthState(status: AuthStatus.authenticated);
     } on ApiException catch (e) {
-      state = AuthState(status: AuthStatus.error, errorMessage: e.message);
+      final message =
+          e.isUnauthorized ? 'invalidCredentials' : e.message;
+      state = AuthState(status: AuthStatus.error, errorMessage: message);
     } on Exception catch (e) {
       state = AuthState(
         status: AuthStatus.error,
