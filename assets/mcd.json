@@ -1,0 +1,87 @@
+{
+  "database": "locked_in",
+  "tables": {
+    "locker": {
+      "description": "Casier individuel disponible à la réservation",
+      "columns": {
+        "id": { "type": "int(11)", "primary_key": true, "auto_increment": true },
+        "specification_id": { "type": "int(11)", "foreign_key": "specification.id" },
+        "locker_bay_id": { "type": "int(11)", "foreign_key": "locker_bay.id" },
+        "number": { "type": "int(11)" },
+        "price": { "type": "int(11)" }
+      }
+    },
+    "specification": {
+      "description": "Caractéristiques physiques d'un type de casier",
+      "columns": {
+        "id": { "type": "int(11)", "primary_key": true, "auto_increment": true },
+        "height": { "type": "int(11)" },
+        "width": { "type": "int(11)" },
+        "depth": { "type": "int(11)" },
+        "material": { "type": "varchar(255)" },
+        "name": { "type": "varchar(255)" },
+        "is_rechargeable": { "type": "tinyint(1)" }
+      }
+    },
+    "address": {
+      "description": "Adresse physique associée aux baies de casiers ou entreprises",
+      "columns": {
+        "id": { "type": "int(11)", "primary_key": true, "auto_increment": true },
+        "number": { "type": "int(11)" },
+        "city": { "type": "varchar(255)" },
+        "country": { "type": "varchar(255)" },
+        "address": { "type": "varchar(255)" },
+        "complement": { "type": "varchar(255)" }
+      }
+    },
+    "customer": {
+      "description": "Utilisateur de l'application pouvant réserver des casiers",
+      "columns": {
+        "id": { "type": "int(11)", "primary_key": true, "auto_increment": true },
+        "email": { "type": "varchar(255)" },
+        "firstname": { "type": "varchar(255)" },
+        "lastname": { "type": "varchar(255)" },
+        "password": { "type": "varchar(255)" },
+        "phone": { "type": "varchar(255)" }
+      }
+    },
+    "company": {
+      "description": "Entreprise propriétaire de baies de casiers",
+      "columns": {
+        "id": { "type": "int(11)", "primary_key": true, "auto_increment": true },
+        "name": { "type": "varchar(255)" },
+        "address_id": { "type": "int(11)", "foreign_key": "address.id" },
+        "siren": { "type": "varchar(255)" }
+      }
+    },
+    "locker_bay": {
+      "description": "Baie (ensemble) de casiers installée à un emplacement physique",
+      "columns": {
+        "id": { "type": "int(11)", "primary_key": true, "auto_increment": true },
+        "company_id": { "type": "int(11)", "foreign_key": "company.id" },
+        "address_id": { "type": "int(11)", "foreign_key": "address.id" },
+        "name": { "type": "varchar(255)" },
+        "hire_duration": { "type": "int(11)" }
+      }
+    },
+    "reservation": {
+      "description": "Réservation d'un casier par un client",
+      "columns": {
+        "id": { "type": "int(11)", "primary_key": true, "auto_increment": true },
+        "public_form": { "type": "varchar(255)" },
+        "date": { "type": "datetime" },
+        "customer_id": { "type": "int(11)", "foreign_key": "customer.id" },
+        "locker_id": { "type": "int(11)", "foreign_key": "locker.id" }
+      }
+    }
+  },
+  "relations": [
+    { "from": "locker.specification_id", "to": "specification.id", "type": "many_to_one", "label": "Un casier a une spécification" },
+    { "from": "locker.locker_bay_id", "to": "locker_bay.id", "type": "many_to_one", "label": "Un casier appartient à une baie" },
+    { "from": "locker_bay.company_id", "to": "company.id", "type": "many_to_one", "label": "Une baie appartient à une entreprise" },
+    { "from": "locker_bay.address_id", "to": "address.id", "type": "many_to_one", "label": "Une baie a une adresse" },
+    { "from": "company.address_id", "to": "address.id", "type": "many_to_one", "label": "Une entreprise a une adresse" },
+    { "from": "reservation.customer_id", "to": "customer.id", "type": "many_to_one", "label": "Une réservation est faite par un client" },
+    { "from": "reservation.locker_id", "to": "locker.id", "type": "many_to_one", "label": "Une réservation concerne un casier" }
+  ]
+}
