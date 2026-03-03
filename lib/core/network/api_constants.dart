@@ -3,7 +3,7 @@ class ApiConstants {
 
   static const baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'https://api.locked-in.app',
+    defaultValue: 'https://openinnov-backend.enzo-palermo.com',
   );
 
   static const connectTimeout = Duration(seconds: 15);
