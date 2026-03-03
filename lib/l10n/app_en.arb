@@ -64,5 +64,12 @@
   "rechargeable": "Charging",
   "noLockersTitle": "No lockers available",
   "noLockersSubtitle": "No locker points are available at the moment. Please check back later.",
-  "lockerBays": "Locker points"
+  "lockerBays": "Locker points",
+  "searchLockerBays": "Search locker points...",
+  "noSearchResults": "No results for \"{query}\". Try a different term.",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  }
 }

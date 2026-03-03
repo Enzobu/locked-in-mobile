@@ -455,6 +455,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Points de casiers'**
   String get lockerBays;
+
+  /// Placeholder barre de recherche casiers
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un point de casiers...'**
+  String get searchLockerBays;
+
+  /// Message aucun résultat de recherche
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun résultat pour \"{query}\". Essayez avec un autre terme.'**
+  String noSearchResults(String query);
 }
 
 class _AppLocalizationsDelegate

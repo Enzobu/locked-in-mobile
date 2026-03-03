@@ -189,4 +189,12 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get lockerBays => 'Points de casiers';
+
+  @override
+  String get searchLockerBays => 'Rechercher un point de casiers...';
+
+  @override
+  String noSearchResults(String query) {
+    return 'Aucun résultat pour \"$query\". Essayez avec un autre terme.';
+  }
 }

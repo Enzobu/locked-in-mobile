@@ -123,5 +123,14 @@
   "noLockersSubtitle": "Aucun point de casiers n'est disponible pour le moment. Revenez plus tard.",
   "@noLockersSubtitle": { "description": "Sous-titre état vide casiers" },
   "lockerBays": "Points de casiers",
-  "@lockerBays": { "description": "Label liste des points de casiers" }
+  "@lockerBays": { "description": "Label liste des points de casiers" },
+  "searchLockerBays": "Rechercher un point de casiers...",
+  "@searchLockerBays": { "description": "Placeholder barre de recherche casiers" },
+  "noSearchResults": "Aucun résultat pour \"{query}\". Essayez avec un autre terme.",
+  "@noSearchResults": {
+    "description": "Message aucun résultat de recherche",
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  }
 }

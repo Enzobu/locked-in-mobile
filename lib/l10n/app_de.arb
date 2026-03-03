@@ -64,5 +64,12 @@
   "rechargeable": "Aufladen",
   "noLockersTitle": "Keine Schließfächer verfügbar",
   "noLockersSubtitle": "Derzeit sind keine Schließfachpunkte verfügbar. Bitte versuchen Sie es später erneut.",
-  "lockerBays": "Schließfachpunkte"
+  "lockerBays": "Schließfachpunkte",
+  "searchLockerBays": "Schließfachpunkte suchen...",
+  "noSearchResults": "Keine Ergebnisse für \"{query}\". Versuchen Sie einen anderen Begriff.",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  }
 }

@@ -189,4 +189,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get lockerBays => 'Punti armadietti';
+
+  @override
+  String get searchLockerBays => 'Cerca punti armadietti...';
+
+  @override
+  String noSearchResults(String query) {
+    return 'Nessun risultato per \"$query\". Prova con un altro termine.';
+  }
 }

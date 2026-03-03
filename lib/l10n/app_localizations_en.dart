@@ -187,4 +187,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lockerBays => 'Locker points';
+
+  @override
+  String get searchLockerBays => 'Search locker points...';
+
+  @override
+  String noSearchResults(String query) {
+    return 'No results for \"$query\". Try a different term.';
+  }
 }

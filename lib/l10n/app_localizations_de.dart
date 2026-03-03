@@ -191,4 +191,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get lockerBays => 'Schließfachpunkte';
+
+  @override
+  String get searchLockerBays => 'Schließfachpunkte suchen...';
+
+  @override
+  String noSearchResults(String query) {
+    return 'Keine Ergebnisse für \"$query\". Versuchen Sie einen anderen Begriff.';
+  }
 }
