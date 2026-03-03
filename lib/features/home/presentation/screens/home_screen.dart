@@ -85,13 +85,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHighest.withValues(
-                    alpha: _isFocused ? 0.7 : 0.4,
-                  ),
+                  color: colorScheme.brightness == Brightness.light
+                      ? Colors.grey.shade100
+                      : Colors.white.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: _isFocused
-                        ? colorScheme.primary.withValues(alpha: 0.5)
+                        ? colorScheme.outline.withValues(alpha: 0.4)
                         : Colors.transparent,
                     width: 1.5,
                   ),
@@ -102,50 +102,65 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   onChanged: _onSearchChanged,
                   style: theme.textTheme.bodyMedium,
                   textInputAction: TextInputAction.search,
+                  cursorColor: colorScheme.primary,
                   decoration: InputDecoration(
                     hintText: l10n.searchLockerBays,
                     hintStyle: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.6,
+                        alpha: 0.5,
                       ),
                     ),
-                    prefixIcon: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.only(left: 4),
                       child: Icon(
                         LucideIcons.search,
-                        key: ValueKey(_isFocused),
                         size: 20,
                         color: _isFocused
-                            ? colorScheme.primary
-                            : colorScheme.onSurfaceVariant,
+                            ? colorScheme.onSurface
+                            : colorScheme.onSurfaceVariant.withValues(
+                                alpha: 0.5,
+                              ),
                       ),
                     ),
+                    prefixIconConstraints: const BoxConstraints(minWidth: 44),
                     suffixIcon: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 150),
                       transitionBuilder: (child, animation) => FadeTransition(
                         opacity: animation,
                         child: ScaleTransition(scale: animation, child: child),
                       ),
                       child: searchQuery.isNotEmpty
-                          ? IconButton(
+                          ? GestureDetector(
                               key: const ValueKey('clear'),
-                              icon: Icon(
-                                LucideIcons.x,
-                                size: 18,
-                                color: colorScheme.onSurfaceVariant,
+                              onTap: _clearSearch,
+                              child: Container(
+                                width: 44,
+                                alignment: Alignment.center,
+                                child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: colorScheme.onSurfaceVariant
+                                        .withValues(alpha: 0.15),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    LucideIcons.x,
+                                    size: 14,
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
                               ),
-                              onPressed: _clearSearch,
                             )
                           : const SizedBox.square(
                               key: ValueKey('empty'),
-                              dimension: 48,
+                              dimension: 44,
                             ),
                     ),
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
+                      horizontal: 0,
                       vertical: 14,
                     ),
                   ),
