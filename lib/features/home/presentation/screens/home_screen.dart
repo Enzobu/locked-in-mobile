@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/models/locker_filter.dart';
 import '../providers/home_provider.dart';
 import '../widgets/filter_bottom_sheet.dart';
 import '../widgets/home_empty_state.dart';
@@ -98,8 +97,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         border: Border.all(
                           color: _isFocused
                               ? colorScheme.outline.withValues(alpha: 0.3)
-                              : colorScheme.outlineVariant
-                                  .withValues(alpha: 0.3),
+                              : colorScheme.outlineVariant.withValues(
+                                  alpha: 0.3,
+                                ),
                         ),
                       ),
                       child: TextField(
@@ -129,8 +129,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     ),
                             ),
                           ),
-                          prefixIconConstraints:
-                              const BoxConstraints(minWidth: 44),
+                          prefixIconConstraints: const BoxConstraints(
+                            minWidth: 44,
+                          ),
                           suffixIcon: AnimatedSwitcher(
                             duration: const Duration(milliseconds: 150),
                             transitionBuilder: (child, animation) =>
@@ -257,8 +258,8 @@ class _FilterButton extends StatelessWidget {
           color: isActive
               ? colorScheme.primary
               : colorScheme.brightness == Brightness.light
-                  ? Colors.white
-                  : Colors.white.withValues(alpha: 0.08),
+              ? Colors.white
+              : Colors.white.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: isActive

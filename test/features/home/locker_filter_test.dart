@@ -135,11 +135,13 @@ void main() {
       expect(filter.activeFilterCount, 4);
     });
 
-    test('activeFilterCount counts price as one even with both min and max',
-        () {
-      const filter = LockerFilter(minPriceCents: 100, maxPriceCents: 500);
-      expect(filter.activeFilterCount, 1);
-    });
+    test(
+      'activeFilterCount counts price as one even with both min and max',
+      () {
+        const filter = LockerFilter(minPriceCents: 100, maxPriceCents: 500);
+        expect(filter.activeFilterCount, 1);
+      },
+    );
 
     test('copyWith creates new instance with updated values', () {
       const original = LockerFilter(
@@ -162,14 +164,8 @@ void main() {
     });
 
     test('equality works correctly', () {
-      const a = LockerFilter(
-        minPriceCents: 100,
-        sizes: {LockerSize.small},
-      );
-      const b = LockerFilter(
-        minPriceCents: 100,
-        sizes: {LockerSize.small},
-      );
+      const a = LockerFilter(minPriceCents: 100, sizes: {LockerSize.small});
+      const b = LockerFilter(minPriceCents: 100, sizes: {LockerSize.small});
       expect(a, equals(b));
     });
 
@@ -210,12 +206,18 @@ void main() {
       if (!filter.isActive) return true;
       return s.lockers.any((locker) {
         if (filter.minPriceCents != null &&
-            locker.priceCents < filter.minPriceCents!) return false;
+            locker.priceCents < filter.minPriceCents!) {
+          return false;
+        }
         if (filter.maxPriceCents != null &&
-            locker.priceCents > filter.maxPriceCents!) return false;
+            locker.priceCents > filter.maxPriceCents!) {
+          return false;
+        }
         if (filter.sizes.isNotEmpty) {
           final size = LockerSize.fromHeight(locker.specification.height);
-          if (!filter.sizes.contains(size)) return false;
+          if (!filter.sizes.contains(size)) {
+            return false;
+          }
         }
         if (filter.materials.isNotEmpty &&
             !filter.materials.contains(locker.specification.material)) {
@@ -285,18 +287,13 @@ void main() {
     });
 
     test('multi-select within a filter is OR-ed', () {
-      const filter = LockerFilter(
-        sizes: {LockerSize.small, LockerSize.large},
-      );
+      const filter = LockerFilter(sizes: {LockerSize.small, LockerSize.large});
       expect(summaryMatchesFilter(summary, filter), true);
     });
 
     test('bay matches if at least one locker passes all criteria', () {
       // Price 300-400 + Material Acier → only the cheap small steel locker
-      const filter = LockerFilter(
-        maxPriceCents: 400,
-        materials: {'Acier'},
-      );
+      const filter = LockerFilter(maxPriceCents: 400, materials: {'Acier'});
       expect(summaryMatchesFilter(summary, filter), true);
 
       // Price 300-400 + Material Aluminium → no locker matches both

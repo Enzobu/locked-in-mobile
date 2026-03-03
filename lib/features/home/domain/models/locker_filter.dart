@@ -51,10 +51,12 @@ class LockerFilter {
     bool? rechargeableOnly,
   }) {
     return LockerFilter(
-      minPriceCents:
-          minPriceCents != null ? minPriceCents() : this.minPriceCents,
-      maxPriceCents:
-          maxPriceCents != null ? maxPriceCents() : this.maxPriceCents,
+      minPriceCents: minPriceCents != null
+          ? minPriceCents()
+          : this.minPriceCents,
+      maxPriceCents: maxPriceCents != null
+          ? maxPriceCents()
+          : this.maxPriceCents,
       sizes: sizes ?? this.sizes,
       materials: materials ?? this.materials,
       rechargeableOnly: rechargeableOnly ?? this.rechargeableOnly,

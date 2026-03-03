@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/models/locker_filter.dart';
@@ -44,8 +43,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
   }
 
   int _getResultCount() {
-    final query =
-        ref.read(searchQueryProvider).toLowerCase();
+    final query = ref.read(searchQueryProvider).toLowerCase();
     final summaries = ref.read(lockerBaySummariesProvider).valueOrNull ?? [];
 
     return summaries.where((summary) {
@@ -65,19 +63,27 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
       if (!_localFilter.isActive) return true;
       return summary.lockers.any((locker) {
         if (_localFilter.minPriceCents != null &&
-            locker.priceCents < _localFilter.minPriceCents!) return false;
+            locker.priceCents < _localFilter.minPriceCents!) {
+          return false;
+        }
         if (_localFilter.maxPriceCents != null &&
-            locker.priceCents > _localFilter.maxPriceCents!) return false;
+            locker.priceCents > _localFilter.maxPriceCents!) {
+          return false;
+        }
         if (_localFilter.sizes.isNotEmpty) {
           final size = LockerSize.fromHeight(locker.specification.height);
-          if (!_localFilter.sizes.contains(size)) return false;
+          if (!_localFilter.sizes.contains(size)) {
+            return false;
+          }
         }
         if (_localFilter.materials.isNotEmpty &&
             !_localFilter.materials.contains(locker.specification.material)) {
           return false;
         }
         if (_localFilter.rechargeableOnly &&
-            !locker.specification.isRechargeable) return false;
+            !locker.specification.isRechargeable) {
+          return false;
+        }
         return true;
       });
     }).length;
@@ -210,22 +216,25 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                     Wrap(
                       spacing: 8,
                       children: availableMaterials.map((material) {
-                        final selected =
-                            _localFilter.materials.contains(material);
+                        final selected = _localFilter.materials.contains(
+                          material,
+                        );
                         return FilterChip(
                           label: Text(material),
                           selected: selected,
                           onSelected: (value) {
                             setState(() {
-                              final materials =
-                                  Set<String>.from(_localFilter.materials);
+                              final materials = Set<String>.from(
+                                _localFilter.materials,
+                              );
                               if (value) {
                                 materials.add(material);
                               } else {
                                 materials.remove(material);
                               }
-                              _localFilter =
-                                  _localFilter.copyWith(materials: materials);
+                              _localFilter = _localFilter.copyWith(
+                                materials: materials,
+                              );
                             });
                           },
                         );
@@ -240,8 +249,9 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                     value: _localFilter.rechargeableOnly,
                     onChanged: (value) {
                       setState(() {
-                        _localFilter =
-                            _localFilter.copyWith(rechargeableOnly: value);
+                        _localFilter = _localFilter.copyWith(
+                          rechargeableOnly: value,
+                        );
                       });
                     },
                   ),
@@ -303,9 +313,9 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-        fontWeight: FontWeight.w600,
-      ),
+      style: Theme.of(
+        context,
+      ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
     );
   }
 }
