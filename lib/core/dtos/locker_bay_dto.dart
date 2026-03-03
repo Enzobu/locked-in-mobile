@@ -1,4 +1,5 @@
 import '../models/locker_bay.dart';
+import '../utils/json_helpers.dart';
 import 'company_dto.dart';
 
 class LockerBayDto {
@@ -28,13 +29,13 @@ class LockerBayDto {
     return LockerBayDto(
       id: json['id'] as int,
       name: json['name'] as String,
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
+      latitude: JsonHelpers.parseDouble(json['latitude']),
+      longitude: JsonHelpers.parseDouble(json['longitude']),
       company: CompanyDto.fromJson(json['company'] as Map<String, dynamic>),
-      maxDuration: json['max_duration'] as int?,
-      minDuration: json['min_duration'] as int?,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      maxDuration: json['maxDuration'] as int? ?? json['max_duration'] as int?,
+      minDuration: json['minDuration'] as int? ?? json['min_duration'] as int?,
+      createdAt: JsonHelpers.parseDateTime(json, 'createdAt', 'created_at'),
+      updatedAt: JsonHelpers.parseDateTime(json, 'updatedAt', 'updated_at'),
     );
   }
 
@@ -45,10 +46,10 @@ class LockerBayDto {
       'latitude': latitude,
       'longitude': longitude,
       'company': company.toJson(),
-      'max_duration': maxDuration,
-      'min_duration': minDuration,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'maxDuration': maxDuration,
+      'minDuration': minDuration,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 

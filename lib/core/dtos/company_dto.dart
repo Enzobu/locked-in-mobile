@@ -1,4 +1,5 @@
 import '../models/company.dart';
+import '../utils/json_helpers.dart';
 import 'address_dto.dart';
 
 class CompanyDto {
@@ -33,11 +34,11 @@ class CompanyDto {
       siret: json['siret'] as String,
       siren: json['siren'] as String,
       ape: json['ape'] as String,
-      juridicForm: json['juridic_form'] as String,
+      juridicForm: (json['juridicForm'] ?? json['juridic_form']) as String,
       phone: json['phone'] as String,
       address: AddressDto.fromJson(json['address'] as Map<String, dynamic>),
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      createdAt: JsonHelpers.parseDateTime(json, 'createdAt', 'created_at'),
+      updatedAt: JsonHelpers.parseDateTime(json, 'updatedAt', 'updated_at'),
     );
   }
 
@@ -48,11 +49,11 @@ class CompanyDto {
       'siret': siret,
       'siren': siren,
       'ape': ape,
-      'juridic_form': juridicForm,
+      'juridicForm': juridicForm,
       'phone': phone,
       'address': address.toJson(),
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 

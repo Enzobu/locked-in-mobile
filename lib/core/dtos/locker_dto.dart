@@ -1,5 +1,6 @@
 import '../models/locker.dart';
 import '../models/locker_status.dart';
+import '../utils/json_helpers.dart';
 import 'locker_bay_dto.dart';
 import 'specification_dto.dart';
 
@@ -32,20 +33,25 @@ class LockerDto {
     return LockerDto(
       id: json['id'] as int,
       number: json['number'] as int,
-      hardwareId: json['hardware_id'] as String?,
+      hardwareId:
+          json['hardwareId'] as String? ?? json['hardware_id'] as String?,
       specification: SpecificationDto.fromJson(
         json['specification'] as Map<String, dynamic>,
       ),
-      priceCents: json['price_cents'] as int,
+      priceCents: JsonHelpers.parseInt(
+        json['priceCents'] ?? json['price_cents'],
+      ),
       lockerBay: LockerBayDto.fromJson(
-        json['locker_bay'] as Map<String, dynamic>,
+        (json['lockerBay'] ?? json['locker_bay']) as Map<String, dynamic>,
       ),
       status: json['status'] as String,
-      lastSeenAt: json['last_seen_at'] != null
-          ? DateTime.parse(json['last_seen_at'] as String)
-          : null,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      lastSeenAt: JsonHelpers.parseDateTimeOrNull(
+        json,
+        'lastSeenAt',
+        'last_seen_at',
+      ),
+      createdAt: JsonHelpers.parseDateTime(json, 'createdAt', 'created_at'),
+      updatedAt: JsonHelpers.parseDateTime(json, 'updatedAt', 'updated_at'),
     );
   }
 
@@ -53,14 +59,14 @@ class LockerDto {
     return {
       'id': id,
       'number': number,
-      'hardware_id': hardwareId,
+      'hardwareId': hardwareId,
       'specification': specification.toJson(),
-      'price_cents': priceCents,
-      'locker_bay': lockerBay.toJson(),
+      'priceCents': priceCents,
+      'lockerBay': lockerBay.toJson(),
       'status': status,
-      'last_seen_at': lastSeenAt?.toIso8601String(),
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'lastSeenAt': lastSeenAt?.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 

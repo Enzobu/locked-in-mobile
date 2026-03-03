@@ -27,7 +27,8 @@ class SpecificationDto {
       depth: json['depth'] as int,
       material: json['material'] as String,
       name: json['name'] as String,
-      isRechargeable: json['is_rechargeable'] as bool,
+      isRechargeable:
+          (json['isRechargeable'] ?? json['is_rechargeable']) as bool,
     );
   }
 
@@ -39,7 +40,7 @@ class SpecificationDto {
       'depth': depth,
       'material': material,
       'name': name,
-      'is_rechargeable': isRechargeable,
+      'isRechargeable': isRechargeable,
     };
   }
 

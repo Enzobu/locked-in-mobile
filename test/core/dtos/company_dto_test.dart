@@ -43,7 +43,7 @@ void main() {
 
       expect(result['id'], json['id']);
       expect(result['name'], json['name']);
-      expect(result['juridic_form'], json['juridic_form']);
+      expect(result['juridicForm'], json['juridic_form']);
       expect(result['address'], isA<Map<String, dynamic>>());
     });
 

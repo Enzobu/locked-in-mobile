@@ -29,7 +29,13 @@ void main() {
       final dto = SpecificationDto.fromJson(json);
       final result = dto.toJson();
 
-      expect(result, json);
+      expect(result['id'], json['id']);
+      expect(result['name'], json['name']);
+      expect(result['width'], json['width']);
+      expect(result['height'], json['height']);
+      expect(result['depth'], json['depth']);
+      expect(result['material'], json['material']);
+      expect(result['isRechargeable'], json['is_rechargeable']);
     });
 
     test('round-trip serialization preserves data', () {

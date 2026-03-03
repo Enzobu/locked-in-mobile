@@ -8,7 +8,7 @@ import 'package:locked_in_mobile/core/models/specification.dart';
 import 'package:locked_in_mobile/features/home/domain/models/locker_bay_summary.dart';
 
 void main() {
-  final address = Address(
+  const address = Address(
     id: 1,
     city: 'Paris',
     country: 'France',

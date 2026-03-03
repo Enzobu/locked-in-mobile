@@ -1,4 +1,5 @@
 import '../models/customer.dart';
+import '../utils/json_helpers.dart';
 import 'address_dto.dart';
 
 class CustomerDto {
@@ -28,10 +29,10 @@ class CustomerDto {
       email: json['email'] as String,
       firstname: json['firstname'] as String,
       lastname: json['lastname'] as String,
-      birthDate: DateTime.parse(json['birth_date'] as String),
+      birthDate: JsonHelpers.parseDateTime(json, 'birthDate', 'birth_date'),
       address: AddressDto.fromJson(json['address'] as Map<String, dynamic>),
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      createdAt: JsonHelpers.parseDateTime(json, 'createdAt', 'created_at'),
+      updatedAt: JsonHelpers.parseDateTime(json, 'updatedAt', 'updated_at'),
     );
   }
 
@@ -41,10 +42,10 @@ class CustomerDto {
       'email': email,
       'firstname': firstname,
       'lastname': lastname,
-      'birth_date': birthDate.toIso8601String(),
+      'birthDate': birthDate.toIso8601String(),
       'address': address.toJson(),
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 
