@@ -197,4 +197,39 @@ class AppLocalizationsIt extends AppLocalizations {
   String noSearchResults(String query) {
     return 'Nessun risultato per \"$query\". Prova con un altro termine.';
   }
+
+  @override
+  String get filters => 'Filtri';
+
+  @override
+  String get resetFilters => 'Reimposta';
+
+  @override
+  String get filterPrice => 'Prezzo';
+
+  @override
+  String get filterSize => 'Dimensione';
+
+  @override
+  String get filterMaterial => 'Materiale';
+
+  @override
+  String get filterRechargeable => 'Solo ricaricabile';
+
+  @override
+  String get filterSizeSmall => 'S';
+
+  @override
+  String get filterSizeMedium => 'M';
+
+  @override
+  String get filterSizeLarge => 'L';
+
+  @override
+  String showResults(int count) {
+    return 'Mostra $count risultati';
+  }
+
+  @override
+  String get noFilterResults => 'Nessun armadietto corrisponde ai tuoi filtri';
 }

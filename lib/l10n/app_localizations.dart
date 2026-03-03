@@ -467,6 +467,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucun résultat pour \"{query}\". Essayez avec un autre terme.'**
   String noSearchResults(String query);
+
+  /// Titre section filtres
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtres'**
+  String get filters;
+
+  /// Bouton réinitialiser les filtres
+  ///
+  /// In fr, this message translates to:
+  /// **'Réinitialiser'**
+  String get resetFilters;
+
+  /// Label filtre prix
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix'**
+  String get filterPrice;
+
+  /// Label filtre taille
+  ///
+  /// In fr, this message translates to:
+  /// **'Taille'**
+  String get filterSize;
+
+  /// Label filtre matériau
+  ///
+  /// In fr, this message translates to:
+  /// **'Matériau'**
+  String get filterMaterial;
+
+  /// Label filtre rechargeable
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechargeable uniquement'**
+  String get filterRechargeable;
+
+  /// Label taille petit
+  ///
+  /// In fr, this message translates to:
+  /// **'S'**
+  String get filterSizeSmall;
+
+  /// Label taille moyen
+  ///
+  /// In fr, this message translates to:
+  /// **'M'**
+  String get filterSizeMedium;
+
+  /// Label taille grand
+  ///
+  /// In fr, this message translates to:
+  /// **'L'**
+  String get filterSizeLarge;
+
+  /// Bouton voir résultats filtrés
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir {count} résultats'**
+  String showResults(int count);
+
+  /// Message aucun résultat avec filtres
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun casier ne correspond à vos filtres'**
+  String get noFilterResults;
 }
 
 class _AppLocalizationsDelegate

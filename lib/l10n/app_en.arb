@@ -71,5 +71,21 @@
     "placeholders": {
       "query": { "type": "String" }
     }
-  }
+  },
+  "filters": "Filters",
+  "resetFilters": "Reset",
+  "filterPrice": "Price",
+  "filterSize": "Size",
+  "filterMaterial": "Material",
+  "filterRechargeable": "Rechargeable only",
+  "filterSizeSmall": "S",
+  "filterSizeMedium": "M",
+  "filterSizeLarge": "L",
+  "showResults": "Show {count} results",
+  "@showResults": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noFilterResults": "No lockers match your filters"
 }

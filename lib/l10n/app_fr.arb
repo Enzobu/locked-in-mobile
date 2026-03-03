@@ -132,5 +132,32 @@
     "placeholders": {
       "query": { "type": "String" }
     }
-  }
+  },
+  "filters": "Filtres",
+  "@filters": { "description": "Titre section filtres" },
+  "resetFilters": "Réinitialiser",
+  "@resetFilters": { "description": "Bouton réinitialiser les filtres" },
+  "filterPrice": "Prix",
+  "@filterPrice": { "description": "Label filtre prix" },
+  "filterSize": "Taille",
+  "@filterSize": { "description": "Label filtre taille" },
+  "filterMaterial": "Matériau",
+  "@filterMaterial": { "description": "Label filtre matériau" },
+  "filterRechargeable": "Rechargeable uniquement",
+  "@filterRechargeable": { "description": "Label filtre rechargeable" },
+  "filterSizeSmall": "S",
+  "@filterSizeSmall": { "description": "Label taille petit" },
+  "filterSizeMedium": "M",
+  "@filterSizeMedium": { "description": "Label taille moyen" },
+  "filterSizeLarge": "L",
+  "@filterSizeLarge": { "description": "Label taille grand" },
+  "showResults": "Voir {count} résultats",
+  "@showResults": {
+    "description": "Bouton voir résultats filtrés",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noFilterResults": "Aucun casier ne correspond à vos filtres",
+  "@noFilterResults": { "description": "Message aucun résultat avec filtres" }
 }
