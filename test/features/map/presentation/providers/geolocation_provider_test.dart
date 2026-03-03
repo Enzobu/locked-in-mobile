@@ -105,10 +105,7 @@ void main() {
       const paris = LatLng(48.8566, 2.3522);
       const lyon = LatLng(45.7640, 4.8357);
 
-      expect(
-        distanceKm(paris, lyon),
-        closeTo(distanceKm(lyon, paris), 0.001),
-      );
+      expect(distanceKm(paris, lyon), closeTo(distanceKm(lyon, paris), 0.001));
     });
   });
 

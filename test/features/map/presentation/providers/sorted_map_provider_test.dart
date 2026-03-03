@@ -16,12 +16,7 @@ class _TestGeolocationNotifier extends GeolocationNotifier {
 /// Creates a minimal LockerBaySummary for testing with given coordinates.
 LockerBaySummary _makeSummary(int id, String name, double lat, double lng) {
   return LockerBaySummary(
-    lockerBay: LockerBay(
-      id: id,
-      name: name,
-      latitude: lat,
-      longitude: lng,
-    ),
+    lockerBay: LockerBay(id: id, name: name, latitude: lat, longitude: lng),
     lockers: const [],
   );
 }
@@ -64,9 +59,7 @@ void main() {
             AsyncValue.data(testSummaries),
           ),
           sortModeProvider.overrideWith((ref) => SortMode.proximity),
-          geolocationProvider.overrideWith(
-            (ref) => GeolocationNotifier(),
-          ),
+          geolocationProvider.overrideWith((ref) => GeolocationNotifier()),
         ],
       );
 
@@ -75,8 +68,7 @@ void main() {
       expect(result.value![0].lockerBay.name, 'Marseille');
     });
 
-    test('sorts by proximity when mode is proximity and position available',
-        () {
+    test('sorts by proximity when mode is proximity and position available', () {
       // User is in Lyon
       container = ProviderContainer(
         overrides: [

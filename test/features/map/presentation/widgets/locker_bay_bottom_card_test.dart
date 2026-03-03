@@ -68,8 +68,9 @@ void main() {
     expect(find.text('Gare de Lyon'), findsOneWidget);
   });
 
-  testWidgets('shows distance badge when user position is provided',
-      (tester) async {
+  testWidgets('shows distance badge when user position is provided', (
+    tester,
+  ) async {
     // User is in Paris, bay is in Lyon (~392 km)
     await tester.pumpWidget(
       createTestWidget(userPosition: const LatLng(48.8566, 2.3522)),
@@ -80,8 +81,9 @@ void main() {
     expect(find.textContaining('km'), findsOneWidget);
   });
 
-  testWidgets('does not show distance badge when no user position',
-      (tester) async {
+  testWidgets('does not show distance badge when no user position', (
+    tester,
+  ) async {
     await tester.pumpWidget(createTestWidget());
     await tester.pumpAndSettle();
 
