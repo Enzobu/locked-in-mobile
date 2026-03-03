@@ -19,11 +19,33 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final _searchController = TextEditingController();
+  final _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() => _isFocused = _focusNode.hasFocus);
+    });
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onSearchChanged(String value) {
+    ref.read(searchQueryProvider.notifier).state = value;
+    ref.read(searchDebounceProvider).onQueryChanged(value);
+  }
+
+  void _clearSearch() {
+    _searchController.clear();
+    _onSearchChanged('');
+    _focusNode.unfocus();
   }
 
   @override
@@ -32,6 +54,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final searchQuery = ref.watch(searchQueryProvider);
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Scaffold(
       body: SafeArea(
@@ -43,7 +66,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Text(
                 l10n.homeGreeting,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
             ),
@@ -58,51 +81,75 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              child: SearchBar(
-                controller: _searchController,
-                hintText: l10n.searchLockerBays,
-                leading: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Icon(
-                    LucideIcons.search,
-                    size: 20,
-                    color: theme.colorScheme.onSurfaceVariant,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHighest.withValues(
+                    alpha: _isFocused ? 0.7 : 0.4,
+                  ),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: _isFocused
+                        ? colorScheme.primary.withValues(alpha: 0.5)
+                        : Colors.transparent,
+                    width: 1.5,
                   ),
                 ),
-                trailing: searchQuery.isNotEmpty
-                    ? [
-                        IconButton(
-                          icon: Icon(
-                            LucideIcons.x,
-                            size: 20,
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
-                          onPressed: () {
-                            _searchController.clear();
-                            ref.read(searchQueryProvider.notifier).state = '';
-                            ref.read(searchDebounceProvider).onQueryChanged('');
-                          },
-                        ),
-                      ]
-                    : null,
-                elevation: const WidgetStatePropertyAll(0),
-                backgroundColor: WidgetStatePropertyAll(
-                  theme.colorScheme.surfaceContainerHighest.withValues(
-                    alpha: 0.5,
+                child: TextField(
+                  controller: _searchController,
+                  focusNode: _focusNode,
+                  onChanged: _onSearchChanged,
+                  style: theme.textTheme.bodyMedium,
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    hintText: l10n.searchLockerBays,
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant.withValues(
+                        alpha: 0.6,
+                      ),
+                    ),
+                    prefixIcon: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: Icon(
+                        LucideIcons.search,
+                        key: ValueKey(_isFocused),
+                        size: 20,
+                        color: _isFocused
+                            ? colorScheme.primary
+                            : colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    suffixIcon: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      transitionBuilder: (child, animation) => FadeTransition(
+                        opacity: animation,
+                        child: ScaleTransition(scale: animation, child: child),
+                      ),
+                      child: searchQuery.isNotEmpty
+                          ? IconButton(
+                              key: const ValueKey('clear'),
+                              icon: Icon(
+                                LucideIcons.x,
+                                size: 18,
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                              onPressed: _clearSearch,
+                            )
+                          : const SizedBox.square(
+                              key: ValueKey('empty'),
+                              dimension: 48,
+                            ),
+                    ),
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 14,
+                    ),
                   ),
                 ),
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                padding: const WidgetStatePropertyAll(
-                  EdgeInsets.symmetric(horizontal: 8),
-                ),
-                onChanged: (value) {
-                  ref.read(searchQueryProvider.notifier).state = value;
-                  ref.read(searchDebounceProvider).onQueryChanged(value);
-                },
               ),
             ),
             Expanded(
