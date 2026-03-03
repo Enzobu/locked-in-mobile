@@ -25,6 +25,17 @@ class DioClient {
       ),
     );
     _dio.interceptors.add(JwtInterceptor(tokenStorage: tokenStorage));
+    _dio.interceptors.add(
+      LogInterceptor(
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: false,
+        responseBody: true,
+        error: true,
+        // ignore: avoid_print
+        logPrint: print,
+      ),
+    );
   }
 
   late final Dio _dio;
