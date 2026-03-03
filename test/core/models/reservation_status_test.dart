@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:locked_in/core/models/reservation_status.dart';
+import 'package:locked_in_mobile/core/models/reservation_status.dart';
 
 void main() {
   group('ReservationStatus', () {
@@ -21,10 +21,7 @@ void main() {
         ReservationStatus.fromString('confirmed'),
         ReservationStatus.confirmed,
       );
-      expect(
-        ReservationStatus.fromString('active'),
-        ReservationStatus.active,
-      );
+      expect(ReservationStatus.fromString('active'), ReservationStatus.active);
       expect(
         ReservationStatus.fromString('completed'),
         ReservationStatus.completed,

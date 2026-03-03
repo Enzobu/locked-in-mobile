@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:locked_in/core/models/address.dart';
-import 'package:locked_in/core/models/customer.dart';
+import 'package:locked_in_mobile/core/models/address.dart';
+import 'package:locked_in_mobile/core/models/customer.dart';
 
 void main() {
   final now = DateTime(2025, 1, 1);

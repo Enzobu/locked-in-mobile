@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:locked_in/core/models/address.dart';
-import 'package:locked_in/core/models/company.dart';
-import 'package:locked_in/core/models/customer.dart';
-import 'package:locked_in/core/models/locker.dart';
-import 'package:locked_in/core/models/locker_bay.dart';
-import 'package:locked_in/core/models/reservation.dart';
-import 'package:locked_in/core/models/reservation_status.dart';
-import 'package:locked_in/core/models/specification.dart';
+import 'package:locked_in_mobile/core/models/address.dart';
+import 'package:locked_in_mobile/core/models/company.dart';
+import 'package:locked_in_mobile/core/models/customer.dart';
+import 'package:locked_in_mobile/core/models/locker.dart';
+import 'package:locked_in_mobile/core/models/locker_bay.dart';
+import 'package:locked_in_mobile/core/models/reservation.dart';
+import 'package:locked_in_mobile/core/models/reservation_status.dart';
+import 'package:locked_in_mobile/core/models/specification.dart';
 
 void main() {
   final now = DateTime(2025, 1, 1);
@@ -108,9 +108,7 @@ void main() {
     });
 
     test('copyWith creates a new instance with updated fields', () {
-      final updated = reservation.copyWith(
-        status: ReservationStatus.cancelled,
-      );
+      final updated = reservation.copyWith(status: ReservationStatus.cancelled);
       expect(updated.status, ReservationStatus.cancelled);
       expect(updated.startsAt, reservation.startsAt);
     });

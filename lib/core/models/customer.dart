@@ -61,15 +61,15 @@ class Customer {
 
   @override
   int get hashCode => Object.hash(
-        id,
-        email,
-        firstname,
-        lastname,
-        birthDate,
-        address,
-        createdAt,
-        updatedAt,
-      );
+    id,
+    email,
+    firstname,
+    lastname,
+    birthDate,
+    address,
+    createdAt,
+    updatedAt,
+  );
 
   @override
   String toString() {

@@ -64,16 +64,16 @@ class LockerBay {
 
   @override
   int get hashCode => Object.hash(
-        id,
-        name,
-        latitude,
-        longitude,
-        company,
-        maxDuration,
-        minDuration,
-        createdAt,
-        updatedAt,
-      );
+    id,
+    name,
+    latitude,
+    longitude,
+    company,
+    maxDuration,
+    minDuration,
+    createdAt,
+    updatedAt,
+  );
 
   @override
   String toString() {

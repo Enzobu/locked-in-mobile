@@ -46,7 +46,8 @@ class Address {
   }
 
   @override
-  int get hashCode => Object.hash(id, number, city, country, street, complement);
+  int get hashCode =>
+      Object.hash(id, number, city, country, street, complement);
 
   @override
   String toString() {

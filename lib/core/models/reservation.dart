@@ -64,15 +64,15 @@ class Reservation {
 
   @override
   int get hashCode => Object.hash(
-        id,
-        startsAt,
-        endsAt,
-        customer,
-        locker,
-        status,
-        createdAt,
-        updatedAt,
-      );
+    id,
+    startsAt,
+    endsAt,
+    customer,
+    locker,
+    status,
+    createdAt,
+    updatedAt,
+  );
 
   @override
   String toString() {

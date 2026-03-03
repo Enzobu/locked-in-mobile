@@ -69,17 +69,17 @@ class Company {
 
   @override
   int get hashCode => Object.hash(
-        id,
-        name,
-        siret,
-        siren,
-        ape,
-        juridicForm,
-        phone,
-        address,
-        createdAt,
-        updatedAt,
-      );
+    id,
+    name,
+    siret,
+    siren,
+    ape,
+    juridicForm,
+    phone,
+    address,
+    createdAt,
+    updatedAt,
+  );
 
   @override
   String toString() {

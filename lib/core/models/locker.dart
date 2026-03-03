@@ -73,17 +73,17 @@ class Locker {
 
   @override
   int get hashCode => Object.hash(
-        id,
-        number,
-        hardwareId,
-        specification,
-        priceCents,
-        lockerBay,
-        status,
-        lastSeenAt,
-        createdAt,
-        updatedAt,
-      );
+    id,
+    number,
+    hardwareId,
+    specification,
+    priceCents,
+    lockerBay,
+    status,
+    lastSeenAt,
+    createdAt,
+    updatedAt,
+  );
 
   @override
   String toString() {

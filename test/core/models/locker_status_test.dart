@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:locked_in/core/models/locker_status.dart';
+import 'package:locked_in_mobile/core/models/locker_status.dart';
 
 void main() {
   group('LockerStatus', () {
