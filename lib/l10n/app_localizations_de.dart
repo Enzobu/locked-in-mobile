@@ -199,4 +199,39 @@ class AppLocalizationsDe extends AppLocalizations {
   String noSearchResults(String query) {
     return 'Keine Ergebnisse für \"$query\". Versuchen Sie einen anderen Begriff.';
   }
+
+  @override
+  String get filters => 'Filter';
+
+  @override
+  String get resetFilters => 'Zurücksetzen';
+
+  @override
+  String get filterPrice => 'Preis';
+
+  @override
+  String get filterSize => 'Größe';
+
+  @override
+  String get filterMaterial => 'Material';
+
+  @override
+  String get filterRechargeable => 'Nur aufladbar';
+
+  @override
+  String get filterSizeSmall => 'S';
+
+  @override
+  String get filterSizeMedium => 'M';
+
+  @override
+  String get filterSizeLarge => 'L';
+
+  @override
+  String showResults(int count) {
+    return '$count Ergebnisse anzeigen';
+  }
+
+  @override
+  String get noFilterResults => 'Keine Schließfächer entsprechen Ihren Filtern';
 }

@@ -71,5 +71,21 @@
     "placeholders": {
       "query": { "type": "String" }
     }
-  }
+  },
+  "filters": "Filtri",
+  "resetFilters": "Reimposta",
+  "filterPrice": "Prezzo",
+  "filterSize": "Dimensione",
+  "filterMaterial": "Materiale",
+  "filterRechargeable": "Solo ricaricabile",
+  "filterSizeSmall": "S",
+  "filterSizeMedium": "M",
+  "filterSizeLarge": "L",
+  "showResults": "Mostra {count} risultati",
+  "@showResults": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noFilterResults": "Nessun armadietto corrisponde ai tuoi filtri"
 }

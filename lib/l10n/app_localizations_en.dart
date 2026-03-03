@@ -195,4 +195,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String noSearchResults(String query) {
     return 'No results for \"$query\". Try a different term.';
   }
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get resetFilters => 'Reset';
+
+  @override
+  String get filterPrice => 'Price';
+
+  @override
+  String get filterSize => 'Size';
+
+  @override
+  String get filterMaterial => 'Material';
+
+  @override
+  String get filterRechargeable => 'Rechargeable only';
+
+  @override
+  String get filterSizeSmall => 'S';
+
+  @override
+  String get filterSizeMedium => 'M';
+
+  @override
+  String get filterSizeLarge => 'L';
+
+  @override
+  String showResults(int count) {
+    return 'Show $count results';
+  }
+
+  @override
+  String get noFilterResults => 'No lockers match your filters';
 }

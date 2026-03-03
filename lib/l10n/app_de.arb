@@ -71,5 +71,21 @@
     "placeholders": {
       "query": { "type": "String" }
     }
-  }
+  },
+  "filters": "Filter",
+  "resetFilters": "Zurücksetzen",
+  "filterPrice": "Preis",
+  "filterSize": "Größe",
+  "filterMaterial": "Material",
+  "filterRechargeable": "Nur aufladbar",
+  "filterSizeSmall": "S",
+  "filterSizeMedium": "M",
+  "filterSizeLarge": "L",
+  "showResults": "{count} Ergebnisse anzeigen",
+  "@showResults": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "noFilterResults": "Keine Schließfächer entsprechen Ihren Filtern"
 }
