@@ -66,14 +66,16 @@
 ## Epic 2 : Domain Models & Mock Data
 
 ### TK-006 — Créer les models domain
-**Status**: `TODO`
+**Status**: `DONE`
 **Branch**: `feature/TK-006-domain-models`
+**Start date**: 2026-03-03
+**End date**: 2026-03-03
 **Description**: Créer tous les models immutables basés sur le MCD : Address, Company, Specification, LockerBay, Locker, Customer, Reservation. Avec copyWith, equality, toString.
 **Acceptance Criteria**:
-- [ ] Tous les models créés dans les bons dossiers feature
-- [ ] Models immutables avec final fields
-- [ ] copyWith sur chaque model
-- [ ] Tests unitaires pour chaque model
+- [x] Tous les models créés dans les bons dossiers feature
+- [x] Models immutables avec final fields
+- [x] copyWith sur chaque model
+- [x] Tests unitaires pour chaque model
 
 ### TK-007 — Créer les DTOs et mock datasources
 **Status**: `TODO`
