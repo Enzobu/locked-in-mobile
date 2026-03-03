@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../home/domain/models/locker_bay_summary.dart';
+import '../providers/geolocation_provider.dart';
 import '../providers/map_provider.dart';
 import '../widgets/locker_bay_bottom_card.dart';
 import '../widgets/locker_bay_marker.dart';
@@ -18,7 +20,8 @@ class MapScreen extends ConsumerStatefulWidget {
   ConsumerState<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapScreenState extends ConsumerState<MapScreen> {
+class _MapScreenState extends ConsumerState<MapScreen>
+    with TickerProviderStateMixin {
   late final MapController _mapController;
 
   @override
@@ -35,9 +38,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   void _onMarkerTapped(LockerBaySummary summary) {
     ref.read(selectedLockerBayProvider.notifier).state = summary;
-    _mapController.move(
+    _animatedMove(
       LatLng(summary.lockerBay.latitude, summary.lockerBay.longitude),
-      _mapController.camera.zoom,
+      _mapController.camera.zoom.clamp(12.0, 18.0),
     );
   }
 
@@ -50,27 +53,140 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   }
 
   void _zoomIn() {
-    final zoom = _mapController.camera.zoom + 1;
-    _mapController.move(_mapController.camera.center, zoom);
+    final zoom = (_mapController.camera.zoom + 1).clamp(3.0, 18.0);
+    _animatedMove(_mapController.camera.center, zoom);
   }
 
   void _zoomOut() {
-    final zoom = _mapController.camera.zoom - 1;
-    _mapController.move(_mapController.camera.center, zoom);
+    final zoom = (_mapController.camera.zoom - 1).clamp(3.0, 18.0);
+    _animatedMove(_mapController.camera.center, zoom);
   }
 
   void _resetCenter() {
     final center = ref.read(mapCenterProvider);
-    _mapController.move(center, 6.0);
+    _animatedMove(center, 6.0);
     ref.read(selectedLockerBayProvider.notifier).state = null;
+  }
+
+  Future<void> _locateMe() async {
+    final geoNotifier = ref.read(geolocationProvider.notifier);
+    await geoNotifier.requestLocation();
+
+    final geoState = ref.read(geolocationProvider);
+
+    if (geoState.hasPosition) {
+      ref.read(sortModeProvider.notifier).state = SortMode.proximity;
+      _animatedMove(geoState.position!, 13.0);
+    } else {
+      _showLocationError(geoState.status);
+    }
+  }
+
+  void _showLocationError(GeolocationStatus status) {
+    final l10n = AppLocalizations.of(context)!;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    String message;
+    bool showSettingsButton = false;
+
+    switch (status) {
+      case GeolocationStatus.denied:
+        message = l10n.mapLocationDenied;
+      case GeolocationStatus.deniedForever:
+        message = l10n.mapLocationDeniedForever;
+        showSettingsButton = true;
+      case GeolocationStatus.serviceDisabled:
+        message = l10n.mapLocationServiceDisabled;
+        showSettingsButton = true;
+      default:
+        message = l10n.mapLocationDenied;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(LucideIcons.mapPinOff, size: 18, color: colorScheme.onInverseSurface),
+            const SizedBox(width: 12),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        margin: const EdgeInsets.all(16),
+        action: showSettingsButton
+            ? SnackBarAction(
+                label: l10n.mapOpenSettings,
+                onPressed: () => Geolocator.openAppSettings(),
+              )
+            : null,
+      ),
+    );
+  }
+
+  void _toggleSortMode() {
+    final current = ref.read(sortModeProvider);
+    final geoState = ref.read(geolocationProvider);
+
+    if (current == SortMode.defaultSort) {
+      if (geoState.hasPosition) {
+        ref.read(sortModeProvider.notifier).state = SortMode.proximity;
+      } else {
+        _locateMe();
+      }
+    } else {
+      ref.read(sortModeProvider.notifier).state = SortMode.defaultSort;
+    }
+  }
+
+  void _animatedMove(LatLng destLocation, double destZoom) {
+    final camera = _mapController.camera;
+    final latTween = Tween<double>(
+      begin: camera.center.latitude,
+      end: destLocation.latitude,
+    );
+    final lngTween = Tween<double>(
+      begin: camera.center.longitude,
+      end: destLocation.longitude,
+    );
+    final zoomTween = Tween<double>(
+      begin: camera.zoom,
+      end: destZoom,
+    );
+
+    final controller = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+    final animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeInOutCubic,
+    );
+
+    controller.addListener(() {
+      _mapController.move(
+        LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)),
+        zoomTween.evaluate(animation),
+      );
+    });
+
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.dispose();
+      }
+    });
+
+    controller.forward();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final summariesAsync = ref.watch(mapLockerBaySummariesProvider);
+    final summariesAsync = ref.watch(sortedMapLockerBaySummariesProvider);
     final selectedBay = ref.watch(selectedLockerBayProvider);
     final initialCenter = ref.watch(mapCenterProvider);
+    final geoState = ref.watch(geolocationProvider);
+    final sortMode = ref.watch(sortModeProvider);
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -122,31 +238,63 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   userAgentPackageName: 'com.lockedin.mobile',
                 ),
                 MarkerLayer(
-                  markers: summaries.map((summary) {
-                    final isSelected =
-                        selectedBay?.lockerBay.id == summary.lockerBay.id;
-                    return Marker(
-                      point: LatLng(
-                        summary.lockerBay.latitude,
-                        summary.lockerBay.longitude,
+                  markers: [
+                    // User position marker
+                    if (geoState.hasPosition)
+                      Marker(
+                        point: geoState.position!,
+                        width: 24,
+                        height: 24,
+                        child: const _UserPositionMarker(),
                       ),
-                      width: 60,
-                      height: 40,
-                      child: GestureDetector(
-                        onTap: () => _onMarkerTapped(summary),
-                        child: LockerBayMarker(
-                          availableCount: summary.availableCount,
-                          isSelected: isSelected,
+                    // Locker bay markers
+                    ...summaries.map((summary) {
+                      final isSelected =
+                          selectedBay?.lockerBay.id == summary.lockerBay.id;
+                      return Marker(
+                        point: LatLng(
+                          summary.lockerBay.latitude,
+                          summary.lockerBay.longitude,
                         ),
-                      ),
-                    );
-                  }).toList(),
+                        width: 80,
+                        height: 50,
+                        child: GestureDetector(
+                          onTap: () => _onMarkerTapped(summary),
+                          child: LockerBayMarker(
+                            availableCount: summary.availableCount,
+                            isSelected: isSelected,
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
                 ),
               ],
             ),
+            // Top-left: "Around me" pill button
+            Positioned(
+              left: 16,
+              top: MediaQuery.of(context).padding.top + kToolbarHeight + 12,
+              child: _AroundMeButton(
+                onPressed: _locateMe,
+                isActive: geoState.hasPosition,
+                isLoading: geoState.status == GeolocationStatus.loading,
+              ),
+            ),
+            // Top-right: Sort toggle (only visible when geolocation active)
+            if (geoState.hasPosition)
+              Positioned(
+                right: 16,
+                top: MediaQuery.of(context).padding.top + kToolbarHeight + 12,
+                child: _SortToggleButton(
+                  sortMode: sortMode,
+                  onPressed: _toggleSortMode,
+                ),
+              ),
+            // Right side: Map controls
             Positioned(
               right: 16,
-              bottom: selectedBay != null ? 180 : 32,
+              bottom: selectedBay != null ? 200 : 32,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -154,10 +302,18 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   const SizedBox(height: 8),
                   _MapButton(icon: LucideIcons.minus, onPressed: _zoomOut),
                   const SizedBox(height: 8),
-                  _MapButton(icon: LucideIcons.locate, onPressed: _resetCenter),
+                  _MapButton(
+                    icon: geoState.hasPosition
+                        ? LucideIcons.navigation
+                        : LucideIcons.locate,
+                    onPressed:
+                        geoState.hasPosition ? () => _animatedMove(geoState.position!, 13.0) : _resetCenter,
+                    isAccented: geoState.hasPosition,
+                  ),
                 ],
               ),
             ),
+            // Bottom card
             if (selectedBay != null)
               Positioned(
                 left: 0,
@@ -166,6 +322,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                 child: SafeArea(
                   child: LockerBayBottomCard(
                     summary: selectedBay,
+                    userPosition: geoState.position,
                     onTap: () => _onCardTapped(selectedBay),
                     onClose: _onCardClosed,
                   ),
@@ -178,11 +335,162 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   }
 }
 
+class _UserPositionMarker extends StatelessWidget {
+  const _UserPositionMarker();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: colorScheme.primary.withValues(alpha: 0.15),
+        border: Border.all(color: colorScheme.primary, width: 2.5),
+      ),
+      child: Center(
+        child: Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: colorScheme.primary,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AroundMeButton extends StatelessWidget {
+  const _AroundMeButton({
+    required this.onPressed,
+    required this.isActive,
+    required this.isLoading,
+  });
+
+  final VoidCallback onPressed;
+  final bool isActive;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+
+    return Material(
+      elevation: 3,
+      borderRadius: BorderRadius.circular(24),
+      color: isActive ? colorScheme.primary : colorScheme.surface,
+      child: InkWell(
+        onTap: isLoading ? null : onPressed,
+        borderRadius: BorderRadius.circular(24),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (isLoading)
+                SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: isActive
+                        ? colorScheme.onPrimary
+                        : colorScheme.primary,
+                  ),
+                )
+              else
+                Icon(
+                  LucideIcons.crosshair,
+                  size: 16,
+                  color: isActive
+                      ? colorScheme.onPrimary
+                      : colorScheme.primary,
+                ),
+              const SizedBox(width: 8),
+              Text(
+                l10n.mapAroundMe,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: isActive
+                      ? colorScheme.onPrimary
+                      : colorScheme.onSurface,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SortToggleButton extends StatelessWidget {
+  const _SortToggleButton({
+    required this.sortMode,
+    required this.onPressed,
+  });
+
+  final SortMode sortMode;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isProximity = sortMode == SortMode.proximity;
+    final l10n = AppLocalizations.of(context)!;
+
+    return Material(
+      elevation: 3,
+      borderRadius: BorderRadius.circular(24),
+      color: isProximity ? colorScheme.primary : colorScheme.surface,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(24),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                LucideIcons.arrowUpDown,
+                size: 14,
+                color: isProximity
+                    ? colorScheme.onPrimary
+                    : colorScheme.onSurface,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                isProximity ? l10n.mapSortByProximity : l10n.mapSortDefault,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: isProximity
+                      ? colorScheme.onPrimary
+                      : colorScheme.onSurface,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _MapButton extends StatelessWidget {
-  const _MapButton({required this.icon, required this.onPressed});
+  const _MapButton({
+    required this.icon,
+    required this.onPressed,
+    this.isAccented = false,
+  });
 
   final IconData icon;
   final VoidCallback onPressed;
+  final bool isAccented;
 
   @override
   Widget build(BuildContext context) {
@@ -191,14 +499,18 @@ class _MapButton extends StatelessWidget {
     return Material(
       elevation: 2,
       borderRadius: BorderRadius.circular(12),
-      color: colorScheme.surface,
+      color: isAccented ? colorScheme.primary : colorScheme.surface,
       child: InkWell(
         onTap: onPressed,
         borderRadius: BorderRadius.circular(12),
         child: SizedBox(
           width: 44,
           height: 44,
-          child: Icon(icon, size: 20, color: colorScheme.onSurface),
+          child: Icon(
+            icon,
+            size: 20,
+            color: isAccented ? colorScheme.onPrimary : colorScheme.onSurface,
+          ),
         ),
       ),
     );

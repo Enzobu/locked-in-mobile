@@ -125,5 +125,19 @@
       "count": { "type": "int" }
     }
   },
-  "mapSeeDetails": "Vedi dettagli"
+  "mapSeeDetails": "Vedi dettagli",
+  "mapAroundMe": "Intorno a me",
+  "mapSortByProximity": "Ordina per vicinanza",
+  "mapSortDefault": "Ordinamento predefinito",
+  "mapDistance": "{distance}",
+  "@mapDistance": {
+    "placeholders": {
+      "distance": { "type": "String" }
+    }
+  },
+  "mapLocationDenied": "L'accesso alla posizione è stato negato",
+  "mapLocationDeniedForever": "L'accesso alla posizione è disabilitato. Abilitalo nelle impostazioni.",
+  "mapLocationServiceDisabled": "Il servizio di localizzazione è disabilitato",
+  "mapOpenSettings": "Apri impostazioni",
+  "mapMyPosition": "La mia posizione"
 }

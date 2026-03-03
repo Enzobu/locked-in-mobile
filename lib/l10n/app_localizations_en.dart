@@ -286,4 +286,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapSeeDetails => 'See details';
+
+  @override
+  String get mapAroundMe => 'Around me';
+
+  @override
+  String get mapSortByProximity => 'Sort by proximity';
+
+  @override
+  String get mapSortDefault => 'Default sort';
+
+  @override
+  String mapDistance(String distance) {
+    return '$distance';
+  }
+
+  @override
+  String get mapLocationDenied => 'Location access was denied';
+
+  @override
+  String get mapLocationDeniedForever =>
+      'Location access is disabled. Enable it in settings.';
+
+  @override
+  String get mapLocationServiceDisabled => 'Location service is disabled';
+
+  @override
+  String get mapOpenSettings => 'Open settings';
+
+  @override
+  String get mapMyPosition => 'My position';
 }

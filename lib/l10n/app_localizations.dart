@@ -629,6 +629,60 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Voir les détails'**
   String get mapSeeDetails;
+
+  /// Bouton géolocalisation autour de moi
+  ///
+  /// In fr, this message translates to:
+  /// **'Autour de moi'**
+  String get mapAroundMe;
+
+  /// Label tri par proximité
+  ///
+  /// In fr, this message translates to:
+  /// **'Tri par proximité'**
+  String get mapSortByProximity;
+
+  /// Label tri par défaut
+  ///
+  /// In fr, this message translates to:
+  /// **'Tri par défaut'**
+  String get mapSortDefault;
+
+  /// Distance affichée sur les cards
+  ///
+  /// In fr, this message translates to:
+  /// **'{distance}'**
+  String mapDistance(String distance);
+
+  /// Message permission refusée
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'accès à la localisation a été refusé'**
+  String get mapLocationDenied;
+
+  /// Message permission refusée définitivement
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'accès à la localisation est désactivé. Activez-le dans les réglages.'**
+  String get mapLocationDeniedForever;
+
+  /// Message service désactivé
+  ///
+  /// In fr, this message translates to:
+  /// **'Le service de localisation est désactivé'**
+  String get mapLocationServiceDisabled;
+
+  /// Bouton ouvrir les réglages
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir les réglages'**
+  String get mapOpenSettings;
+
+  /// Label ma position
+  ///
+  /// In fr, this message translates to:
+  /// **'Ma position'**
+  String get mapMyPosition;
 }
 
 class _AppLocalizationsDelegate

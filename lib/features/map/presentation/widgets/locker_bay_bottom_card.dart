@@ -1,26 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../home/domain/models/locker_bay_summary.dart';
+import '../providers/geolocation_provider.dart';
 
 class LockerBayBottomCard extends StatelessWidget {
   const LockerBayBottomCard({
     required this.summary,
     required this.onTap,
     required this.onClose,
+    this.userPosition,
     super.key,
   });
 
   final LockerBaySummary summary;
   final VoidCallback onTap;
   final VoidCallback onClose;
+  final LatLng? userPosition;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final l10n = AppLocalizations.of(context)!;
+
+    String? distance;
+    if (userPosition != null) {
+      final km = distanceKm(
+        userPosition!,
+        LatLng(summary.lockerBay.latitude, summary.lockerBay.longitude),
+      );
+      distance = formatDistance(km);
+    }
 
     return Card(
       margin: const EdgeInsets.all(16),
@@ -79,6 +92,10 @@ class LockerBayBottomCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            if (distance != null) ...[
+                              const SizedBox(width: 8),
+                              _DistanceBadge(distance: distance),
+                            ],
                           ],
                         ),
                       ],
@@ -128,6 +145,43 @@ class LockerBayBottomCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _DistanceBadge extends StatelessWidget {
+  const _DistanceBadge({required this.distance});
+
+  final String distance;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            LucideIcons.navigation,
+            size: 10,
+            color: colorScheme.onPrimaryContainer,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            distance,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              color: colorScheme.onPrimaryContainer,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
       ),
     );
   }
