@@ -103,6 +103,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   textInputAction: TextInputAction.search,
                   cursorColor: colorScheme.primary,
                   decoration: InputDecoration(
+                    filled: false,
                     hintText: l10n.searchLockerBays,
                     hintStyle: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant.withValues(
