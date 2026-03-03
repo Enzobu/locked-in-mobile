@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/dtos/customer_dto.dart';
 import '../../../../core/models/customer.dart';
 import '../../../../core/network/api_exception.dart';
 import '../../../../core/network/dio_client.dart';
@@ -74,8 +75,9 @@ class AuthNotifier extends Notifier<AuthState> {
     }
 
     try {
-      await _datasource.getCurrentCustomer();
-      state = const AuthState(status: AuthStatus.authenticated);
+      final data = await _datasource.getCurrentCustomer();
+      final customer = CustomerDto.fromJson(data).toDomain();
+      state = AuthState(status: AuthStatus.authenticated, customer: customer);
     } on ApiException catch (e) {
       if (e.isUnauthorized) {
         await _tokenStorage.clearTokens();
@@ -98,7 +100,9 @@ class AuthNotifier extends Notifier<AuthState> {
         );
       }
       await _tokenStorage.saveTokens(accessToken: token);
-      state = const AuthState(status: AuthStatus.authenticated);
+      final customerData = await _datasource.getCurrentCustomer();
+      final customer = CustomerDto.fromJson(customerData).toDomain();
+      state = AuthState(status: AuthStatus.authenticated, customer: customer);
     } on ApiException catch (e) {
       final message = e.isUnauthorized ? 'invalidCredentials' : e.message;
       state = AuthState(status: AuthStatus.error, errorMessage: message);
