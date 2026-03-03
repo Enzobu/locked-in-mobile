@@ -125,5 +125,19 @@
       "count": { "type": "int" }
     }
   },
-  "mapSeeDetails": "See details"
+  "mapSeeDetails": "See details",
+  "mapAroundMe": "Around me",
+  "mapSortByProximity": "Sort by proximity",
+  "mapSortDefault": "Default sort",
+  "mapDistance": "{distance}",
+  "@mapDistance": {
+    "placeholders": {
+      "distance": { "type": "String" }
+    }
+  },
+  "mapLocationDenied": "Location access was denied",
+  "mapLocationDeniedForever": "Location access is disabled. Enable it in settings.",
+  "mapLocationServiceDisabled": "Location service is disabled",
+  "mapOpenSettings": "Open settings",
+  "mapMyPosition": "My position"
 }

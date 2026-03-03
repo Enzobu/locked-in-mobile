@@ -290,4 +290,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mapSeeDetails => 'Details anzeigen';
+
+  @override
+  String get mapAroundMe => 'In meiner Nähe';
+
+  @override
+  String get mapSortByProximity => 'Nach Entfernung sortieren';
+
+  @override
+  String get mapSortDefault => 'Standardsortierung';
+
+  @override
+  String mapDistance(String distance) {
+    return '$distance';
+  }
+
+  @override
+  String get mapLocationDenied => 'Standortzugriff wurde verweigert';
+
+  @override
+  String get mapLocationDeniedForever =>
+      'Standortzugriff ist deaktiviert. Aktivieren Sie ihn in den Einstellungen.';
+
+  @override
+  String get mapLocationServiceDisabled => 'Ortungsdienst ist deaktiviert';
+
+  @override
+  String get mapOpenSettings => 'Einstellungen öffnen';
+
+  @override
+  String get mapMyPosition => 'Meine Position';
 }

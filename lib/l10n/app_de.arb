@@ -125,5 +125,19 @@
       "count": { "type": "int" }
     }
   },
-  "mapSeeDetails": "Details anzeigen"
+  "mapSeeDetails": "Details anzeigen",
+  "mapAroundMe": "In meiner Nähe",
+  "mapSortByProximity": "Nach Entfernung sortieren",
+  "mapSortDefault": "Standardsortierung",
+  "mapDistance": "{distance}",
+  "@mapDistance": {
+    "placeholders": {
+      "distance": { "type": "String" }
+    }
+  },
+  "mapLocationDenied": "Standortzugriff wurde verweigert",
+  "mapLocationDeniedForever": "Standortzugriff ist deaktiviert. Aktivieren Sie ihn in den Einstellungen.",
+  "mapLocationServiceDisabled": "Ortungsdienst ist deaktiviert",
+  "mapOpenSettings": "Einstellungen öffnen",
+  "mapMyPosition": "Meine Position"
 }

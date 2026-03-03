@@ -288,4 +288,35 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mapSeeDetails => 'Voir les détails';
+
+  @override
+  String get mapAroundMe => 'Autour de moi';
+
+  @override
+  String get mapSortByProximity => 'Tri par proximité';
+
+  @override
+  String get mapSortDefault => 'Tri par défaut';
+
+  @override
+  String mapDistance(String distance) {
+    return '$distance';
+  }
+
+  @override
+  String get mapLocationDenied => 'L\'accès à la localisation a été refusé';
+
+  @override
+  String get mapLocationDeniedForever =>
+      'L\'accès à la localisation est désactivé. Activez-le dans les réglages.';
+
+  @override
+  String get mapLocationServiceDisabled =>
+      'Le service de localisation est désactivé';
+
+  @override
+  String get mapOpenSettings => 'Ouvrir les réglages';
+
+  @override
+  String get mapMyPosition => 'Ma position';
 }

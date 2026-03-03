@@ -213,5 +213,28 @@
     }
   },
   "mapSeeDetails": "Voir les détails",
-  "@mapSeeDetails": { "description": "Bouton voir détails sur la carte" }
+  "@mapSeeDetails": { "description": "Bouton voir détails sur la carte" },
+  "mapAroundMe": "Autour de moi",
+  "@mapAroundMe": { "description": "Bouton géolocalisation autour de moi" },
+  "mapSortByProximity": "Tri par proximité",
+  "@mapSortByProximity": { "description": "Label tri par proximité" },
+  "mapSortDefault": "Tri par défaut",
+  "@mapSortDefault": { "description": "Label tri par défaut" },
+  "mapDistance": "{distance}",
+  "@mapDistance": {
+    "description": "Distance affichée sur les cards",
+    "placeholders": {
+      "distance": { "type": "String" }
+    }
+  },
+  "mapLocationDenied": "L'accès à la localisation a été refusé",
+  "@mapLocationDenied": { "description": "Message permission refusée" },
+  "mapLocationDeniedForever": "L'accès à la localisation est désactivé. Activez-le dans les réglages.",
+  "@mapLocationDeniedForever": { "description": "Message permission refusée définitivement" },
+  "mapLocationServiceDisabled": "Le service de localisation est désactivé",
+  "@mapLocationServiceDisabled": { "description": "Message service désactivé" },
+  "mapOpenSettings": "Ouvrir les réglages",
+  "@mapOpenSettings": { "description": "Bouton ouvrir les réglages" },
+  "mapMyPosition": "Ma position",
+  "@mapMyPosition": { "description": "Label ma position" }
 }

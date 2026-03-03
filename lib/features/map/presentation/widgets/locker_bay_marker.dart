@@ -15,7 +15,7 @@ class LockerBayMarker extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final markerColor = isSelected ? colorScheme.primary : colorScheme.primary;
-    final scale = isSelected ? 1.15 : 1.0;
+    final scale = isSelected ? 1.2 : 1.0;
 
     return Transform.scale(
       scale: scale,
@@ -23,14 +23,14 @@ class LockerBayMarker extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               color: markerColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(14),
               boxShadow: [
                 BoxShadow(
                   color: markerColor.withValues(alpha: 0.4),
-                  blurRadius: isSelected ? 8 : 4,
+                  blurRadius: isSelected ? 10 : 5,
                   offset: const Offset(0, 2),
                 ),
               ],
@@ -38,13 +38,13 @@ class LockerBayMarker extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(LucideIcons.box, size: 12, color: Colors.white),
-                const SizedBox(width: 3),
+                const Icon(LucideIcons.box, size: 16, color: Colors.white),
+                const SizedBox(width: 4),
                 Text(
                   '$availableCount',
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 11,
+                    fontSize: 14,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -52,7 +52,7 @@ class LockerBayMarker extends StatelessWidget {
             ),
           ),
           CustomPaint(
-            size: const Size(12, 8),
+            size: const Size(14, 9),
             painter: _TrianglePainter(color: markerColor),
           ),
         ],
