@@ -277,4 +277,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String pricePerDay(String price) {
     return '$price €';
   }
+
+  @override
+  String get mapLockerBays => 'Points de casiers';
+
+  @override
+  String mapLockerBayCount(int count) {
+    return '$count casiers';
+  }
+
+  @override
+  String get mapSeeDetails => 'Voir les détails';
 }

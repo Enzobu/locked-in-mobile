@@ -202,5 +202,16 @@
     "placeholders": {
       "price": { "type": "String" }
     }
-  }
+  },
+  "mapLockerBays": "Points de casiers",
+  "@mapLockerBays": { "description": "Titre des markers sur la carte" },
+  "mapLockerBayCount": "{count} casiers",
+  "@mapLockerBayCount": {
+    "description": "Nombre de casiers dans un point",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "mapSeeDetails": "Voir les détails",
+  "@mapSeeDetails": { "description": "Bouton voir détails sur la carte" }
 }
