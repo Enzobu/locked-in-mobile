@@ -15,13 +15,15 @@ final _testCustomer = Customer(
   firstname: 'Jean',
   lastname: 'Dupont',
   birthDate: DateTime(1995, 6, 15),
-  address: const Address(
-    id: 1,
-    number: '22',
-    city: 'Paris',
-    country: 'France',
-    street: 'Rue de Test',
-  ),
+  addresses: const [
+    Address(
+      id: 1,
+      number: '22',
+      city: 'Paris',
+      country: 'France',
+      street: 'Rue de Test',
+    ),
+  ],
   createdAt: DateTime(2025, 1, 10),
   updatedAt: DateTime(2026, 2, 15),
 );
@@ -46,7 +48,6 @@ class _FakeAuthNotifier extends AuthNotifier {
     required String firstname,
     required String lastname,
     required String email,
-    required String phone,
   }) async {
     if (_customer == null) return false;
     state = state.copyWith(

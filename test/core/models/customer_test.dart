@@ -18,7 +18,7 @@ void main() {
     firstname: 'John',
     lastname: 'Doe',
     birthDate: birthDate,
-    address: address,
+    addresses: [address],
     createdAt: now,
     updatedAt: now,
   );
@@ -30,7 +30,7 @@ void main() {
       expect(customer.firstname, 'John');
       expect(customer.lastname, 'Doe');
       expect(customer.birthDate, birthDate);
-      expect(customer.address, address);
+      expect(customer.primaryAddress, address);
     });
 
     test('fullName returns firstname and lastname', () {
@@ -54,7 +54,7 @@ void main() {
         firstname: 'John',
         lastname: 'Doe',
         birthDate: birthDate,
-        address: address,
+        addresses: [address],
         createdAt: now,
         updatedAt: now,
       );
