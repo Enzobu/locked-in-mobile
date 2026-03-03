@@ -238,5 +238,8 @@
   "profileTerms": "Terms of use",
   "profilePrivacy": "Privacy policy",
   "profileHelp": "Help & support",
-  "profileLogoutConfirm": "Are you sure you want to log out?"
+  "profileLogoutConfirm": "Are you sure you want to log out?",
+  "profileEdit": "Edit profile",
+  "profileEditSuccess": "Profile updated successfully",
+  "profileEditError": "Failed to update profile"
 }

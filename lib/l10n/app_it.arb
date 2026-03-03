@@ -238,5 +238,8 @@
   "profileTerms": "Condizioni d'uso",
   "profilePrivacy": "Informativa sulla privacy",
   "profileHelp": "Aiuto e supporto",
-  "profileLogoutConfirm": "Sei sicuro di voler uscire?"
+  "profileLogoutConfirm": "Sei sicuro di voler uscire?",
+  "profileEdit": "Modifica profilo",
+  "profileEditSuccess": "Profilo aggiornato con successo",
+  "profileEditError": "Errore durante l'aggiornamento del profilo"
 }

@@ -507,4 +507,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get profileLogoutConfirm => 'Sei sicuro di voler uscire?';
+
+  @override
+  String get profileEdit => 'Modifica profilo';
+
+  @override
+  String get profileEditSuccess => 'Profilo aggiornato con successo';
+
+  @override
+  String get profileEditError => 'Errore durante l\'aggiornamento del profilo';
 }

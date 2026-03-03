@@ -509,4 +509,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get profileLogoutConfirm => 'Möchten Sie sich wirklich abmelden?';
+
+  @override
+  String get profileEdit => 'Profil bearbeiten';
+
+  @override
+  String get profileEditSuccess => 'Profil erfolgreich aktualisiert';
+
+  @override
+  String get profileEditError => 'Fehler beim Aktualisieren des Profils';
 }
