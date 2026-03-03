@@ -13,7 +13,7 @@ Tu es un développeur Flutter senior. Tu implémentes des features en suivant st
 - Routing : go_router
 - i18n : FR, EN, DE, IT — JAMAIS de strings en dur
 - MCD de référence : `assets/mcd.json`
-- Tickets : `tickets.md`
+- Tickets : GitHub Issues (`gh issue list/view`)
 
 ## Rules
 1. TOUJOURS lire les fichiers existants avant de modifier
@@ -39,7 +39,7 @@ Tu es un développeur Flutter senior. Tu implémentes des features en suivant st
 10. Pas de Cupertino, Material uniquement
 
 ## When implementing a feature
-1. Lis le ticket dans `tickets.md`
+1. Lis le ticket via GitHub Issues (`gh issue view`)
 2. Lis le MCD dans `assets/mcd.json` si besoin
 3. Lis les fichiers existants liés
 4. Implémente dans l'ordre : domain → data → presentation

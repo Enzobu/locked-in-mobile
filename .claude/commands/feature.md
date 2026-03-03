@@ -8,7 +8,7 @@ user_invocable: true
 Implémente une nouvelle feature en suivant les conventions du projet.
 
 ## Steps
-1. Identify the ticket in `tickets.md`
+1. Identify the ticket via GitHub Issues (`gh issue view`)
 2. Create branch from dev: `git checkout dev && git pull && git checkout -b feature/TK-XXX-description`
 3. Create the feature folder structure:
    ```
@@ -33,7 +33,10 @@ Implémente une nouvelle feature en suivant les conventions du projet.
 12. Write tests for business logic and key interactions
 13. Run `flutter analyze` and `dart format .`
 14. Run `flutter test`
-15. Update ticket status in `tickets.md`
+15. Push branch and create PR via `gh pr create`
+16. Merge PR via `gh pr merge --merge`
+17. `git checkout dev && git pull`
+18. Close GitHub issue via `gh issue close`
 
 ## Rules
 - Follow feature-first clean architecture strictly
