@@ -232,4 +232,49 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get noFilterResults => 'Nessun armadietto corrisponde ai tuoi filtri';
+
+  @override
+  String get lockerBayDetail => 'Dettagli punto';
+
+  @override
+  String get lockerBayAddress => 'Indirizzo';
+
+  @override
+  String get lockerBayCompany => 'Azienda';
+
+  @override
+  String get lockerBayLockers => 'Armadietti';
+
+  @override
+  String lockerNumber(int number) {
+    return 'Armadietto n°$number';
+  }
+
+  @override
+  String lockerSize(int width, int height, int depth) {
+    return '$width × $height × $depth cm';
+  }
+
+  @override
+  String get lockerAvailable => 'Disponibile';
+
+  @override
+  String get lockerReserved => 'Prenotato';
+
+  @override
+  String get lockerOccupied => 'Occupato';
+
+  @override
+  String get lockerOutOfOrder => 'Fuori servizio';
+
+  @override
+  String get lockerOffline => 'Offline';
+
+  @override
+  String get reserveLocker => 'Prenota';
+
+  @override
+  String pricePerDay(String price) {
+    return '$price €';
+  }
 }

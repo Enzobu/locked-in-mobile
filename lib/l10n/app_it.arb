@@ -87,5 +87,35 @@
       "count": { "type": "int" }
     }
   },
-  "noFilterResults": "Nessun armadietto corrisponde ai tuoi filtri"
+  "noFilterResults": "Nessun armadietto corrisponde ai tuoi filtri",
+  "lockerBayDetail": "Dettagli punto",
+  "lockerBayAddress": "Indirizzo",
+  "lockerBayCompany": "Azienda",
+  "lockerBayLockers": "Armadietti",
+  "lockerNumber": "Armadietto n°{number}",
+  "@lockerNumber": {
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  },
+  "lockerSize": "{width} × {height} × {depth} cm",
+  "@lockerSize": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "depth": { "type": "int" }
+    }
+  },
+  "lockerAvailable": "Disponibile",
+  "lockerReserved": "Prenotato",
+  "lockerOccupied": "Occupato",
+  "lockerOutOfOrder": "Fuori servizio",
+  "lockerOffline": "Offline",
+  "reserveLocker": "Prenota",
+  "pricePerDay": "{price} €",
+  "@pricePerDay": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  }
 }

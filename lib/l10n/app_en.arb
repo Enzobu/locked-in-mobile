@@ -87,5 +87,35 @@
       "count": { "type": "int" }
     }
   },
-  "noFilterResults": "No lockers match your filters"
+  "noFilterResults": "No lockers match your filters",
+  "lockerBayDetail": "Point details",
+  "lockerBayAddress": "Address",
+  "lockerBayCompany": "Company",
+  "lockerBayLockers": "Lockers",
+  "lockerNumber": "Locker #{number}",
+  "@lockerNumber": {
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  },
+  "lockerSize": "{width} × {height} × {depth} cm",
+  "@lockerSize": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "depth": { "type": "int" }
+    }
+  },
+  "lockerAvailable": "Available",
+  "lockerReserved": "Reserved",
+  "lockerOccupied": "Occupied",
+  "lockerOutOfOrder": "Out of order",
+  "lockerOffline": "Offline",
+  "reserveLocker": "Reserve",
+  "pricePerDay": "{price} €",
+  "@pricePerDay": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  }
 }

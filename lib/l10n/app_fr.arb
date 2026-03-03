@@ -159,5 +159,48 @@
     }
   },
   "noFilterResults": "Aucun casier ne correspond à vos filtres",
-  "@noFilterResults": { "description": "Message aucun résultat avec filtres" }
+  "@noFilterResults": { "description": "Message aucun résultat avec filtres" },
+  "lockerBayDetail": "Détail du point",
+  "@lockerBayDetail": { "description": "Titre page détail d'un locker bay" },
+  "lockerBayAddress": "Adresse",
+  "@lockerBayAddress": { "description": "Label section adresse" },
+  "lockerBayCompany": "Entreprise",
+  "@lockerBayCompany": { "description": "Label section entreprise" },
+  "lockerBayLockers": "Casiers",
+  "@lockerBayLockers": { "description": "Label section liste des casiers" },
+  "lockerNumber": "Casier n°{number}",
+  "@lockerNumber": {
+    "description": "Numéro du casier",
+    "placeholders": {
+      "number": { "type": "int" }
+    }
+  },
+  "lockerSize": "{width} × {height} × {depth} cm",
+  "@lockerSize": {
+    "description": "Dimensions du casier",
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "depth": { "type": "int" }
+    }
+  },
+  "lockerAvailable": "Disponible",
+  "@lockerAvailable": { "description": "Statut casier disponible" },
+  "lockerReserved": "Réservé",
+  "@lockerReserved": { "description": "Statut casier réservé" },
+  "lockerOccupied": "Occupé",
+  "@lockerOccupied": { "description": "Statut casier occupé" },
+  "lockerOutOfOrder": "Hors service",
+  "@lockerOutOfOrder": { "description": "Statut casier hors service" },
+  "lockerOffline": "Hors ligne",
+  "@lockerOffline": { "description": "Statut casier hors ligne" },
+  "reserveLocker": "Réserver",
+  "@reserveLocker": { "description": "Bouton réserver un casier" },
+  "pricePerDay": "{price} €",
+  "@pricePerDay": {
+    "description": "Prix du casier",
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  }
 }
