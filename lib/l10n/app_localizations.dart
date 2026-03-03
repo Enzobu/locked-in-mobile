@@ -1025,6 +1025,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Êtes-vous sûr de vouloir vous déconnecter ?'**
   String get profileLogoutConfirm;
+
+  /// Titre écran modification profil
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le profil'**
+  String get profileEdit;
+
+  /// Message succès modification profil
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil mis à jour avec succès'**
+  String get profileEditSuccess;
+
+  /// Message erreur modification profil
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur lors de la mise à jour du profil'**
+  String get profileEditError;
 }
 
 class _AppLocalizationsDelegate

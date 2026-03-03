@@ -12,6 +12,7 @@ import '../features/auth/presentation/screens/splash_screen.dart';
 import '../features/home/presentation/screens/home_screen.dart';
 import '../features/home/presentation/screens/locker_bay_detail_screen.dart';
 import '../features/map/presentation/screens/map_screen.dart';
+import '../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
 import '../features/reservations/presentation/screens/reservation_detail_screen.dart';
 import '../features/reservations/presentation/screens/reservation_flow_screen.dart';
@@ -120,6 +121,10 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/profile',
                 builder: (context, state) => const ProfileScreen(),
+              ),
+              GoRoute(
+                path: '/profile/edit',
+                builder: (context, state) => const EditProfileScreen(),
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../app/locale_provider.dart';
@@ -35,7 +36,10 @@ class ProfileScreen extends ConsumerWidget {
                   const SizedBox(height: 8),
                   ProfileHeader(customer: customer),
                   const SizedBox(height: 24),
-                  _PersonalInfoSection(customer: customer),
+                  _PersonalInfoSection(
+                    customer: customer,
+                    onEdit: () => context.push('/profile/edit'),
+                  ),
                   const SizedBox(height: 16),
                   _PreferencesSection(),
                   const SizedBox(height: 16),
@@ -54,9 +58,10 @@ class ProfileScreen extends ConsumerWidget {
 }
 
 class _PersonalInfoSection extends StatelessWidget {
-  const _PersonalInfoSection({required this.customer});
+  const _PersonalInfoSection({required this.customer, this.onEdit});
 
   final Customer? customer;
+  final VoidCallback? onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +70,15 @@ class _PersonalInfoSection extends StatelessWidget {
     return ProfileSection(
       title: l10n.profilePersonalInfo,
       icon: LucideIcons.user,
+      trailing: IconButton(
+        onPressed: onEdit,
+        icon: Icon(
+          LucideIcons.edit,
+          size: 18,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        tooltip: l10n.profileEdit,
+      ),
       children: [
         ProfileSectionTile(
           icon: LucideIcons.mail,

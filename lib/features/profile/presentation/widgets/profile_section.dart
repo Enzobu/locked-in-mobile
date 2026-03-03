@@ -7,11 +7,13 @@ class ProfileSection extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.children,
+    this.trailing,
   });
 
   final String title;
   final IconData icon;
   final List<ProfileSectionTile> children;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,16 @@ class ProfileSection extends StatelessWidget {
             children: [
               Icon(icon, size: 16, color: theme.colorScheme.primary),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.primary,
+              Expanded(
+                child: Text(
+                  title,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
               ),
+              ?trailing,
             ],
           ),
         ),

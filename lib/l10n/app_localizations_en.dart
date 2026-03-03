@@ -504,4 +504,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileLogoutConfirm => 'Are you sure you want to log out?';
+
+  @override
+  String get profileEdit => 'Edit profile';
+
+  @override
+  String get profileEditSuccess => 'Profile updated successfully';
+
+  @override
+  String get profileEditError => 'Failed to update profile';
 }

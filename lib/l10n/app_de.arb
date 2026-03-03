@@ -238,5 +238,8 @@
   "profileTerms": "Nutzungsbedingungen",
   "profilePrivacy": "Datenschutzrichtlinie",
   "profileHelp": "Hilfe & Support",
-  "profileLogoutConfirm": "Möchten Sie sich wirklich abmelden?"
+  "profileLogoutConfirm": "Möchten Sie sich wirklich abmelden?",
+  "profileEdit": "Profil bearbeiten",
+  "profileEditSuccess": "Profil erfolgreich aktualisiert",
+  "profileEditError": "Fehler beim Aktualisieren des Profils"
 }

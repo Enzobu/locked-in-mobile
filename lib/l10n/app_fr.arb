@@ -392,5 +392,11 @@
   "profileHelp": "Aide et support",
   "@profileHelp": { "description": "Lien aide et support" },
   "profileLogoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter ?",
-  "@profileLogoutConfirm": { "description": "Message confirmation déconnexion" }
+  "@profileLogoutConfirm": { "description": "Message confirmation déconnexion" },
+  "profileEdit": "Modifier le profil",
+  "@profileEdit": { "description": "Titre écran modification profil" },
+  "profileEditSuccess": "Profil mis à jour avec succès",
+  "@profileEditSuccess": { "description": "Message succès modification profil" },
+  "profileEditError": "Erreur lors de la mise à jour du profil",
+  "@profileEditError": { "description": "Message erreur modification profil" }
 }
