@@ -13,7 +13,7 @@ Application mobile Flutter de réservation de casiers (lockers). Backend Symfony
 - **Routing**: go_router
 - **i18n**: flutter_localizations + intl (FR, EN, DE, IT)
 - **Storage local**: shared_preferences
-- **Primary Color**: #E60024
+- **Primary Color**: #C10000
 - **Dark mode**: supporté
 
 ## Architecture - Feature First Clean Architecture
