@@ -7,6 +7,8 @@ import 'package:locked_in_mobile/features/auth/presentation/providers/auth_provi
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _FakeAuthDatasource implements AuthDatasource {
+  bool tokenValid = true;
+
   @override
   Future<Map<String, dynamic>> login(String email, String password) async {
     await Future<void>.delayed(const Duration(milliseconds: 100));
@@ -49,6 +51,10 @@ class _FakeAuthDatasource implements AuthDatasource {
 
   @override
   Future<Map<String, dynamic>> getCurrentCustomer() async {
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    if (!tokenValid) {
+      throw const ApiException(statusCode: 401, message: 'Token expired');
+    }
     return {
       'id': 1,
       'email': 'test@test.com',
@@ -63,13 +69,13 @@ class _FakeAuthDatasource implements AuthDatasource {
 
 void main() {
   late ProviderContainer container;
+  late _FakeAuthDatasource fakeDatasource;
 
   setUp(() {
     SharedPreferences.setMockInitialValues({});
+    fakeDatasource = _FakeAuthDatasource();
     container = ProviderContainer(
-      overrides: [
-        authDatasourceProvider.overrideWithValue(_FakeAuthDatasource()),
-      ],
+      overrides: [authDatasourceProvider.overrideWithValue(fakeDatasource)],
     );
   });
 
@@ -77,17 +83,64 @@ void main() {
     container.dispose();
   });
 
-  group('AuthNotifier - login', () {
-    test('initial state is initial then becomes unauthenticated', () async {
-      final state = container.read(authProvider);
-      expect(state.status, AuthStatus.initial);
+  group('AuthNotifier - session management', () {
+    test(
+      'initial state is initial then becomes unauthenticated when no token',
+      () async {
+        final state = container.read(authProvider);
+        expect(state.status, AuthStatus.initial);
 
+        await Future<void>.delayed(const Duration(milliseconds: 300));
+
+        final updatedState = container.read(authProvider);
+        expect(updatedState.status, AuthStatus.unauthenticated);
+      },
+    );
+
+    test('auto-login succeeds when valid token is stored', () async {
+      // Wait for setUp container's _checkAuth to complete
       await Future<void>.delayed(const Duration(milliseconds: 300));
 
-      final updatedState = container.read(authProvider);
-      expect(updatedState.status, AuthStatus.unauthenticated);
+      SharedPreferences.setMockInitialValues({'access_token': 'valid_token'});
+      final ds = _FakeAuthDatasource();
+      final c = ProviderContainer(
+        overrides: [authDatasourceProvider.overrideWithValue(ds)],
+      );
+      addTearDown(c.dispose);
+
+      // Trigger provider build (starts _checkAuth async)
+      c.read(authProvider);
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      final state = c.read(authProvider);
+      expect(state.status, AuthStatus.authenticated);
     });
 
+    test('auto-login fails and clears token when token is expired', () async {
+      // Wait for setUp container's _checkAuth to complete
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      SharedPreferences.setMockInitialValues({'access_token': 'expired_token'});
+      final ds = _FakeAuthDatasource()..tokenValid = false;
+      final c = ProviderContainer(
+        overrides: [authDatasourceProvider.overrideWithValue(ds)],
+      );
+      addTearDown(c.dispose);
+
+      // Trigger provider build (starts _checkAuth async)
+      c.read(authProvider);
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      final state = c.read(authProvider);
+      expect(state.status, AuthStatus.unauthenticated);
+
+      final tokenStorage = c.read(tokenStorageProvider);
+      final token = await tokenStorage.getAccessToken();
+      expect(token, isNull);
+    });
+  });
+
+  group('AuthNotifier - login', () {
     test('login with valid credentials sets authenticated state', () async {
       await Future<void>.delayed(const Duration(milliseconds: 300));
 
