@@ -6,6 +6,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../features/auth/presentation/providers/auth_provider.dart';
 import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/auth/presentation/screens/register_screen.dart';
+import '../features/auth/presentation/screens/splash_screen.dart';
 import '../features/home/presentation/screens/home_screen.dart';
 import '../features/map/presentation/screens/map_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
@@ -22,25 +23,35 @@ final routerProvider = Provider<GoRouter>((ref) {
   final authChangeNotifier = _AuthChangeNotifier(ref);
 
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/',
     refreshListenable: authChangeNotifier,
     redirect: (context, state) {
       final authState = ref.read(authProvider);
       final isAuthenticated = authState.status == AuthStatus.authenticated;
-      final isOnLogin = state.matchedLocation == '/login';
+      final isOnSplash = state.matchedLocation == '/';
 
       if (authState.status == AuthStatus.initial ||
           authState.status == AuthStatus.loading) {
-        return null;
+        if (isOnSplash) return null;
+        return '/';
       }
 
-      final isOnAuth = isOnLogin || state.matchedLocation == '/register';
+      if (isOnSplash) {
+        return isAuthenticated ? '/home' : '/login';
+      }
+
+      final isOnAuth = state.matchedLocation == '/login' ||
+          state.matchedLocation == '/register';
 
       if (!isAuthenticated && !isOnAuth) return '/login';
       if (isAuthenticated && isOnAuth) return '/home';
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const SplashScreen(),
+      ),
       GoRoute(
         path: '/login',
         pageBuilder: (context, state) => const NoTransitionPage(

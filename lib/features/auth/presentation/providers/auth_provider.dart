@@ -68,9 +68,20 @@ class AuthNotifier extends Notifier<AuthState> {
 
   Future<void> _checkAuth() async {
     final hasToken = await _tokenStorage.hasTokens();
-    if (hasToken) {
+    if (!hasToken) {
+      state = const AuthState(status: AuthStatus.unauthenticated);
+      return;
+    }
+
+    try {
+      await _datasource.getCurrentCustomer();
       state = const AuthState(status: AuthStatus.authenticated);
-    } else {
+    } on ApiException catch (e) {
+      if (e.isUnauthorized) {
+        await _tokenStorage.clearTokens();
+      }
+      state = const AuthState(status: AuthStatus.unauthenticated);
+    } on Exception {
       state = const AuthState(status: AuthStatus.unauthenticated);
     }
   }
