@@ -40,7 +40,8 @@ class MockReservationDatasource implements ReservationDatasource {
     final id = _nextId++;
     final reservation = {
       'id': id,
-      'public_form': 'RES-2026-${id.toRadixString(36).toUpperCase().padLeft(6, '0')}',
+      'public_form':
+          'RES-2026-${id.toRadixString(36).toUpperCase().padLeft(6, '0')}',
       'starts_at': startsAt,
       'ends_at': endsAt,
       'customer': MockData.currentCustomer,

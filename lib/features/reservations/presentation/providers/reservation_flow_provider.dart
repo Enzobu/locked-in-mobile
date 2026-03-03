@@ -157,5 +157,4 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
       state = state.copyWith(isSubmitting: false, error: () => e.toString());
     }
   }
-
 }
