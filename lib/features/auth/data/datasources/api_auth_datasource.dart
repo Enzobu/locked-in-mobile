@@ -38,6 +38,25 @@ class ApiAuthDatasource implements AuthDatasource {
   }
 
   @override
+  Future<Map<String, dynamic>> updateCustomer({
+    required String firstname,
+    required String lastname,
+    required String email,
+    required String phone,
+  }) async {
+    final response = await dioClient.patch<Map<String, dynamic>>(
+      '/api/customers/me',
+      data: {
+        'firstname': firstname,
+        'lastname': lastname,
+        'email': email,
+        'phone': phone,
+      },
+    );
+    return response.data!;
+  }
+
+  @override
   Future<Map<String, dynamic>> getCurrentCustomer() async {
     final response = await dioClient.get<Map<String, dynamic>>(
       '/api/customers/me',

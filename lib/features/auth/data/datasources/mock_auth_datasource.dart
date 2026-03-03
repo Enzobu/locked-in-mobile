@@ -47,6 +47,28 @@ class MockAuthDatasource implements AuthDatasource {
   }
 
   @override
+  Future<Map<String, dynamic>> updateCustomer({
+    required String firstname,
+    required String lastname,
+    required String email,
+    required String phone,
+  }) async {
+    await Future<void>.delayed(const Duration(milliseconds: 500));
+
+    if (!_isLoggedIn) {
+      throw Exception('Not authenticated');
+    }
+
+    final updated = Map<String, dynamic>.from(MockData.currentCustomer);
+    updated['firstname'] = firstname;
+    updated['lastname'] = lastname;
+    updated['email'] = email;
+    updated['phone'] = phone;
+    updated['updated_at'] = DateTime.now().toIso8601String();
+    return updated;
+  }
+
+  @override
   Future<Map<String, dynamic>> getCurrentCustomer() async {
     await Future<void>.delayed(const Duration(milliseconds: 200));
 

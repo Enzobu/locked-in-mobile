@@ -12,5 +12,12 @@ abstract class AuthDatasource {
 
   Future<Map<String, dynamic>> getCurrentCustomer();
 
+  Future<Map<String, dynamic>> updateCustomer({
+    required String firstname,
+    required String lastname,
+    required String email,
+    required String phone,
+  });
+
   Future<void> logout();
 }

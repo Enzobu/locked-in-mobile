@@ -142,6 +142,27 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
+  Future<bool> updateProfile({
+    required String firstname,
+    required String lastname,
+    required String email,
+    required String phone,
+  }) async {
+    try {
+      final data = await _datasource.updateCustomer(
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        phone: phone,
+      );
+      final customer = CustomerDto.fromJson(data).toDomain();
+      state = state.copyWith(customer: customer);
+      return true;
+    } on Exception {
+      return false;
+    }
+  }
+
   Future<void> logout() async {
     await _tokenStorage.clearTokens();
     state = const AuthState(status: AuthStatus.unauthenticated);
