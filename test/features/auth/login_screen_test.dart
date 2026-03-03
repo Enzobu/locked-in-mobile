@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:locked_in_mobile/features/auth/data/datasources/mock_auth_datasource.dart';
 import 'package:locked_in_mobile/features/auth/data/repositories/mock_auth_repository.dart';
-import 'package:locked_in_mobile/features/auth/domain/repositories/auth_repository.dart';
 import 'package:locked_in_mobile/features/auth/presentation/providers/auth_provider.dart';
 import 'package:locked_in_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:locked_in_mobile/l10n/app_localizations.dart';

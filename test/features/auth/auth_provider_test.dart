@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:locked_in_mobile/core/network/token_storage.dart';
 import 'package:locked_in_mobile/features/auth/data/datasources/mock_auth_datasource.dart';
 import 'package:locked_in_mobile/features/auth/data/repositories/mock_auth_repository.dart';
-import 'package:locked_in_mobile/features/auth/domain/repositories/auth_repository.dart';
 import 'package:locked_in_mobile/features/auth/presentation/providers/auth_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
