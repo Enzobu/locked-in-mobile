@@ -363,5 +363,34 @@
   "reservationDetailMaterial": "Matériau",
   "@reservationDetailMaterial": { "description": "Label matériau" },
   "reservationDetailCancelReservation": "Annuler la réservation",
-  "@reservationDetailCancelReservation": { "description": "Bouton annuler réservation détail" }
+  "@reservationDetailCancelReservation": { "description": "Bouton annuler réservation détail" },
+
+  "profilePersonalInfo": "Informations personnelles",
+  "@profilePersonalInfo": { "description": "Section infos personnelles profil" },
+  "profilePreferences": "Préférences",
+  "@profilePreferences": { "description": "Section préférences profil" },
+  "profileAbout": "À propos",
+  "@profileAbout": { "description": "Section à propos profil" },
+  "profileVersion": "Version {version}",
+  "@profileVersion": {
+    "description": "Version de l'application",
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "profileMemberSince": "Membre depuis {date}",
+  "@profileMemberSince": {
+    "description": "Date d'inscription",
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "profileTerms": "Conditions d'utilisation",
+  "@profileTerms": { "description": "Lien conditions d'utilisation" },
+  "profilePrivacy": "Politique de confidentialité",
+  "@profilePrivacy": { "description": "Lien politique de confidentialité" },
+  "profileHelp": "Aide et support",
+  "@profileHelp": { "description": "Lien aide et support" },
+  "profileLogoutConfirm": "Êtes-vous sûr de vouloir vous déconnecter ?",
+  "@profileLogoutConfirm": { "description": "Message confirmation déconnexion" }
 }

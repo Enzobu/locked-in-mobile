@@ -477,4 +477,36 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reservationDetailCancelReservation => 'Annuler la réservation';
+
+  @override
+  String get profilePersonalInfo => 'Informations personnelles';
+
+  @override
+  String get profilePreferences => 'Préférences';
+
+  @override
+  String get profileAbout => 'À propos';
+
+  @override
+  String profileVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String profileMemberSince(String date) {
+    return 'Membre depuis $date';
+  }
+
+  @override
+  String get profileTerms => 'Conditions d\'utilisation';
+
+  @override
+  String get profilePrivacy => 'Politique de confidentialité';
+
+  @override
+  String get profileHelp => 'Aide et support';
+
+  @override
+  String get profileLogoutConfirm =>
+      'Êtes-vous sûr de vouloir vous déconnecter ?';
 }

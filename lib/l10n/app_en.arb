@@ -218,5 +218,25 @@
     }
   },
   "reservationDetailMaterial": "Material",
-  "reservationDetailCancelReservation": "Cancel reservation"
+  "reservationDetailCancelReservation": "Cancel reservation",
+
+  "profilePersonalInfo": "Personal information",
+  "profilePreferences": "Preferences",
+  "profileAbout": "About",
+  "profileVersion": "Version {version}",
+  "@profileVersion": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "profileMemberSince": "Member since {date}",
+  "@profileMemberSince": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "profileTerms": "Terms of use",
+  "profilePrivacy": "Privacy policy",
+  "profileHelp": "Help & support",
+  "profileLogoutConfirm": "Are you sure you want to log out?"
 }

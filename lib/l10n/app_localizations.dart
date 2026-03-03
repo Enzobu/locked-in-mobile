@@ -971,6 +971,60 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Annuler la réservation'**
   String get reservationDetailCancelReservation;
+
+  /// Section infos personnelles profil
+  ///
+  /// In fr, this message translates to:
+  /// **'Informations personnelles'**
+  String get profilePersonalInfo;
+
+  /// Section préférences profil
+  ///
+  /// In fr, this message translates to:
+  /// **'Préférences'**
+  String get profilePreferences;
+
+  /// Section à propos profil
+  ///
+  /// In fr, this message translates to:
+  /// **'À propos'**
+  String get profileAbout;
+
+  /// Version de l'application
+  ///
+  /// In fr, this message translates to:
+  /// **'Version {version}'**
+  String profileVersion(String version);
+
+  /// Date d'inscription
+  ///
+  /// In fr, this message translates to:
+  /// **'Membre depuis {date}'**
+  String profileMemberSince(String date);
+
+  /// Lien conditions d'utilisation
+  ///
+  /// In fr, this message translates to:
+  /// **'Conditions d\'utilisation'**
+  String get profileTerms;
+
+  /// Lien politique de confidentialité
+  ///
+  /// In fr, this message translates to:
+  /// **'Politique de confidentialité'**
+  String get profilePrivacy;
+
+  /// Lien aide et support
+  ///
+  /// In fr, this message translates to:
+  /// **'Aide et support'**
+  String get profileHelp;
+
+  /// Message confirmation déconnexion
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir vous déconnecter ?'**
+  String get profileLogoutConfirm;
 }
 
 class _AppLocalizationsDelegate
