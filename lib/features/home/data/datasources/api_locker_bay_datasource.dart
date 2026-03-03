@@ -21,10 +21,12 @@ class ApiLockerBayDatasource implements LockerBayDatasource {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getLockersByBayId(int lockerBayId) async {
+  Future<List<Map<String, dynamic>>> getLockersByBayId(
+    int lockerBayId,
+  ) async {
     final response = await dioClient.get<dynamic>(
       '/api/lockers',
-      queryParameters: {'lockerBay': lockerBayId},
+      queryParameters: {'lockerBay': '/api/locker_bays/$lockerBayId'},
     );
     return _extractList(response.data);
   }
@@ -38,8 +40,6 @@ class ApiLockerBayDatasource implements LockerBayDatasource {
     return _extractList(response.data);
   }
 
-  /// Extracts a list from the API response.
-  /// Handles both plain JSON arrays and hydra collections.
   List<Map<String, dynamic>> _extractList(dynamic data) {
     if (data is List) {
       return data.cast<Map<String, dynamic>>();

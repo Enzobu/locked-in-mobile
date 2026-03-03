@@ -22,11 +22,13 @@ final lockerBaySummariesProvider =
       LockerBaySummariesNotifier.new,
     );
 
-class LockerBaySummariesNotifier extends AsyncNotifier<List<LockerBaySummary>> {
+class LockerBaySummariesNotifier
+    extends AsyncNotifier<List<LockerBaySummary>> {
   @override
   Future<List<LockerBaySummary>> build() => _fetchSummaries();
 
-  LockerBayRepository get _repository => ref.read(lockerBayRepositoryProvider);
+  LockerBayRepository get _repository =>
+      ref.read(lockerBayRepositoryProvider);
 
   Future<List<LockerBaySummary>> _fetchSummaries() async {
     final bays = await _repository.getLockerBays();
