@@ -26,7 +26,6 @@ class MockAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String birthDate,
-    required String phone,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
 
@@ -40,7 +39,8 @@ class MockAuthDatasource implements AuthDatasource {
       'firstname': firstname,
       'lastname': lastname,
       'birth_date': birthDate,
-      'address': MockData.addresses[15],
+      'roles': ['ROLE_CUSTOMER'],
+      'addresses': [],
       'created_at': DateTime.now().toIso8601String(),
       'updated_at': DateTime.now().toIso8601String(),
     };
@@ -51,7 +51,6 @@ class MockAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
-    required String phone,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
 
@@ -63,7 +62,6 @@ class MockAuthDatasource implements AuthDatasource {
     updated['firstname'] = firstname;
     updated['lastname'] = lastname;
     updated['email'] = email;
-    updated['phone'] = phone;
     updated['updated_at'] = DateTime.now().toIso8601String();
     return updated;
   }

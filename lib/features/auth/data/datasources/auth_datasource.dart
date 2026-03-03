@@ -7,7 +7,6 @@ abstract class AuthDatasource {
     required String firstname,
     required String lastname,
     required String birthDate,
-    required String phone,
   });
 
   Future<Map<String, dynamic>> getCurrentCustomer();
@@ -16,7 +15,6 @@ abstract class AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
-    required String phone,
   });
 
   Future<void> logout();

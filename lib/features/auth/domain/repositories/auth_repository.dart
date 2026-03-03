@@ -9,7 +9,6 @@ abstract class AuthRepository {
     required String firstname,
     required String lastname,
     required DateTime birthDate,
-    required String phone,
   });
 
   Future<Customer> getCurrentCustomer();
