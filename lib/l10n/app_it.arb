@@ -139,5 +139,49 @@
   "mapLocationDeniedForever": "L'accesso alla posizione è disabilitato. Abilitalo nelle impostazioni.",
   "mapLocationServiceDisabled": "Il servizio di localizzazione è disabilitato",
   "mapOpenSettings": "Apri impostazioni",
-  "mapMyPosition": "La mia posizione"
+  "mapMyPosition": "La mia posizione",
+
+  "reservationFlowTitle": "Prenota un armadietto",
+  "reservationSelectDate": "Seleziona le date",
+  "reservationStartDate": "Data di inizio",
+  "reservationEndDate": "Data di fine",
+  "reservationDuration": "{days} giorno/i",
+  "@reservationDuration": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "reservationNext": "Continua",
+  "reservationSummaryTitle": "Riepilogo",
+  "reservationLocker": "Armadietto",
+  "reservationLocation": "Posizione",
+  "reservationPeriod": "Periodo",
+  "reservationTotalPrice": "Totale",
+  "reservationPrice": "{price} €",
+  "@reservationPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "reservationConfirm": "Conferma prenotazione",
+  "reservationSuccessTitle": "Prenotazione confermata!",
+  "reservationSuccessSubtitle": "Il tuo armadietto è prenotato. Mostra questo codice all'arrivo.",
+  "reservationCode": "Codice di prenotazione",
+  "reservationBackToHome": "Torna alla home",
+  "reservationViewAll": "Vedi le mie prenotazioni",
+  "reservationSelectDateHint": "Tocca per selezionare",
+  "reservationDateFrom": "Dal",
+  "reservationDateTo": "Al",
+  "reservationErrorGeneric": "Si è verificato un errore. Riprova.",
+
+  "reservationsEmpty": "Nessuna prenotazione",
+  "reservationsEmptySubtitle": "Non hai ancora prenotazioni. Prenota il tuo primo armadietto!",
+  "reservationStatusPending": "In attesa",
+  "reservationStatusConfirmed": "Confermata",
+  "reservationStatusActive": "Attiva",
+  "reservationStatusCompleted": "Completata",
+  "reservationStatusCancelled": "Annullata",
+  "reservationStatusExpired": "Scaduta",
+  "reservationsUpcoming": "Prossime",
+  "reservationsPast": "Passate"
 }

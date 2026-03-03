@@ -683,6 +683,198 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ma position'**
   String get mapMyPosition;
+
+  /// Titre du flow de réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Réserver un casier'**
+  String get reservationFlowTitle;
+
+  /// Titre étape sélection date
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionnez vos dates'**
+  String get reservationSelectDate;
+
+  /// Label date de début
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de début'**
+  String get reservationStartDate;
+
+  /// Label date de fin
+  ///
+  /// In fr, this message translates to:
+  /// **'Date de fin'**
+  String get reservationEndDate;
+
+  /// Durée de la réservation en jours
+  ///
+  /// In fr, this message translates to:
+  /// **'{days} jour(s)'**
+  String reservationDuration(int days);
+
+  /// Bouton étape suivante
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer'**
+  String get reservationNext;
+
+  /// Titre étape récapitulatif
+  ///
+  /// In fr, this message translates to:
+  /// **'Récapitulatif'**
+  String get reservationSummaryTitle;
+
+  /// Label section casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Casier'**
+  String get reservationLocker;
+
+  /// Label section emplacement
+  ///
+  /// In fr, this message translates to:
+  /// **'Emplacement'**
+  String get reservationLocation;
+
+  /// Label section période
+  ///
+  /// In fr, this message translates to:
+  /// **'Période'**
+  String get reservationPeriod;
+
+  /// Label prix total
+  ///
+  /// In fr, this message translates to:
+  /// **'Total'**
+  String get reservationTotalPrice;
+
+  /// Prix formaté
+  ///
+  /// In fr, this message translates to:
+  /// **'{price} €'**
+  String reservationPrice(String price);
+
+  /// Bouton confirmer réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer la réservation'**
+  String get reservationConfirm;
+
+  /// Titre succès réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservation confirmée !'**
+  String get reservationSuccessTitle;
+
+  /// Sous-titre succès réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre casier est réservé. Présentez ce code à l\'arrivée.'**
+  String get reservationSuccessSubtitle;
+
+  /// Label code de réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Code de réservation'**
+  String get reservationCode;
+
+  /// Bouton retour accueil
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à l\'accueil'**
+  String get reservationBackToHome;
+
+  /// Bouton voir réservations
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir mes réservations'**
+  String get reservationViewAll;
+
+  /// Hint sélection date
+  ///
+  /// In fr, this message translates to:
+  /// **'Touchez pour sélectionner'**
+  String get reservationSelectDateHint;
+
+  /// Label du
+  ///
+  /// In fr, this message translates to:
+  /// **'Du'**
+  String get reservationDateFrom;
+
+  /// Label au
+  ///
+  /// In fr, this message translates to:
+  /// **'Au'**
+  String get reservationDateTo;
+
+  /// Message erreur générique réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Une erreur est survenue. Veuillez réessayer.'**
+  String get reservationErrorGeneric;
+
+  /// Titre état vide réservations
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune réservation'**
+  String get reservationsEmpty;
+
+  /// Sous-titre état vide réservations
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous n\'avez pas encore de réservation. Réservez votre premier casier !'**
+  String get reservationsEmptySubtitle;
+
+  /// Statut réservation en attente
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente'**
+  String get reservationStatusPending;
+
+  /// Statut réservation confirmée
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmée'**
+  String get reservationStatusConfirmed;
+
+  /// Statut réservation active
+  ///
+  /// In fr, this message translates to:
+  /// **'Active'**
+  String get reservationStatusActive;
+
+  /// Statut réservation terminée
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminée'**
+  String get reservationStatusCompleted;
+
+  /// Statut réservation annulée
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulée'**
+  String get reservationStatusCancelled;
+
+  /// Statut réservation expirée
+  ///
+  /// In fr, this message translates to:
+  /// **'Expirée'**
+  String get reservationStatusExpired;
+
+  /// Section réservations à venir
+  ///
+  /// In fr, this message translates to:
+  /// **'À venir'**
+  String get reservationsUpcoming;
+
+  /// Section réservations passées
+  ///
+  /// In fr, this message translates to:
+  /// **'Passées'**
+  String get reservationsPast;
 }
 
 class _AppLocalizationsDelegate

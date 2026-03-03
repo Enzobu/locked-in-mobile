@@ -320,4 +320,107 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mapMyPosition => 'Meine Position';
+
+  @override
+  String get reservationFlowTitle => 'Schließfach reservieren';
+
+  @override
+  String get reservationSelectDate => 'Wählen Sie Ihre Daten';
+
+  @override
+  String get reservationStartDate => 'Startdatum';
+
+  @override
+  String get reservationEndDate => 'Enddatum';
+
+  @override
+  String reservationDuration(int days) {
+    return '$days Tag(e)';
+  }
+
+  @override
+  String get reservationNext => 'Weiter';
+
+  @override
+  String get reservationSummaryTitle => 'Zusammenfassung';
+
+  @override
+  String get reservationLocker => 'Schließfach';
+
+  @override
+  String get reservationLocation => 'Standort';
+
+  @override
+  String get reservationPeriod => 'Zeitraum';
+
+  @override
+  String get reservationTotalPrice => 'Gesamt';
+
+  @override
+  String reservationPrice(String price) {
+    return '$price €';
+  }
+
+  @override
+  String get reservationConfirm => 'Reservierung bestätigen';
+
+  @override
+  String get reservationSuccessTitle => 'Reservierung bestätigt!';
+
+  @override
+  String get reservationSuccessSubtitle =>
+      'Ihr Schließfach ist reserviert. Zeigen Sie diesen Code bei der Ankunft.';
+
+  @override
+  String get reservationCode => 'Reservierungscode';
+
+  @override
+  String get reservationBackToHome => 'Zurück zur Startseite';
+
+  @override
+  String get reservationViewAll => 'Meine Reservierungen anzeigen';
+
+  @override
+  String get reservationSelectDateHint => 'Tippen zum Auswählen';
+
+  @override
+  String get reservationDateFrom => 'Von';
+
+  @override
+  String get reservationDateTo => 'Bis';
+
+  @override
+  String get reservationErrorGeneric =>
+      'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get reservationsEmpty => 'Keine Reservierungen';
+
+  @override
+  String get reservationsEmptySubtitle =>
+      'Sie haben noch keine Reservierungen. Buchen Sie Ihr erstes Schließfach!';
+
+  @override
+  String get reservationStatusPending => 'Ausstehend';
+
+  @override
+  String get reservationStatusConfirmed => 'Bestätigt';
+
+  @override
+  String get reservationStatusActive => 'Aktiv';
+
+  @override
+  String get reservationStatusCompleted => 'Abgeschlossen';
+
+  @override
+  String get reservationStatusCancelled => 'Storniert';
+
+  @override
+  String get reservationStatusExpired => 'Abgelaufen';
+
+  @override
+  String get reservationsUpcoming => 'Bevorstehend';
+
+  @override
+  String get reservationsPast => 'Vergangene';
 }

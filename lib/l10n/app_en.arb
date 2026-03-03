@@ -139,5 +139,49 @@
   "mapLocationDeniedForever": "Location access is disabled. Enable it in settings.",
   "mapLocationServiceDisabled": "Location service is disabled",
   "mapOpenSettings": "Open settings",
-  "mapMyPosition": "My position"
+  "mapMyPosition": "My position",
+
+  "reservationFlowTitle": "Reserve a locker",
+  "reservationSelectDate": "Select your dates",
+  "reservationStartDate": "Start date",
+  "reservationEndDate": "End date",
+  "reservationDuration": "{days} day(s)",
+  "@reservationDuration": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "reservationNext": "Continue",
+  "reservationSummaryTitle": "Summary",
+  "reservationLocker": "Locker",
+  "reservationLocation": "Location",
+  "reservationPeriod": "Period",
+  "reservationTotalPrice": "Total",
+  "reservationPrice": "{price} €",
+  "@reservationPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "reservationConfirm": "Confirm reservation",
+  "reservationSuccessTitle": "Reservation confirmed!",
+  "reservationSuccessSubtitle": "Your locker is reserved. Show this code on arrival.",
+  "reservationCode": "Reservation code",
+  "reservationBackToHome": "Back to home",
+  "reservationViewAll": "View my reservations",
+  "reservationSelectDateHint": "Tap to select",
+  "reservationDateFrom": "From",
+  "reservationDateTo": "To",
+  "reservationErrorGeneric": "An error occurred. Please try again.",
+
+  "reservationsEmpty": "No reservations",
+  "reservationsEmptySubtitle": "You don't have any reservations yet. Book your first locker!",
+  "reservationStatusPending": "Pending",
+  "reservationStatusConfirmed": "Confirmed",
+  "reservationStatusActive": "Active",
+  "reservationStatusCompleted": "Completed",
+  "reservationStatusCancelled": "Cancelled",
+  "reservationStatusExpired": "Expired",
+  "reservationsUpcoming": "Upcoming",
+  "reservationsPast": "Past"
 }
