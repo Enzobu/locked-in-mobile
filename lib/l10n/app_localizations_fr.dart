@@ -232,4 +232,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get noFilterResults => 'Aucun casier ne correspond à vos filtres';
+
+  @override
+  String get lockerBayDetail => 'Détail du point';
+
+  @override
+  String get lockerBayAddress => 'Adresse';
+
+  @override
+  String get lockerBayCompany => 'Entreprise';
+
+  @override
+  String get lockerBayLockers => 'Casiers';
+
+  @override
+  String lockerNumber(int number) {
+    return 'Casier n°$number';
+  }
+
+  @override
+  String lockerSize(int width, int height, int depth) {
+    return '$width × $height × $depth cm';
+  }
+
+  @override
+  String get lockerAvailable => 'Disponible';
+
+  @override
+  String get lockerReserved => 'Réservé';
+
+  @override
+  String get lockerOccupied => 'Occupé';
+
+  @override
+  String get lockerOutOfOrder => 'Hors service';
+
+  @override
+  String get lockerOffline => 'Hors ligne';
+
+  @override
+  String get reserveLocker => 'Réserver';
+
+  @override
+  String pricePerDay(String price) {
+    return '$price €';
+  }
 }

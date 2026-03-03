@@ -234,4 +234,49 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get noFilterResults => 'Keine Schließfächer entsprechen Ihren Filtern';
+
+  @override
+  String get lockerBayDetail => 'Punktdetails';
+
+  @override
+  String get lockerBayAddress => 'Adresse';
+
+  @override
+  String get lockerBayCompany => 'Unternehmen';
+
+  @override
+  String get lockerBayLockers => 'Schließfächer';
+
+  @override
+  String lockerNumber(int number) {
+    return 'Schließfach Nr. $number';
+  }
+
+  @override
+  String lockerSize(int width, int height, int depth) {
+    return '$width × $height × $depth cm';
+  }
+
+  @override
+  String get lockerAvailable => 'Verfügbar';
+
+  @override
+  String get lockerReserved => 'Reserviert';
+
+  @override
+  String get lockerOccupied => 'Belegt';
+
+  @override
+  String get lockerOutOfOrder => 'Außer Betrieb';
+
+  @override
+  String get lockerOffline => 'Offline';
+
+  @override
+  String get reserveLocker => 'Reservieren';
+
+  @override
+  String pricePerDay(String price) {
+    return '$price €';
+  }
 }

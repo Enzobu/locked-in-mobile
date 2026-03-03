@@ -230,4 +230,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noFilterResults => 'No lockers match your filters';
+
+  @override
+  String get lockerBayDetail => 'Point details';
+
+  @override
+  String get lockerBayAddress => 'Address';
+
+  @override
+  String get lockerBayCompany => 'Company';
+
+  @override
+  String get lockerBayLockers => 'Lockers';
+
+  @override
+  String lockerNumber(int number) {
+    return 'Locker #$number';
+  }
+
+  @override
+  String lockerSize(int width, int height, int depth) {
+    return '$width × $height × $depth cm';
+  }
+
+  @override
+  String get lockerAvailable => 'Available';
+
+  @override
+  String get lockerReserved => 'Reserved';
+
+  @override
+  String get lockerOccupied => 'Occupied';
+
+  @override
+  String get lockerOutOfOrder => 'Out of order';
+
+  @override
+  String get lockerOffline => 'Offline';
+
+  @override
+  String get reserveLocker => 'Reserve';
+
+  @override
+  String pricePerDay(String price) {
+    return '$price €';
+  }
 }

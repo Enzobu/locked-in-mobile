@@ -533,6 +533,84 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucun casier ne correspond à vos filtres'**
   String get noFilterResults;
+
+  /// Titre page détail d'un locker bay
+  ///
+  /// In fr, this message translates to:
+  /// **'Détail du point'**
+  String get lockerBayDetail;
+
+  /// Label section adresse
+  ///
+  /// In fr, this message translates to:
+  /// **'Adresse'**
+  String get lockerBayAddress;
+
+  /// Label section entreprise
+  ///
+  /// In fr, this message translates to:
+  /// **'Entreprise'**
+  String get lockerBayCompany;
+
+  /// Label section liste des casiers
+  ///
+  /// In fr, this message translates to:
+  /// **'Casiers'**
+  String get lockerBayLockers;
+
+  /// Numéro du casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Casier n°{number}'**
+  String lockerNumber(int number);
+
+  /// Dimensions du casier
+  ///
+  /// In fr, this message translates to:
+  /// **'{width} × {height} × {depth} cm'**
+  String lockerSize(int width, int height, int depth);
+
+  /// Statut casier disponible
+  ///
+  /// In fr, this message translates to:
+  /// **'Disponible'**
+  String get lockerAvailable;
+
+  /// Statut casier réservé
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservé'**
+  String get lockerReserved;
+
+  /// Statut casier occupé
+  ///
+  /// In fr, this message translates to:
+  /// **'Occupé'**
+  String get lockerOccupied;
+
+  /// Statut casier hors service
+  ///
+  /// In fr, this message translates to:
+  /// **'Hors service'**
+  String get lockerOutOfOrder;
+
+  /// Statut casier hors ligne
+  ///
+  /// In fr, this message translates to:
+  /// **'Hors ligne'**
+  String get lockerOffline;
+
+  /// Bouton réserver un casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Réserver'**
+  String get reserveLocker;
+
+  /// Prix du casier
+  ///
+  /// In fr, this message translates to:
+  /// **'{price} €'**
+  String pricePerDay(String price);
 }
 
 class _AppLocalizationsDelegate
