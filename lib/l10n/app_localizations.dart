@@ -693,26 +693,38 @@ abstract class AppLocalizations {
   /// Titre étape sélection date
   ///
   /// In fr, this message translates to:
-  /// **'Sélectionnez vos dates'**
+  /// **'Planifiez votre réservation'**
   String get reservationSelectDate;
 
-  /// Label date de début
+  /// Label date
   ///
   /// In fr, this message translates to:
-  /// **'Date de début'**
+  /// **'Date'**
   String get reservationStartDate;
 
-  /// Label date de fin
+  /// Label heure de début
   ///
   /// In fr, this message translates to:
-  /// **'Date de fin'**
-  String get reservationEndDate;
+  /// **'Heure de début'**
+  String get reservationStartTime;
 
-  /// Durée de la réservation en jours
+  /// Label durée
   ///
   /// In fr, this message translates to:
-  /// **'{days} jour(s)'**
-  String reservationDuration(int days);
+  /// **'Durée'**
+  String get reservationDurationLabel;
+
+  /// Durée en minutes
+  ///
+  /// In fr, this message translates to:
+  /// **'{minutes} min'**
+  String reservationDurationMinutes(int minutes);
+
+  /// Durée en heures et minutes
+  ///
+  /// In fr, this message translates to:
+  /// **'{hours}h{minutes}'**
+  String reservationDurationHoursMinutes(int hours, String minutes);
 
   /// Bouton étape suivante
   ///
@@ -798,17 +810,23 @@ abstract class AppLocalizations {
   /// **'Touchez pour sélectionner'**
   String get reservationSelectDateHint;
 
-  /// Label du
+  /// Label début
   ///
   /// In fr, this message translates to:
-  /// **'Du'**
+  /// **'Début'**
   String get reservationDateFrom;
 
-  /// Label au
+  /// Label fin
   ///
   /// In fr, this message translates to:
-  /// **'Au'**
+  /// **'Fin'**
   String get reservationDateTo;
+
+  /// Indication durée max
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée max : {minutes} min'**
+  String reservationMaxDuration(int minutes);
 
   /// Message erreur générique réservation
   ///

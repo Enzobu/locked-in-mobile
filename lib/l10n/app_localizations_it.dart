@@ -324,17 +324,25 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reservationFlowTitle => 'Prenota un armadietto';
 
   @override
-  String get reservationSelectDate => 'Seleziona le date';
+  String get reservationSelectDate => 'Pianifica la prenotazione';
 
   @override
-  String get reservationStartDate => 'Data di inizio';
+  String get reservationStartDate => 'Data';
 
   @override
-  String get reservationEndDate => 'Data di fine';
+  String get reservationStartTime => 'Ora di inizio';
 
   @override
-  String reservationDuration(int days) {
-    return '$days giorno/i';
+  String get reservationDurationLabel => 'Durata';
+
+  @override
+  String reservationDurationMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String reservationDurationHoursMinutes(int hours, String minutes) {
+    return '${hours}h$minutes';
   }
 
   @override
@@ -383,10 +391,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reservationSelectDateHint => 'Tocca per selezionare';
 
   @override
-  String get reservationDateFrom => 'Dal';
+  String get reservationDateFrom => 'Inizio';
 
   @override
-  String get reservationDateTo => 'Al';
+  String get reservationDateTo => 'Fine';
+
+  @override
+  String reservationMaxDuration(int minutes) {
+    return 'Durata max: $minutes min';
+  }
 
   @override
   String get reservationErrorGeneric => 'Si è verificato un errore. Riprova.';

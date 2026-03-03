@@ -142,13 +142,21 @@
   "mapMyPosition": "La mia posizione",
 
   "reservationFlowTitle": "Prenota un armadietto",
-  "reservationSelectDate": "Seleziona le date",
-  "reservationStartDate": "Data di inizio",
-  "reservationEndDate": "Data di fine",
-  "reservationDuration": "{days} giorno/i",
-  "@reservationDuration": {
+  "reservationSelectDate": "Pianifica la prenotazione",
+  "reservationStartDate": "Data",
+  "reservationStartTime": "Ora di inizio",
+  "reservationDurationLabel": "Durata",
+  "reservationDurationMinutes": "{minutes} min",
+  "@reservationDurationMinutes": {
     "placeholders": {
-      "days": { "type": "int" }
+      "minutes": { "type": "int" }
+    }
+  },
+  "reservationDurationHoursMinutes": "{hours}h{minutes}",
+  "@reservationDurationHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "String" }
     }
   },
   "reservationNext": "Continua",
@@ -170,8 +178,14 @@
   "reservationBackToHome": "Torna alla home",
   "reservationViewAll": "Vedi le mie prenotazioni",
   "reservationSelectDateHint": "Tocca per selezionare",
-  "reservationDateFrom": "Dal",
-  "reservationDateTo": "Al",
+  "reservationDateFrom": "Inizio",
+  "reservationDateTo": "Fine",
+  "reservationMaxDuration": "Durata max: {minutes} min",
+  "@reservationMaxDuration": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
   "reservationErrorGeneric": "Si è verificato un errore. Riprova.",
 
   "reservationsEmpty": "Nessuna prenotazione",

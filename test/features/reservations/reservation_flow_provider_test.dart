@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:locked_in_mobile/core/models/address.dart';
@@ -11,7 +12,7 @@ import 'package:locked_in_mobile/features/reservations/data/repositories/mock_re
 import 'package:locked_in_mobile/features/reservations/presentation/providers/reservation_flow_provider.dart';
 import 'package:locked_in_mobile/features/reservations/presentation/providers/reservation_provider.dart';
 
-Locker _createTestLocker() {
+Locker _createTestLocker({int? minDuration, int? maxDuration}) {
   return Locker(
     id: 1,
     number: 1,
@@ -25,16 +26,18 @@ Locker _createTestLocker() {
       isRechargeable: false,
     ),
     priceCents: 500,
-    lockerBay: const LockerBay(
+    lockerBay: LockerBay(
       id: 1,
       name: 'Gare de Lyon',
       latitude: 48.8443,
       longitude: 2.3744,
+      minDuration: minDuration ?? 30,
+      maxDuration: maxDuration ?? 120,
       company: Company(
         id: 1,
         name: 'LockerBox France',
         siren: '123456789',
-        address: Address(
+        address: const Address(
           id: 13,
           city: 'Paris',
           country: 'France',
@@ -76,71 +79,119 @@ void main() {
       final state = container.read(reservationFlowProvider(testLocker));
 
       expect(state.step, ReservationFlowStep.dateSelection);
-      expect(state.startDate, isNull);
-      expect(state.endDate, isNull);
+      expect(state.selectedDate, isNull);
+      expect(state.selectedTime, isNull);
+      expect(state.durationMinutes, 30); // minDuration default
       expect(state.canProceed, isFalse);
       expect(state.isSubmitting, isFalse);
       expect(state.reservation, isNull);
       expect(state.publicForm, isNull);
     });
 
-    test('canProceed is false when dates are not set', () {
+    test('canProceed is false when date or time not set', () {
       final state = container.read(reservationFlowProvider(testLocker));
       expect(state.canProceed, isFalse);
     });
 
-    test('durationDays returns 0 when dates are not set', () {
+    test('minDuration and maxDuration come from lockerBay', () {
       final state = container.read(reservationFlowProvider(testLocker));
-      expect(state.durationDays, 0);
+      expect(state.minDuration, 30);
+      expect(state.maxDuration, 120);
     });
 
-    test('totalPrice returns 0 when duration is 0', () {
+    test('startsAt combines date and time', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDate(DateTime(2026, 4, 1));
+      notifier.setTime(const TimeOfDay(hour: 14, minute: 30));
+
       final state = container.read(reservationFlowProvider(testLocker));
-      expect(state.totalPrice, 0);
+      expect(state.startsAt, DateTime(2026, 4, 1, 14, 30));
+    });
+
+    test('endsAt adds duration to startsAt', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDate(DateTime(2026, 4, 1));
+      notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
+      notifier.setDuration(90);
+
+      final state = container.read(reservationFlowProvider(testLocker));
+      expect(state.endsAt, DateTime(2026, 4, 1, 15, 30));
     });
   });
 
   group('ReservationFlowNotifier', () {
-    test('setDateRange updates start and end dates', () {
+    test('setDate updates selectedDate', () {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
-      final start = DateTime(2026, 4, 1);
-      final end = DateTime(2026, 4, 3);
-
-      notifier.setDateRange(start, end);
+      notifier.setDate(DateTime(2026, 4, 1));
 
       final state = container.read(reservationFlowProvider(testLocker));
-      expect(state.startDate, start);
-      expect(state.endDate, end);
-      expect(state.canProceed, isTrue);
-      expect(state.durationDays, 2);
+      expect(state.selectedDate, DateTime(2026, 4, 1));
     });
 
-    test('totalPrice is calculated correctly', () {
+    test('setTime updates selectedTime', () {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
-      notifier.setDateRange(DateTime(2026, 4, 1), DateTime(2026, 4, 4));
+      notifier.setTime(const TimeOfDay(hour: 10, minute: 30));
 
       final state = container.read(reservationFlowProvider(testLocker));
-      // 3 days * 5.00 EUR = 15.00 EUR
-      expect(state.totalPrice, 15.0);
-      expect(state.durationDays, 3);
+      expect(state.selectedTime, const TimeOfDay(hour: 10, minute: 30));
+    });
+
+    test('setDuration clamps to min/max', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+
+      notifier.setDuration(10); // below min (30)
+      expect(
+        container.read(reservationFlowProvider(testLocker)).durationMinutes,
+        30,
+      );
+
+      notifier.setDuration(200); // above max (120)
+      expect(
+        container.read(reservationFlowProvider(testLocker)).durationMinutes,
+        120,
+      );
+
+      notifier.setDuration(60); // within range
+      expect(
+        container.read(reservationFlowProvider(testLocker)).durationMinutes,
+        60,
+      );
+    });
+
+    test('canProceed is true when date, time, and duration are set', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDate(DateTime(2026, 4, 1));
+      notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
+
+      final state = container.read(reservationFlowProvider(testLocker));
+      expect(state.canProceed, isTrue);
     });
 
     test('goToSummary transitions to summary step', () {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
-      notifier.setDateRange(DateTime(2026, 4, 1), DateTime(2026, 4, 3));
+      notifier.setDate(DateTime(2026, 4, 1));
+      notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
       notifier.goToSummary();
 
       final state = container.read(reservationFlowProvider(testLocker));
       expect(state.step, ReservationFlowStep.summary);
     });
 
-    test('goToSummary does nothing without dates', () {
+    test('goToSummary does nothing without date/time', () {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
@@ -154,30 +205,28 @@ void main() {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
-      notifier.setDateRange(DateTime(2026, 4, 1), DateTime(2026, 4, 3));
+      notifier.setDate(DateTime(2026, 4, 1));
+      notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
       notifier.goToSummary();
       notifier.goBackToDateSelection();
 
       final state = container.read(reservationFlowProvider(testLocker));
       expect(state.step, ReservationFlowStep.dateSelection);
-      // Dates should be preserved
-      expect(state.startDate, isNotNull);
-      expect(state.endDate, isNotNull);
+      expect(state.selectedDate, isNotNull);
+      expect(state.selectedTime, isNotNull);
     });
 
     test(
       'confirmReservation creates reservation and generates publicForm',
       () async {
-        // Keep the provider alive during async operations
-        container.listen(
-          reservationFlowProvider(testLocker),
-          (_, __) {},
-        );
+        container.listen(reservationFlowProvider(testLocker), (_, __) {});
 
         final notifier = container.read(
           reservationFlowProvider(testLocker).notifier,
         );
-        notifier.setDateRange(DateTime(2026, 4, 1), DateTime(2026, 4, 3));
+        notifier.setDate(DateTime(2026, 4, 1));
+        notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
+        notifier.setDuration(60);
         notifier.goToSummary();
 
         await notifier.confirmReservation();
@@ -193,7 +242,7 @@ void main() {
       },
     );
 
-    test('confirmReservation does nothing without dates', () async {
+    test('confirmReservation does nothing without date/time', () async {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
@@ -202,6 +251,41 @@ void main() {
       final state = container.read(reservationFlowProvider(testLocker));
       expect(state.step, ReservationFlowStep.dateSelection);
       expect(state.reservation, isNull);
+    });
+  });
+
+  group('ReservationFlowState.formatDuration', () {
+    test('formats minutes only when under 60', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDuration(45);
+
+      final state = container.read(reservationFlowProvider(testLocker));
+      final result = state.formatDuration((m) => '$m min', (h, m) => '${h}h$m');
+      expect(result, '45 min');
+    });
+
+    test('formats hours and minutes when 60+', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDuration(90);
+
+      final state = container.read(reservationFlowProvider(testLocker));
+      final result = state.formatDuration((m) => '$m min', (h, m) => '${h}h$m');
+      expect(result, '1h30');
+    });
+
+    test('formats exact hours', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDuration(120);
+
+      final state = container.read(reservationFlowProvider(testLocker));
+      final result = state.formatDuration((m) => '$m min', (h, m) => '${h}h$m');
+      expect(result, '2h00');
     });
   });
 

@@ -325,17 +325,25 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reservationFlowTitle => 'Schließfach reservieren';
 
   @override
-  String get reservationSelectDate => 'Wählen Sie Ihre Daten';
+  String get reservationSelectDate => 'Planen Sie Ihre Reservierung';
 
   @override
-  String get reservationStartDate => 'Startdatum';
+  String get reservationStartDate => 'Datum';
 
   @override
-  String get reservationEndDate => 'Enddatum';
+  String get reservationStartTime => 'Startzeit';
 
   @override
-  String reservationDuration(int days) {
-    return '$days Tag(e)';
+  String get reservationDurationLabel => 'Dauer';
+
+  @override
+  String reservationDurationMinutes(int minutes) {
+    return '$minutes Min.';
+  }
+
+  @override
+  String reservationDurationHoursMinutes(int hours, String minutes) {
+    return '${hours}h$minutes';
   }
 
   @override
@@ -384,10 +392,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reservationSelectDateHint => 'Tippen zum Auswählen';
 
   @override
-  String get reservationDateFrom => 'Von';
+  String get reservationDateFrom => 'Beginn';
 
   @override
-  String get reservationDateTo => 'Bis';
+  String get reservationDateTo => 'Ende';
+
+  @override
+  String reservationMaxDuration(int minutes) {
+    return 'Max. Dauer: $minutes Min.';
+  }
 
   @override
   String get reservationErrorGeneric =>

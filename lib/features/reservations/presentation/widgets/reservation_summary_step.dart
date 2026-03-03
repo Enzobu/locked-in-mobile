@@ -19,7 +19,13 @@ class ReservationSummaryStep extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final locale = Localizations.localeOf(context).toLanguageTag();
-    final dateFormat = DateFormat.yMMMd(locale);
+    final dateFormat = DateFormat.yMMMEd(locale);
+    final timeFormat = DateFormat.Hm(locale);
+
+    final durationLabel = state.formatDuration(
+      l10n.reservationDurationMinutes,
+      l10n.reservationDurationHoursMinutes,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,16 +77,14 @@ class ReservationSummaryStep extends ConsumerWidget {
           icon: LucideIcons.calendar,
           title: l10n.reservationPeriod,
           children: [
+            _SummaryRow(label: dateFormat.format(state.startsAt!), value: ''),
             _SummaryRow(
               label:
-                  '${l10n.reservationDateFrom} ${dateFormat.format(state.startDate!)}',
+                  '${l10n.reservationDateFrom} ${timeFormat.format(state.startsAt!)}',
               value:
-                  '${l10n.reservationDateTo} ${dateFormat.format(state.endDate!)}',
+                  '${l10n.reservationDateTo} ${timeFormat.format(state.endsAt!)}',
             ),
-            _SummaryRow(
-              label: l10n.reservationDuration(state.durationDays),
-              value: '',
-            ),
+            _SummaryRow(label: durationLabel, value: ''),
           ],
         ),
         const SizedBox(height: 20),
@@ -102,7 +106,7 @@ class ReservationSummaryStep extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  l10n.reservationPrice(state.totalPrice.toStringAsFixed(2)),
+                  l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w800,
                     color: colorScheme.onPrimaryContainer,

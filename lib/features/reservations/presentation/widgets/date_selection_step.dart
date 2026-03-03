@@ -17,19 +17,15 @@ class DateSelectionStep extends ConsumerWidget {
     final state = ref.watch(reservationFlowProvider(locker));
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final dateFormat = DateFormat.yMMMd(
-      Localizations.localeOf(context).toLanguageTag(),
-    );
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final dateFormat = DateFormat.yMMMEd(locale);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Locker info header
         _LockerInfoHeader(locker: locker),
         const SizedBox(height: 24),
 
-        // Date selection title
         Text(
           l10n.reservationSelectDate,
           style: theme.textTheme.titleMedium?.copyWith(
@@ -38,58 +34,32 @@ class DateSelectionStep extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
 
-        // Start date
-        _DateCard(
-          label: l10n.reservationDateFrom,
-          date: state.startDate,
-          dateFormat: dateFormat,
-          hint: l10n.reservationSelectDateHint,
-          icon: LucideIcons.calendarPlus,
-          onTap: () => _selectDateRange(context, ref),
+        // Date picker
+        _SelectionCard(
+          label: l10n.reservationStartDate,
+          value: state.selectedDate != null
+              ? dateFormat.format(state.selectedDate!)
+              : l10n.reservationSelectDateHint,
+          isSet: state.selectedDate != null,
+          icon: LucideIcons.calendar,
+          onTap: () => _pickDate(context, ref),
         ),
         const SizedBox(height: 12),
 
-        // End date
-        _DateCard(
-          label: l10n.reservationDateTo,
-          date: state.endDate,
-          dateFormat: dateFormat,
-          hint: l10n.reservationSelectDateHint,
-          icon: LucideIcons.calendarCheck,
-          onTap: () => _selectDateRange(context, ref),
+        // Time picker
+        _SelectionCard(
+          label: l10n.reservationStartTime,
+          value: state.selectedTime != null
+              ? state.selectedTime!.format(context)
+              : l10n.reservationSelectDateHint,
+          isSet: state.selectedTime != null,
+          icon: LucideIcons.clock,
+          onTap: () => _pickTime(context, ref),
         ),
+        const SizedBox(height: 20),
 
-        // Duration chip
-        if (state.canProceed) ...[
-          const SizedBox(height: 16),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    LucideIcons.clock,
-                    size: 16,
-                    color: colorScheme.onPrimaryContainer,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    l10n.reservationDuration(state.durationDays),
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      color: colorScheme.onPrimaryContainer,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+        // Duration slider
+        _DurationSlider(locker: locker),
 
         const Spacer(),
 
@@ -115,34 +85,122 @@ class DateSelectionStep extends ConsumerWidget {
     );
   }
 
-  Future<void> _selectDateRange(BuildContext context, WidgetRef ref) async {
+  Future<void> _pickDate(BuildContext context, WidgetRef ref) async {
     final now = DateTime.now();
-    final result = await showDateRangePicker(
+    final state = ref.read(reservationFlowProvider(locker));
+    final result = await showDatePicker(
       context: context,
+      initialDate: state.selectedDate ?? now,
       firstDate: now,
-      lastDate: now.add(const Duration(days: 365)),
-      initialDateRange:
-          ref.read(reservationFlowProvider(locker)).startDate != null
-          ? DateTimeRange(
-              start: ref.read(reservationFlowProvider(locker)).startDate!,
-              end: ref.read(reservationFlowProvider(locker)).endDate!,
-            )
-          : null,
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(
-            context,
-          ).copyWith(colorScheme: Theme.of(context).colorScheme),
-          child: child!,
-        );
-      },
+      lastDate: now.add(const Duration(days: 90)),
+    );
+    if (result != null) {
+      ref.read(reservationFlowProvider(locker).notifier).setDate(result);
+    }
+  }
+
+  Future<void> _pickTime(BuildContext context, WidgetRef ref) async {
+    final state = ref.read(reservationFlowProvider(locker));
+    final result = await showTimePicker(
+      context: context,
+      initialTime: state.selectedTime ?? TimeOfDay.now(),
+    );
+    if (result != null) {
+      ref.read(reservationFlowProvider(locker).notifier).setTime(result);
+    }
+  }
+}
+
+class _DurationSlider extends ConsumerWidget {
+  const _DurationSlider({required this.locker});
+
+  final Locker locker;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(reservationFlowProvider(locker));
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    final durationLabel = state.formatDuration(
+      l10n.reservationDurationMinutes,
+      l10n.reservationDurationHoursMinutes,
     );
 
-    if (result != null) {
-      ref
-          .read(reservationFlowProvider(locker).notifier)
-          .setDateRange(result.start, result.end);
-    }
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(LucideIcons.timer, size: 18, color: colorScheme.primary),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.reservationDurationLabel,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Text(
+                    durationLabel,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: colorScheme.onPrimaryContainer,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Slider(
+              value: (state.durationMinutes ?? state.minDuration).toDouble(),
+              min: state.minDuration.toDouble(),
+              max: state.maxDuration.toDouble(),
+              divisions: (state.maxDuration - state.minDuration) ~/ 15,
+              onChanged: (value) {
+                ref
+                    .read(reservationFlowProvider(locker).notifier)
+                    .setDuration(value.round());
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    l10n.reservationDurationMinutes(state.minDuration),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  Text(
+                    l10n.reservationDurationMinutes(state.maxDuration),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -198,7 +256,7 @@ class _LockerInfoHeader extends StatelessWidget {
               ),
             ),
             Text(
-              l10n.pricePerDay(locker.priceEuros.toStringAsFixed(2)),
+              l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w800,
                 color: colorScheme.primary,
@@ -211,20 +269,18 @@ class _LockerInfoHeader extends StatelessWidget {
   }
 }
 
-class _DateCard extends StatelessWidget {
-  const _DateCard({
+class _SelectionCard extends StatelessWidget {
+  const _SelectionCard({
     required this.label,
-    required this.date,
-    required this.dateFormat,
-    required this.hint,
+    required this.value,
+    required this.isSet,
     required this.icon,
     required this.onTap,
   });
 
   final String label;
-  final DateTime? date;
-  final DateFormat dateFormat;
-  final String hint;
+  final String value;
+  final bool isSet;
   final IconData icon;
   final VoidCallback onTap;
 
@@ -256,12 +312,10 @@ class _DateCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    date != null ? dateFormat.format(date!) : hint,
+                    value,
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      fontWeight: date != null
-                          ? FontWeight.w600
-                          : FontWeight.w400,
-                      color: date != null
+                      fontWeight: isSet ? FontWeight.w600 : FontWeight.w400,
+                      color: isSet
                           ? colorScheme.onSurface
                           : colorScheme.onSurfaceVariant,
                     ),

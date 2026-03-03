@@ -240,17 +240,27 @@
 
   "reservationFlowTitle": "Réserver un casier",
   "@reservationFlowTitle": { "description": "Titre du flow de réservation" },
-  "reservationSelectDate": "Sélectionnez vos dates",
+  "reservationSelectDate": "Planifiez votre réservation",
   "@reservationSelectDate": { "description": "Titre étape sélection date" },
-  "reservationStartDate": "Date de début",
-  "@reservationStartDate": { "description": "Label date de début" },
-  "reservationEndDate": "Date de fin",
-  "@reservationEndDate": { "description": "Label date de fin" },
-  "reservationDuration": "{days} jour(s)",
-  "@reservationDuration": {
-    "description": "Durée de la réservation en jours",
+  "reservationStartDate": "Date",
+  "@reservationStartDate": { "description": "Label date" },
+  "reservationStartTime": "Heure de début",
+  "@reservationStartTime": { "description": "Label heure de début" },
+  "reservationDurationLabel": "Durée",
+  "@reservationDurationLabel": { "description": "Label durée" },
+  "reservationDurationMinutes": "{minutes} min",
+  "@reservationDurationMinutes": {
+    "description": "Durée en minutes",
     "placeholders": {
-      "days": { "type": "int" }
+      "minutes": { "type": "int" }
+    }
+  },
+  "reservationDurationHoursMinutes": "{hours}h{minutes}",
+  "@reservationDurationHoursMinutes": {
+    "description": "Durée en heures et minutes",
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "String" }
     }
   },
   "reservationNext": "Continuer",
@@ -286,10 +296,17 @@
   "@reservationViewAll": { "description": "Bouton voir réservations" },
   "reservationSelectDateHint": "Touchez pour sélectionner",
   "@reservationSelectDateHint": { "description": "Hint sélection date" },
-  "reservationDateFrom": "Du",
-  "@reservationDateFrom": { "description": "Label du" },
-  "reservationDateTo": "Au",
-  "@reservationDateTo": { "description": "Label au" },
+  "reservationDateFrom": "Début",
+  "@reservationDateFrom": { "description": "Label début" },
+  "reservationDateTo": "Fin",
+  "@reservationDateTo": { "description": "Label fin" },
+  "reservationMaxDuration": "Durée max : {minutes} min",
+  "@reservationMaxDuration": {
+    "description": "Indication durée max",
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
   "reservationErrorGeneric": "Une erreur est survenue. Veuillez réessayer.",
   "@reservationErrorGeneric": { "description": "Message erreur générique réservation" },
 

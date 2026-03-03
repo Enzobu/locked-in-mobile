@@ -321,17 +321,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservationFlowTitle => 'Reserve a locker';
 
   @override
-  String get reservationSelectDate => 'Select your dates';
+  String get reservationSelectDate => 'Plan your reservation';
 
   @override
-  String get reservationStartDate => 'Start date';
+  String get reservationStartDate => 'Date';
 
   @override
-  String get reservationEndDate => 'End date';
+  String get reservationStartTime => 'Start time';
 
   @override
-  String reservationDuration(int days) {
-    return '$days day(s)';
+  String get reservationDurationLabel => 'Duration';
+
+  @override
+  String reservationDurationMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String reservationDurationHoursMinutes(int hours, String minutes) {
+    return '${hours}h$minutes';
   }
 
   @override
@@ -380,10 +388,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservationSelectDateHint => 'Tap to select';
 
   @override
-  String get reservationDateFrom => 'From';
+  String get reservationDateFrom => 'Start';
 
   @override
-  String get reservationDateTo => 'To';
+  String get reservationDateTo => 'End';
+
+  @override
+  String reservationMaxDuration(int minutes) {
+    return 'Max duration: $minutes min';
+  }
 
   @override
   String get reservationErrorGeneric => 'An error occurred. Please try again.';
