@@ -198,6 +198,36 @@ abstract class AppLocalizations {
   /// **'Mot de passe'**
   String get password;
 
+  /// Sous-titre page login
+  ///
+  /// In fr, this message translates to:
+  /// **'Connectez-vous pour accéder à vos casiers'**
+  String get loginSubtitle;
+
+  /// Erreur email vide
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'email est requis'**
+  String get emailRequired;
+
+  /// Erreur email invalide
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'email n\'est pas valide'**
+  String get emailInvalid;
+
+  /// Erreur mot de passe vide
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mot de passe est requis'**
+  String get passwordRequired;
+
+  /// Erreur mot de passe trop court
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mot de passe doit contenir au moins 6 caractères'**
+  String get passwordTooShort;
+
   /// Placeholder recherche
   ///
   /// In fr, this message translates to:

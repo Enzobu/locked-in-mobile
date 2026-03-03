@@ -57,6 +57,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get password => 'Mot de passe';
 
   @override
+  String get loginSubtitle => 'Connectez-vous pour accéder à vos casiers';
+
+  @override
+  String get emailRequired => 'L\'email est requis';
+
+  @override
+  String get emailInvalid => 'L\'email n\'est pas valide';
+
+  @override
+  String get passwordRequired => 'Le mot de passe est requis';
+
+  @override
+  String get passwordTooShort =>
+      'Le mot de passe doit contenir au moins 6 caractères';
+
+  @override
   String get search => 'Rechercher';
 
   @override
