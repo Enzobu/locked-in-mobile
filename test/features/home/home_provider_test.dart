@@ -101,7 +101,7 @@ void main() {
       for (final bay in results) {
         final matches =
             bay.name.toLowerCase().contains('lyon') ||
-            bay.company.address.city.toLowerCase().contains('lyon');
+            bay.company?.address.city.toLowerCase().contains('lyon') == true;
         expect(matches, true);
       }
     });

@@ -28,7 +28,11 @@ class SpecificationDto {
       material: json['material'] as String,
       name: json['name'] as String,
       isRechargeable:
-          (json['isRechargeable'] ?? json['is_rechargeable']) as bool,
+          (json['isRechargeable'] ??
+                  json['rechargeable'] ??
+                  json['is_rechargeable'] ??
+                  false)
+              as bool,
     );
   }
 

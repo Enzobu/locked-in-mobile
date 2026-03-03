@@ -167,4 +167,28 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invalidCredentials => 'Ungültige E-Mail oder Passwort';
+
+  @override
+  String get homeGreeting => 'Willkommen';
+
+  @override
+  String get homeTitle => 'Finden Sie Ihr Schließfach';
+
+  @override
+  String availableLockers(int available, int total) {
+    return '$available/$total verfügbar';
+  }
+
+  @override
+  String get rechargeable => 'Aufladen';
+
+  @override
+  String get noLockersTitle => 'Keine Schließfächer verfügbar';
+
+  @override
+  String get noLockersSubtitle =>
+      'Derzeit sind keine Schließfachpunkte verfügbar. Bitte versuchen Sie es später erneut.';
+
+  @override
+  String get lockerBays => 'Schließfachpunkte';
 }

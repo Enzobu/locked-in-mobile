@@ -23,7 +23,7 @@ class AddressDto {
       number: json['number'] as String?,
       city: json['city'] as String,
       country: json['country'] as String,
-      street: json['street'] as String,
+      street: (json['street'] ?? json['address']) as String,
       complement: json['complement'] as String?,
     );
   }

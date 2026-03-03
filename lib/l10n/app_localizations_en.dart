@@ -163,4 +163,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invalidCredentials => 'Invalid email or password';
+
+  @override
+  String get homeGreeting => 'Welcome';
+
+  @override
+  String get homeTitle => 'Find your locker';
+
+  @override
+  String availableLockers(int available, int total) {
+    return '$available/$total available';
+  }
+
+  @override
+  String get rechargeable => 'Charging';
+
+  @override
+  String get noLockersTitle => 'No lockers available';
+
+  @override
+  String get noLockersSubtitle =>
+      'No locker points are available at the moment. Please check back later.';
+
+  @override
+  String get lockerBays => 'Locker points';
 }

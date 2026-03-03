@@ -21,9 +21,7 @@ class ApiLockerBayDatasource implements LockerBayDatasource {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getLockersByBayId(
-    int lockerBayId,
-  ) async {
+  Future<List<Map<String, dynamic>>> getLockersByBayId(int lockerBayId) async {
     final response = await dioClient.get<dynamic>(
       '/api/lockers',
       queryParameters: {'lockerBay': '/api/locker_bays/$lockerBayId'},

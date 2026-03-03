@@ -10,11 +10,7 @@ void main() {
     'company': {
       'id': 1,
       'name': 'LockerBox France',
-      'siret': '12345678901234',
       'siren': '123456789',
-      'ape': '5221Z',
-      'juridic_form': 'SAS',
-      'phone': '+33 1 23 45 67 89',
       'address': {
         'id': 13,
         'number': '100',
@@ -23,13 +19,9 @@ void main() {
         'street': 'Boulevard Haussmann',
         'complement': null,
       },
-      'created_at': '2024-01-15T10:00:00.000',
-      'updated_at': '2024-06-01T14:30:00.000',
     },
-    'max_duration': 120,
-    'min_duration': 30,
-    'created_at': '2024-01-01T00:00:00.000',
-    'updated_at': '2024-06-01T00:00:00.000',
+    'maxDuration': 120,
+    'minDuration': 30,
   };
 
   group('LockerBayDto', () {
@@ -42,13 +34,27 @@ void main() {
       expect(dto.longitude, 2.3744);
       expect(dto.maxDuration, 120);
       expect(dto.minDuration, 30);
-      expect(dto.company.name, 'LockerBox France');
+      expect(dto.company!.name, 'LockerBox France');
+    });
+
+    test('fromJson handles missing company (nested in locker)', () {
+      final nestedJson = {
+        'id': 1,
+        'name': 'Gare de Lyon',
+        'latitude': 48.8443,
+        'longitude': 2.3744,
+      };
+
+      final dto = LockerBayDto.fromJson(nestedJson);
+
+      expect(dto.company, isNull);
+      expect(dto.maxDuration, isNull);
     });
 
     test('fromJson handles null durations', () {
       final jsonNullDuration = Map<String, dynamic>.from(json);
-      jsonNullDuration['max_duration'] = null;
-      jsonNullDuration['min_duration'] = null;
+      jsonNullDuration['maxDuration'] = null;
+      jsonNullDuration['minDuration'] = null;
 
       final dto = LockerBayDto.fromJson(jsonNullDuration);
 
@@ -66,7 +72,7 @@ void main() {
       expect(restored.latitude, dto.latitude);
       expect(restored.longitude, dto.longitude);
       expect(restored.maxDuration, dto.maxDuration);
-      expect(restored.company.id, dto.company.id);
+      expect(restored.company!.id, dto.company!.id);
     });
 
     test('toDomain creates correct domain model', () {
@@ -76,7 +82,7 @@ void main() {
       expect(domain.id, dto.id);
       expect(domain.name, dto.name);
       expect(domain.latitude, dto.latitude);
-      expect(domain.company.name, 'LockerBox France');
+      expect(domain.company!.name, 'LockerBox France');
     });
 
     test('fromDomain creates correct DTO', () {

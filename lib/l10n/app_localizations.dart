@@ -413,6 +413,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Email ou mot de passe incorrect'**
   String get invalidCredentials;
+
+  /// Salutation page accueil
+  ///
+  /// In fr, this message translates to:
+  /// **'Bienvenue'**
+  String get homeGreeting;
+
+  /// Titre principal page accueil
+  ///
+  /// In fr, this message translates to:
+  /// **'Trouvez votre casier'**
+  String get homeTitle;
+
+  /// Nombre de casiers disponibles sur le total
+  ///
+  /// In fr, this message translates to:
+  /// **'{available}/{total} disponibles'**
+  String availableLockers(int available, int total);
+
+  /// Label casier rechargeable
+  ///
+  /// In fr, this message translates to:
+  /// **'Recharge'**
+  String get rechargeable;
+
+  /// Titre état vide casiers
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun casier disponible'**
+  String get noLockersTitle;
+
+  /// Sous-titre état vide casiers
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun point de casiers n\'est disponible pour le moment. Revenez plus tard.'**
+  String get noLockersSubtitle;
+
+  /// Label liste des points de casiers
+  ///
+  /// In fr, this message translates to:
+  /// **'Points de casiers'**
+  String get lockerBays;
 }
 
 class _AppLocalizationsDelegate

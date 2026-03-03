@@ -165,4 +165,28 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invalidCredentials => 'Email ou mot de passe incorrect';
+
+  @override
+  String get homeGreeting => 'Bienvenue';
+
+  @override
+  String get homeTitle => 'Trouvez votre casier';
+
+  @override
+  String availableLockers(int available, int total) {
+    return '$available/$total disponibles';
+  }
+
+  @override
+  String get rechargeable => 'Recharge';
+
+  @override
+  String get noLockersTitle => 'Aucun casier disponible';
+
+  @override
+  String get noLockersSubtitle =>
+      'Aucun point de casiers n\'est disponible pour le moment. Revenez plus tard.';
+
+  @override
+  String get lockerBays => 'Points de casiers';
 }

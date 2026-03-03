@@ -8,9 +8,7 @@ class LockerBayDto {
     required this.name,
     required this.latitude,
     required this.longitude,
-    required this.company,
-    required this.createdAt,
-    required this.updatedAt,
+    this.company,
     this.maxDuration,
     this.minDuration,
   });
@@ -19,23 +17,22 @@ class LockerBayDto {
   final String name;
   final double latitude;
   final double longitude;
-  final CompanyDto company;
+  final CompanyDto? company;
   final int? maxDuration;
   final int? minDuration;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
   factory LockerBayDto.fromJson(Map<String, dynamic> json) {
+    final companyJson = json['company'];
     return LockerBayDto(
       id: json['id'] as int,
       name: json['name'] as String,
       latitude: JsonHelpers.parseDouble(json['latitude']),
       longitude: JsonHelpers.parseDouble(json['longitude']),
-      company: CompanyDto.fromJson(json['company'] as Map<String, dynamic>),
+      company: companyJson is Map<String, dynamic>
+          ? CompanyDto.fromJson(companyJson)
+          : null,
       maxDuration: json['maxDuration'] as int? ?? json['max_duration'] as int?,
       minDuration: json['minDuration'] as int? ?? json['min_duration'] as int?,
-      createdAt: JsonHelpers.parseDateTime(json, 'createdAt', 'created_at'),
-      updatedAt: JsonHelpers.parseDateTime(json, 'updatedAt', 'updated_at'),
     );
   }
 
@@ -45,11 +42,9 @@ class LockerBayDto {
       'name': name,
       'latitude': latitude,
       'longitude': longitude,
-      'company': company.toJson(),
+      'company': company?.toJson(),
       'maxDuration': maxDuration,
       'minDuration': minDuration,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 
@@ -59,11 +54,9 @@ class LockerBayDto {
       name: name,
       latitude: latitude,
       longitude: longitude,
-      company: company.toDomain(),
+      company: company?.toDomain(),
       maxDuration: maxDuration,
       minDuration: minDuration,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
     );
   }
 
@@ -73,11 +66,11 @@ class LockerBayDto {
       name: lockerBay.name,
       latitude: lockerBay.latitude,
       longitude: lockerBay.longitude,
-      company: CompanyDto.fromDomain(lockerBay.company),
+      company: lockerBay.company != null
+          ? CompanyDto.fromDomain(lockerBay.company!)
+          : null,
       maxDuration: lockerBay.maxDuration,
       minDuration: lockerBay.minDuration,
-      createdAt: lockerBay.createdAt,
-      updatedAt: lockerBay.updatedAt,
     );
   }
 }

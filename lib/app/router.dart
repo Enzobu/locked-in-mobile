@@ -114,36 +114,47 @@ class ScaffoldWithNavBar extends StatelessWidget {
 
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) {
-          navigationShell.goBranch(
-            index,
-            initialLocation: index == navigationShell.currentIndex,
-          );
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(LucideIcons.home),
-            selectedIcon: const Icon(LucideIcons.home),
-            label: l10n.home,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Theme.of(
+                context,
+              ).colorScheme.outlineVariant.withValues(alpha: 0.3),
+            ),
           ),
-          NavigationDestination(
-            icon: const Icon(LucideIcons.map),
-            selectedIcon: const Icon(LucideIcons.map),
-            label: l10n.map,
-          ),
-          NavigationDestination(
-            icon: const Icon(LucideIcons.calendarCheck),
-            selectedIcon: const Icon(LucideIcons.calendarCheck),
-            label: l10n.reservations,
-          ),
-          NavigationDestination(
-            icon: const Icon(LucideIcons.user),
-            selectedIcon: const Icon(LucideIcons.user),
-            label: l10n.profile,
-          ),
-        ],
+        ),
+        child: NavigationBar(
+          selectedIndex: navigationShell.currentIndex,
+          onDestinationSelected: (index) {
+            navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            );
+          },
+          destinations: [
+            NavigationDestination(
+              icon: const Icon(LucideIcons.home),
+              selectedIcon: const Icon(LucideIcons.home),
+              label: l10n.home,
+            ),
+            NavigationDestination(
+              icon: const Icon(LucideIcons.mapPin),
+              selectedIcon: const Icon(LucideIcons.mapPin),
+              label: l10n.map,
+            ),
+            NavigationDestination(
+              icon: const Icon(LucideIcons.calendarCheck),
+              selectedIcon: const Icon(LucideIcons.calendarCheck),
+              label: l10n.reservations,
+            ),
+            NavigationDestination(
+              icon: const Icon(LucideIcons.userCircle2),
+              selectedIcon: const Icon(LucideIcons.userCircle2),
+              label: l10n.profile,
+            ),
+          ],
+        ),
       ),
     );
   }
