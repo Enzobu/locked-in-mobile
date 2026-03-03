@@ -228,6 +228,24 @@ abstract class AppLocalizations {
   /// **'Le mot de passe doit contenir au moins 6 caractères'**
   String get passwordTooShort;
 
+  /// Titre page login
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservez vos casiers en toute simplicité'**
+  String get loginTitle;
+
+  /// Lien mot de passe oublié
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe oublié ?'**
+  String get forgotPassword;
+
+  /// Texte avant lien inscription
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de compte ?'**
+  String get noAccount;
+
   /// Placeholder recherche
   ///
   /// In fr, this message translates to:

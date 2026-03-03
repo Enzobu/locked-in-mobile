@@ -73,6 +73,15 @@ class AppLocalizationsIt extends AppLocalizations {
       'La password deve contenere almeno 6 caratteri';
 
   @override
+  String get loginTitle => 'Prenota i tuoi armadietti con facilità';
+
+  @override
+  String get forgotPassword => 'Password dimenticata?';
+
+  @override
+  String get noAccount => 'Non hai un account?';
+
+  @override
   String get search => 'Cerca';
 
   @override
