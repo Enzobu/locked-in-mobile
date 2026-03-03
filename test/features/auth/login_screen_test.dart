@@ -32,6 +32,19 @@ class _FakeAuthDatasource implements AuthDatasource {
   Future<Map<String, dynamic>> getCurrentCustomer() async => {
     'id': 1,
     'email': 'test@test.com',
+    'firstname': 'Test',
+    'lastname': 'User',
+    'birth_date': '1995-06-15T00:00:00.000',
+    'address': {
+      'id': 1,
+      'number': '10',
+      'city': 'Paris',
+      'country': 'France',
+      'street': 'Rue de Test',
+      'complement': null,
+    },
+    'created_at': '2025-01-10T08:00:00.000',
+    'updated_at': '2026-02-15T10:30:00.000',
   };
 
   @override
