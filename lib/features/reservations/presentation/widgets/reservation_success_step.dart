@@ -135,17 +135,12 @@ class _ReservationSuccessStepState extends State<ReservationSuccessStep>
                           color: colorScheme.primary,
                         ),
                         const SizedBox(width: 16),
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              widget.publicForm,
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 2,
-                                fontFamily: 'monospace',
-                              ),
-                            ),
+                        Text(
+                          widget.publicForm,
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 2,
+                            fontFamily: 'monospace',
                           ),
                         ),
                       ],
