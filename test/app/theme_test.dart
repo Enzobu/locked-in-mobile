@@ -33,8 +33,8 @@ void main() {
     });
 
     test('themes use Geist font family', () {
-      expect(AppTheme.light.textTheme.bodyMedium?.fontFamily, 'Geist');
-      expect(AppTheme.dark.textTheme.bodyMedium?.fontFamily, 'Geist');
+      expect(AppTheme.light.textTheme.bodyMedium?.fontFamily, 'Poppins');
+      expect(AppTheme.dark.textTheme.bodyMedium?.fontFamily, 'Poppins');
     });
   });
 

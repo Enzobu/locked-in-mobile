@@ -20,7 +20,7 @@ class AppTheme {
   static final light = ThemeData(
     useMaterial3: true,
     colorScheme: _lightColorScheme,
-    fontFamily: 'Geist',
+    fontFamily: 'Poppins',
     appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
     cardTheme: CardThemeData(
       elevation: 1,
@@ -53,7 +53,7 @@ class AppTheme {
   static final dark = ThemeData(
     useMaterial3: true,
     colorScheme: _darkColorScheme,
-    fontFamily: 'Geist',
+    fontFamily: 'Poppins',
     appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
     cardTheme: CardThemeData(
       elevation: 1,
