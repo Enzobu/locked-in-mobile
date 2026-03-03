@@ -87,6 +87,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           return ReservationDetailScreen(reservation: reservation);
         },
       ),
+      GoRoute(
+        path: '/profile/edit',
+        builder: (context, state) => const EditProfileScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return ScaffoldWithNavBar(navigationShell: navigationShell);
@@ -121,10 +125,6 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/profile',
                 builder: (context, state) => const ProfileScreen(),
-              ),
-              GoRoute(
-                path: '/profile/edit',
-                builder: (context, state) => const EditProfileScreen(),
               ),
             ],
           ),
