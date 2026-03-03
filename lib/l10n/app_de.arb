@@ -142,13 +142,21 @@
   "mapMyPosition": "Meine Position",
 
   "reservationFlowTitle": "Schließfach reservieren",
-  "reservationSelectDate": "Wählen Sie Ihre Daten",
-  "reservationStartDate": "Startdatum",
-  "reservationEndDate": "Enddatum",
-  "reservationDuration": "{days} Tag(e)",
-  "@reservationDuration": {
+  "reservationSelectDate": "Planen Sie Ihre Reservierung",
+  "reservationStartDate": "Datum",
+  "reservationStartTime": "Startzeit",
+  "reservationDurationLabel": "Dauer",
+  "reservationDurationMinutes": "{minutes} Min.",
+  "@reservationDurationMinutes": {
     "placeholders": {
-      "days": { "type": "int" }
+      "minutes": { "type": "int" }
+    }
+  },
+  "reservationDurationHoursMinutes": "{hours}h{minutes}",
+  "@reservationDurationHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "String" }
     }
   },
   "reservationNext": "Weiter",
@@ -170,8 +178,14 @@
   "reservationBackToHome": "Zurück zur Startseite",
   "reservationViewAll": "Meine Reservierungen anzeigen",
   "reservationSelectDateHint": "Tippen zum Auswählen",
-  "reservationDateFrom": "Von",
-  "reservationDateTo": "Bis",
+  "reservationDateFrom": "Beginn",
+  "reservationDateTo": "Ende",
+  "reservationMaxDuration": "Max. Dauer: {minutes} Min.",
+  "@reservationMaxDuration": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
   "reservationErrorGeneric": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
 
   "reservationsEmpty": "Keine Reservierungen",

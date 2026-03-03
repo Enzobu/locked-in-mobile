@@ -324,17 +324,25 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservationFlowTitle => 'Réserver un casier';
 
   @override
-  String get reservationSelectDate => 'Sélectionnez vos dates';
+  String get reservationSelectDate => 'Planifiez votre réservation';
 
   @override
-  String get reservationStartDate => 'Date de début';
+  String get reservationStartDate => 'Date';
 
   @override
-  String get reservationEndDate => 'Date de fin';
+  String get reservationStartTime => 'Heure de début';
 
   @override
-  String reservationDuration(int days) {
-    return '$days jour(s)';
+  String get reservationDurationLabel => 'Durée';
+
+  @override
+  String reservationDurationMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String reservationDurationHoursMinutes(int hours, String minutes) {
+    return '${hours}h$minutes';
   }
 
   @override
@@ -383,10 +391,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservationSelectDateHint => 'Touchez pour sélectionner';
 
   @override
-  String get reservationDateFrom => 'Du';
+  String get reservationDateFrom => 'Début';
 
   @override
-  String get reservationDateTo => 'Au';
+  String get reservationDateTo => 'Fin';
+
+  @override
+  String reservationMaxDuration(int minutes) {
+    return 'Durée max : $minutes min';
+  }
 
   @override
   String get reservationErrorGeneric =>

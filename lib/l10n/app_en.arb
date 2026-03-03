@@ -142,13 +142,21 @@
   "mapMyPosition": "My position",
 
   "reservationFlowTitle": "Reserve a locker",
-  "reservationSelectDate": "Select your dates",
-  "reservationStartDate": "Start date",
-  "reservationEndDate": "End date",
-  "reservationDuration": "{days} day(s)",
-  "@reservationDuration": {
+  "reservationSelectDate": "Plan your reservation",
+  "reservationStartDate": "Date",
+  "reservationStartTime": "Start time",
+  "reservationDurationLabel": "Duration",
+  "reservationDurationMinutes": "{minutes} min",
+  "@reservationDurationMinutes": {
     "placeholders": {
-      "days": { "type": "int" }
+      "minutes": { "type": "int" }
+    }
+  },
+  "reservationDurationHoursMinutes": "{hours}h{minutes}",
+  "@reservationDurationHoursMinutes": {
+    "placeholders": {
+      "hours": { "type": "int" },
+      "minutes": { "type": "String" }
     }
   },
   "reservationNext": "Continue",
@@ -170,8 +178,14 @@
   "reservationBackToHome": "Back to home",
   "reservationViewAll": "View my reservations",
   "reservationSelectDateHint": "Tap to select",
-  "reservationDateFrom": "From",
-  "reservationDateTo": "To",
+  "reservationDateFrom": "Start",
+  "reservationDateTo": "End",
+  "reservationMaxDuration": "Max duration: {minutes} min",
+  "@reservationMaxDuration": {
+    "placeholders": {
+      "minutes": { "type": "int" }
+    }
+  },
   "reservationErrorGeneric": "An error occurred. Please try again.",
 
   "reservationsEmpty": "No reservations",

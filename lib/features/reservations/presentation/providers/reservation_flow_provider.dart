@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/locker.dart';
@@ -12,8 +13,9 @@ class ReservationFlowState {
   const ReservationFlowState({
     required this.locker,
     this.step = ReservationFlowStep.dateSelection,
-    this.startDate,
-    this.endDate,
+    this.selectedDate,
+    this.selectedTime,
+    this.durationMinutes,
     this.isSubmitting = false,
     this.reservation,
     this.publicForm,
@@ -22,30 +24,57 @@ class ReservationFlowState {
 
   final Locker locker;
   final ReservationFlowStep step;
-  final DateTime? startDate;
-  final DateTime? endDate;
+  final DateTime? selectedDate;
+  final TimeOfDay? selectedTime;
+  final int? durationMinutes;
   final bool isSubmitting;
   final Reservation? reservation;
   final String? publicForm;
   final String? error;
 
-  bool get canProceed => startDate != null && endDate != null;
+  bool get canProceed =>
+      selectedDate != null && selectedTime != null && durationMinutes != null;
 
-  int get durationDays {
-    if (startDate == null || endDate == null) return 0;
-    return endDate!.difference(startDate!).inDays;
+  int get minDuration => locker.lockerBay.minDuration ?? 30;
+  int get maxDuration => locker.lockerBay.maxDuration ?? 120;
+
+  DateTime? get startsAt {
+    if (selectedDate == null || selectedTime == null) return null;
+    return DateTime(
+      selectedDate!.year,
+      selectedDate!.month,
+      selectedDate!.day,
+      selectedTime!.hour,
+      selectedTime!.minute,
+    );
   }
 
-  double get totalPrice {
-    if (durationDays == 0) return 0;
-    return locker.priceEuros * durationDays;
+  DateTime? get endsAt {
+    final start = startsAt;
+    if (start == null || durationMinutes == null) return null;
+    return start.add(Duration(minutes: durationMinutes!));
+  }
+
+  String formatDuration(
+    String Function(int) formatMinutes,
+    String Function(int, String) formatHoursMinutes,
+  ) {
+    final mins = durationMinutes ?? 0;
+    if (mins < 60) return formatMinutes(mins);
+    final hours = mins ~/ 60;
+    final remaining = mins % 60;
+    return formatHoursMinutes(
+      hours,
+      remaining > 0 ? remaining.toString().padLeft(2, '0') : '00',
+    );
   }
 
   ReservationFlowState copyWith({
     Locker? locker,
     ReservationFlowStep? step,
-    DateTime? Function()? startDate,
-    DateTime? Function()? endDate,
+    DateTime? Function()? selectedDate,
+    TimeOfDay? Function()? selectedTime,
+    int? Function()? durationMinutes,
     bool? isSubmitting,
     Reservation? Function()? reservation,
     String? Function()? publicForm,
@@ -54,8 +83,11 @@ class ReservationFlowState {
     return ReservationFlowState(
       locker: locker ?? this.locker,
       step: step ?? this.step,
-      startDate: startDate != null ? startDate() : this.startDate,
-      endDate: endDate != null ? endDate() : this.endDate,
+      selectedDate: selectedDate != null ? selectedDate() : this.selectedDate,
+      selectedTime: selectedTime != null ? selectedTime() : this.selectedTime,
+      durationMinutes: durationMinutes != null
+          ? durationMinutes()
+          : this.durationMinutes,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       reservation: reservation != null ? reservation() : this.reservation,
       publicForm: publicForm != null ? publicForm() : this.publicForm,
@@ -71,16 +103,26 @@ final reservationFlowProvider = StateNotifierProvider.autoDispose
 
 class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
   ReservationFlowNotifier(this._ref, Locker locker)
-    : super(ReservationFlowState(locker: locker));
+    : super(
+        ReservationFlowState(
+          locker: locker,
+          durationMinutes: locker.lockerBay.minDuration ?? 30,
+        ),
+      );
 
   final Ref _ref;
 
-  void setDateRange(DateTime start, DateTime end) {
-    state = state.copyWith(
-      startDate: () => start,
-      endDate: () => end,
-      error: () => null,
-    );
+  void setDate(DateTime date) {
+    state = state.copyWith(selectedDate: () => date, error: () => null);
+  }
+
+  void setTime(TimeOfDay time) {
+    state = state.copyWith(selectedTime: () => time, error: () => null);
+  }
+
+  void setDuration(int minutes) {
+    final clamped = minutes.clamp(state.minDuration, state.maxDuration);
+    state = state.copyWith(durationMinutes: () => clamped, error: () => null);
   }
 
   void goToSummary() {
@@ -101,8 +143,8 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
       final repository = _ref.read(reservationRepositoryProvider);
       final reservation = await repository.createReservation(
         lockerId: state.locker.id,
-        startsAt: state.startDate!,
-        endsAt: state.endDate!,
+        startsAt: state.startsAt!,
+        endsAt: state.endsAt!,
       );
 
       final publicForm = _generatePublicForm();
