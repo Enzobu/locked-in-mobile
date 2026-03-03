@@ -1,5 +1,5 @@
 name: locked_in_mobile
-description: "A new Flutter project."
+description: "Application mobile de réservation de casiers (lockers)"
 publish_to: 'none'
 version: 0.1.0+1
 
@@ -9,11 +9,45 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Routing
+  go_router: ^14.8.1
+
+  # HTTP & Network
+  dio: ^5.7.0
+
+  # UI
+  lucide_icons: ^0.257.0
+  flutter_svg: ^2.0.17
+
+  # Maps
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+
+  # Storage
+  shared_preferences: ^2.5.3
+
+  # Internationalization
+  intl: any
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  riverpod_generator: ^2.6.3
+  build_runner: ^2.4.14
+  custom_lint: ^0.7.5
+  riverpod_lint: ^2.6.3
 
 flutter:
   uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/
