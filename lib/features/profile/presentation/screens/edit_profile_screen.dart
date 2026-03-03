@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons/lucide_icons.dart';
-
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../auth/presentation/widgets/auth_text_field.dart';
@@ -46,12 +44,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
     setState(() => _isLoading = true);
 
-    final success = await ref.read(authProvider.notifier).updateProfile(
-      firstname: _firstnameController.text.trim(),
-      lastname: _lastnameController.text.trim(),
-      email: _emailController.text.trim(),
-      phone: _phoneController.text.trim(),
-    );
+    final success = await ref
+        .read(authProvider.notifier)
+        .updateProfile(
+          firstname: _firstnameController.text.trim(),
+          lastname: _lastnameController.text.trim(),
+          email: _emailController.text.trim(),
+          phone: _phoneController.text.trim(),
+        );
 
     if (!mounted) return;
     setState(() => _isLoading = false);
@@ -64,8 +64,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
         content: Text(
           success ? l10n.profileEditSuccess : l10n.profileEditError,
         ),
-        backgroundColor:
-            success ? theme.colorScheme.primary : theme.colorScheme.error,
+        backgroundColor: success
+            ? theme.colorScheme.primary
+            : theme.colorScheme.error,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),

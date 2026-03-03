@@ -73,7 +73,7 @@ class _PersonalInfoSection extends StatelessWidget {
       trailing: IconButton(
         onPressed: onEdit,
         icon: Icon(
-          LucideIcons.penSquare,
+          LucideIcons.edit,
           size: 18,
           color: Theme.of(context).colorScheme.primary,
         ),

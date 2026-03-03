@@ -68,7 +68,7 @@ void main() {
   Widget createTestWidget({Customer? customer}) {
     return ProviderScope(
       overrides: [authProvider.overrideWith(() => _FakeAuthNotifier(customer))],
-      child: MaterialApp(
+      child: const MaterialApp(
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -92,8 +92,9 @@ void main() {
       expect(find.text('jean.dupont@email.com'), findsOneWidget);
     });
 
-    testWidgets('shows validation errors on empty required fields',
-        (tester) async {
+    testWidgets('shows validation errors on empty required fields', (
+      tester,
+    ) async {
       await tester.pumpWidget(createTestWidget(customer: _testCustomer));
       await tester.pumpAndSettle();
 
