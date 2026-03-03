@@ -250,43 +250,48 @@ class _FilterButton extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
+      child: SizedBox(
         width: 48,
         height: 48,
-        decoration: BoxDecoration(
-          color: isActive
-              ? colorScheme.primary
-              : colorScheme.brightness == Brightness.light
-              ? Colors.white
-              : Colors.white.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: isActive
-                ? colorScheme.primary
-                : colorScheme.outlineVariant.withValues(alpha: 0.3),
-          ),
-        ),
         child: Stack(
-          alignment: Alignment.center,
+          clipBehavior: Clip.none,
           children: [
-            Icon(
-              LucideIcons.slidersHorizontal,
-              size: 20,
-              color: isActive
-                  ? colorScheme.onPrimary
-                  : colorScheme.onSurfaceVariant,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: isActive
+                    ? colorScheme.primary
+                    : colorScheme.brightness == Brightness.light
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: isActive
+                      ? colorScheme.primary
+                      : colorScheme.outlineVariant.withValues(alpha: 0.3),
+                ),
+              ),
+              child: Icon(
+                LucideIcons.slidersHorizontal,
+                size: 20,
+                color: isActive
+                    ? colorScheme.onPrimary
+                    : colorScheme.onSurfaceVariant,
+              ),
             ),
             if (isActive)
               Positioned(
-                top: 6,
-                right: 6,
+                top: -4,
+                right: -4,
                 child: Container(
-                  width: 16,
-                  height: 16,
+                  width: 18,
+                  height: 18,
                   decoration: BoxDecoration(
-                    color: colorScheme.onPrimary,
+                    color: colorScheme.primary,
                     shape: BoxShape.circle,
+                    border: Border.all(color: colorScheme.surface, width: 2),
                   ),
                   alignment: Alignment.center,
                   child: Text(
@@ -294,7 +299,7 @@ class _FilterButton extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
-                      color: colorScheme.primary,
+                      color: colorScheme.onPrimary,
                     ),
                   ),
                 ),
