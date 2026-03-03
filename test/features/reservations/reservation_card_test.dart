@@ -48,12 +48,14 @@ void main() {
     firstname: 'Jean',
     lastname: 'Dupont',
     birthDate: DateTime(1995, 6, 15),
-    address: const Address(
-      id: 1,
-      city: 'Paris',
-      country: 'France',
-      street: 'Rue de Rivoli',
-    ),
+    addresses: const [
+      Address(
+        id: 1,
+        city: 'Paris',
+        country: 'France',
+        street: 'Rue de Rivoli',
+      ),
+    ],
     createdAt: now,
     updatedAt: now,
   );

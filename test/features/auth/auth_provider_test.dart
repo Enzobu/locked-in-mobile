@@ -34,7 +34,6 @@ class _FakeAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String birthDate,
-    required String phone,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     if (email.isEmpty || password.isEmpty) {
@@ -61,14 +60,17 @@ class _FakeAuthDatasource implements AuthDatasource {
       'firstname': 'Test',
       'lastname': 'User',
       'birth_date': '1995-06-15T00:00:00.000',
-      'address': {
-        'id': 1,
-        'number': '10',
-        'city': 'Paris',
-        'country': 'France',
-        'street': 'Rue de Test',
-        'complement': null,
-      },
+      'roles': ['ROLE_CUSTOMER'],
+      'addresses': [
+        {
+          'id': 1,
+          'number': '10',
+          'city': 'Paris',
+          'country': 'France',
+          'street': 'Rue de Test',
+          'complement': null,
+        },
+      ],
       'created_at': '2025-01-10T08:00:00.000',
       'updated_at': '2026-02-15T10:30:00.000',
     };
@@ -81,7 +83,6 @@ class _FakeAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
-    required String phone,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 50));
     if (updateShouldFail) {
@@ -93,14 +94,17 @@ class _FakeAuthDatasource implements AuthDatasource {
       'firstname': firstname,
       'lastname': lastname,
       'birth_date': '1995-06-15T00:00:00.000',
-      'address': {
-        'id': 1,
-        'number': '10',
-        'city': 'Paris',
-        'country': 'France',
-        'street': 'Rue de Test',
-        'complement': null,
-      },
+      'roles': ['ROLE_CUSTOMER'],
+      'addresses': [
+        {
+          'id': 1,
+          'number': '10',
+          'city': 'Paris',
+          'country': 'France',
+          'street': 'Rue de Test',
+          'complement': null,
+        },
+      ],
       'created_at': '2025-01-10T08:00:00.000',
       'updated_at': DateTime.now().toIso8601String(),
     };
@@ -286,7 +290,6 @@ void main() {
             password: 'password123',
             firstname: 'Jean',
             lastname: 'Dupont',
-            phone: '+33612345678',
           );
 
       final state = container.read(authProvider);
@@ -303,7 +306,6 @@ void main() {
             password: 'password123',
             firstname: 'Jean',
             lastname: 'Dupont',
-            phone: '+33612345678',
           );
 
       final state = container.read(authProvider);
@@ -321,7 +323,6 @@ void main() {
             password: '',
             firstname: '',
             lastname: '',
-            phone: '',
           );
 
       final state = container.read(authProvider);
@@ -344,7 +345,6 @@ void main() {
             firstname: 'Updated',
             lastname: 'Name',
             email: 'updated@test.com',
-            phone: '+33600000000',
           );
 
       expect(result, isTrue);
@@ -364,7 +364,6 @@ void main() {
             firstname: 'Test',
             lastname: 'User',
             email: 'test@test.com',
-            phone: '',
           );
 
       expect(result, isFalse);

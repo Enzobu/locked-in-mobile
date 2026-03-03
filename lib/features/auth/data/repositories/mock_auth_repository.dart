@@ -21,7 +21,6 @@ class MockAuthRepository implements AuthRepository {
     required String firstname,
     required String lastname,
     required DateTime birthDate,
-    required String phone,
   }) async {
     final data = await datasource.register(
       email: email,
@@ -29,7 +28,6 @@ class MockAuthRepository implements AuthRepository {
       firstname: firstname,
       lastname: lastname,
       birthDate: birthDate.toIso8601String(),
-      phone: phone,
     );
     return CustomerDto.fromJson(data).toDomain();
   }

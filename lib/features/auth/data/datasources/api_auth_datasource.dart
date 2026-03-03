@@ -22,10 +22,9 @@ class ApiAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String birthDate,
-    required String phone,
   }) async {
     final response = await dioClient.post<Map<String, dynamic>>(
-      '/api/customers',
+      '/api/register',
       data: {
         'email': email,
         'password': password,
@@ -42,7 +41,6 @@ class ApiAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
-    required String phone,
   }) async {
     final response = await dioClient.put<Map<String, dynamic>>(
       '/api/customers/me',
@@ -50,7 +48,6 @@ class ApiAuthDatasource implements AuthDatasource {
         'firstname': firstname,
         'lastname': lastname,
         'email': email,
-        'phone': phone,
       },
     );
     return response.data!;

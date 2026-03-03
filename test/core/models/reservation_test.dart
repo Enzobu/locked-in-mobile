@@ -53,7 +53,7 @@ void main() {
     firstname: 'John',
     lastname: 'Doe',
     birthDate: birthDate,
-    address: address,
+    addresses: [address],
     createdAt: now,
     updatedAt: now,
   );

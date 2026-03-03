@@ -17,7 +17,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late final TextEditingController _firstnameController;
   late final TextEditingController _lastnameController;
   late final TextEditingController _emailController;
-  late final TextEditingController _phoneController;
   bool _isLoading = false;
 
   @override
@@ -27,7 +26,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _firstnameController = TextEditingController(text: customer?.firstname);
     _lastnameController = TextEditingController(text: customer?.lastname);
     _emailController = TextEditingController(text: customer?.email);
-    _phoneController = TextEditingController();
   }
 
   @override
@@ -35,7 +33,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _firstnameController.dispose();
     _lastnameController.dispose();
     _emailController.dispose();
-    _phoneController.dispose();
     super.dispose();
   }
 
@@ -50,7 +47,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           firstname: _firstnameController.text.trim(),
           lastname: _lastnameController.text.trim(),
           email: _emailController.text.trim(),
-          phone: _phoneController.text.trim(),
         );
 
     if (!mounted) return;
@@ -148,24 +144,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
                   if (!emailRegex.hasMatch(value.trim())) {
                     return l10n.emailInvalid;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              AuthTextField(
-                label: l10n.phone,
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                textInputAction: TextInputAction.done,
-                autocorrect: false,
-                onFieldSubmitted: (_) => _submit(),
-                validator: (value) {
-                  if (value != null && value.trim().isNotEmpty) {
-                    final phoneRegex = RegExp(r'^\+?[\d\s\-()]{7,}$');
-                    if (!phoneRegex.hasMatch(value.trim())) {
-                      return l10n.phoneInvalid;
-                    }
                   }
                   return null;
                 },

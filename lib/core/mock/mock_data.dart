@@ -358,14 +358,17 @@ class MockData {
     'firstname': 'Jean',
     'lastname': 'Dupont',
     'birth_date': '1995-06-15T00:00:00.000',
-    'address': {
-      'id': 16,
-      'number': '22',
-      'city': 'Paris',
-      'country': 'France',
-      'street': 'Rue du Faubourg Saint-Honoré',
-      'complement': 'Apt 4B',
-    },
+    'roles': ['ROLE_CUSTOMER'],
+    'addresses': [
+      {
+        'id': 16,
+        'number': '22',
+        'city': 'Paris',
+        'country': 'France',
+        'street': 'Rue du Faubourg Saint-Honoré',
+        'complement': 'Apt 4B',
+      },
+    ],
     'created_at': '2025-01-10T08:00:00.000',
     'updated_at': '2026-02-15T10:30:00.000',
   };

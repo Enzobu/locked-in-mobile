@@ -8,14 +8,17 @@ void main() {
     'firstname': 'Jean',
     'lastname': 'Dupont',
     'birth_date': '1995-06-15T00:00:00.000',
-    'address': {
-      'id': 16,
-      'number': '22',
-      'city': 'Paris',
-      'country': 'France',
-      'street': 'Rue du Faubourg Saint-Honoré',
-      'complement': 'Apt 4B',
-    },
+    'addresses': [
+      {
+        'id': 16,
+        'number': '22',
+        'city': 'Paris',
+        'country': 'France',
+        'street': 'Rue du Faubourg Saint-Honoré',
+        'complement': 'Apt 4B',
+      },
+    ],
+    'roles': ['ROLE_CUSTOMER'],
     'created_at': '2025-01-10T08:00:00.000',
     'updated_at': '2026-02-15T10:30:00.000',
   };
@@ -29,7 +32,7 @@ void main() {
       expect(dto.firstname, 'Jean');
       expect(dto.lastname, 'Dupont');
       expect(dto.birthDate, DateTime.parse('1995-06-15T00:00:00.000'));
-      expect(dto.address.city, 'Paris');
+      expect(dto.addresses.first.city, 'Paris');
     });
 
     test('round-trip serialization preserves data', () {
@@ -42,7 +45,7 @@ void main() {
       expect(restored.firstname, dto.firstname);
       expect(restored.lastname, dto.lastname);
       expect(restored.birthDate, dto.birthDate);
-      expect(restored.address.id, dto.address.id);
+      expect(restored.addresses.first.id, dto.addresses.first.id);
     });
 
     test('toDomain creates correct domain model', () {

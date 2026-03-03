@@ -21,7 +21,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _firstnameController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
@@ -32,7 +31,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     _firstnameController.dispose();
     _lastnameController.dispose();
     _emailController.dispose();
-    _phoneController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -47,7 +45,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           password: _passwordController.text,
           firstname: _firstnameController.text.trim(),
           lastname: _lastnameController.text.trim(),
-          phone: _phoneController.text.trim(),
         );
   }
 
@@ -169,27 +166,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   );
                                   if (!emailRegex.hasMatch(value.trim())) {
                                     return l10n.emailInvalid;
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 16),
-                              AuthTextField(
-                                label: l10n.phone,
-                                controller: _phoneController,
-                                enabled: !isLoading,
-                                hintText: '+33 6 12 34 56 78',
-                                keyboardType: TextInputType.phone,
-                                textInputAction: TextInputAction.next,
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return l10n.phoneRequired;
-                                  }
-                                  final phoneRegex = RegExp(
-                                    r'^[+]?[\d\s\-().]{7,}$',
-                                  );
-                                  if (!phoneRegex.hasMatch(value.trim())) {
-                                    return l10n.phoneInvalid;
                                   }
                                   return null;
                                 },

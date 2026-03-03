@@ -119,7 +119,6 @@ class AuthNotifier extends Notifier<AuthState> {
     required String password,
     required String firstname,
     required String lastname,
-    required String phone,
   }) async {
     state = state.copyWith(status: AuthStatus.loading);
     try {
@@ -129,7 +128,6 @@ class AuthNotifier extends Notifier<AuthState> {
         firstname: firstname,
         lastname: lastname,
         birthDate: DateTime.now().toIso8601String(),
-        phone: phone,
       );
       state = const AuthState(status: AuthStatus.registerSuccess);
     } on ApiException catch (e) {
@@ -146,14 +144,12 @@ class AuthNotifier extends Notifier<AuthState> {
     required String firstname,
     required String lastname,
     required String email,
-    required String phone,
   }) async {
     try {
       final data = await _datasource.updateCustomer(
         firstname: firstname,
         lastname: lastname,
         email: email,
-        phone: phone,
       );
       final customer = CustomerDto.fromJson(data).toDomain();
       state = state.copyWith(customer: customer);
