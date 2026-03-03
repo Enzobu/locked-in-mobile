@@ -8,7 +8,7 @@ import 'package:locked_in_mobile/core/models/specification.dart';
 import 'package:locked_in_mobile/features/home/domain/models/locker_bay_summary.dart';
 
 void main() {
-  final address = Address(
+  const address = Address(
     id: 1,
     city: 'Paris',
     country: 'France',
@@ -16,20 +16,14 @@ void main() {
     number: '12',
   );
 
-  final company = Company(
+  const company = Company(
     id: 1,
     name: 'LockerBox',
-    siret: '12345678901234',
     siren: '123456789',
-    ape: '5221Z',
-    juridicForm: 'SAS',
-    phone: '+33123456789',
     address: address,
-    createdAt: DateTime(2024),
-    updatedAt: DateTime(2024),
   );
 
-  final bay = LockerBay(
+  const bay = LockerBay(
     id: 1,
     name: 'Gare de Lyon',
     latitude: 48.8443,
@@ -37,8 +31,6 @@ void main() {
     company: company,
     maxDuration: 120,
     minDuration: 30,
-    createdAt: DateTime(2024),
-    updatedAt: DateTime(2024),
   );
 
   const specSmall = Specification(

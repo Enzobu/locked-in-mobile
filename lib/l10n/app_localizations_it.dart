@@ -165,4 +165,28 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get invalidCredentials => 'Email o password non validi';
+
+  @override
+  String get homeGreeting => 'Benvenuto';
+
+  @override
+  String get homeTitle => 'Trova il tuo armadietto';
+
+  @override
+  String availableLockers(int available, int total) {
+    return '$available/$total disponibili';
+  }
+
+  @override
+  String get rechargeable => 'Ricarica';
+
+  @override
+  String get noLockersTitle => 'Nessun armadietto disponibile';
+
+  @override
+  String get noLockersSubtitle =>
+      'Nessun punto armadietti è disponibile al momento. Riprova più tardi.';
+
+  @override
+  String get lockerBays => 'Punti armadietti';
 }

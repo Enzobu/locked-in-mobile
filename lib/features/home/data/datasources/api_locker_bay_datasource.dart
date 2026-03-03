@@ -8,8 +8,8 @@ class ApiLockerBayDatasource implements LockerBayDatasource {
 
   @override
   Future<List<Map<String, dynamic>>> getLockerBays() async {
-    final response = await dioClient.get<List<dynamic>>('/api/locker_bays');
-    return response.data!.cast<Map<String, dynamic>>();
+    final response = await dioClient.get<dynamic>('/api/locker_bays');
+    return _extractList(response.data);
   }
 
   @override
@@ -22,19 +22,32 @@ class ApiLockerBayDatasource implements LockerBayDatasource {
 
   @override
   Future<List<Map<String, dynamic>>> getLockersByBayId(int lockerBayId) async {
-    final response = await dioClient.get<List<dynamic>>(
+    final response = await dioClient.get<dynamic>(
       '/api/lockers',
-      queryParameters: {'lockerBay': lockerBayId},
+      queryParameters: {'lockerBay': '/api/locker_bays/$lockerBayId'},
     );
-    return response.data!.cast<Map<String, dynamic>>();
+    return _extractList(response.data);
   }
 
   @override
   Future<List<Map<String, dynamic>>> searchLockerBays(String query) async {
-    final response = await dioClient.get<List<dynamic>>(
+    final response = await dioClient.get<dynamic>(
       '/api/locker_bays',
       queryParameters: {'name': query},
     );
-    return response.data!.cast<Map<String, dynamic>>();
+    return _extractList(response.data);
+  }
+
+  List<Map<String, dynamic>> _extractList(dynamic data) {
+    if (data is List) {
+      return data.cast<Map<String, dynamic>>();
+    }
+    if (data is Map<String, dynamic>) {
+      final members = data['hydra:member'] ?? data['member'];
+      if (members is List) {
+        return members.cast<Map<String, dynamic>>();
+      }
+    }
+    return [];
   }
 }

@@ -26,7 +26,7 @@ class LockerBaySummary {
   bool get hasRechargeableLockers =>
       lockers.any((l) => l.specification.isRechargeable);
 
-  String get city => lockerBay.company.address.city;
+  String get city => lockerBay.company?.address.city ?? '';
 
   String get priceRange {
     if (minPriceCents == null) return '';

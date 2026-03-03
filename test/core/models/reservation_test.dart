@@ -17,17 +17,11 @@ void main() {
     country: 'France',
     street: 'Rue de Rivoli',
   );
-  final company = Company(
+  const company = Company(
     id: 1,
     name: 'LockerCorp',
-    siret: '12345678901234',
     siren: '123456789',
-    ape: '6201Z',
-    juridicForm: 'SAS',
-    phone: '+33123456789',
     address: address,
-    createdAt: now,
-    updatedAt: now,
   );
   const spec = Specification(
     id: 1,
@@ -37,14 +31,12 @@ void main() {
     material: 'steel',
     name: 'Medium',
   );
-  final lockerBay = LockerBay(
+  const lockerBay = LockerBay(
     id: 1,
     name: 'Gare du Nord',
     latitude: 48.8809,
     longitude: 2.3553,
     company: company,
-    createdAt: now,
-    updatedAt: now,
   );
   final locker = Locker(
     id: 1,

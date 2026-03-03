@@ -4,27 +4,20 @@ import 'package:locked_in_mobile/core/models/company.dart';
 import 'package:locked_in_mobile/core/models/locker_bay.dart';
 
 void main() {
-  final now = DateTime(2025, 1, 1);
   const address = Address(
     id: 1,
     city: 'Paris',
     country: 'France',
     street: 'Rue de Rivoli',
   );
-  final company = Company(
+  const company = Company(
     id: 1,
     name: 'LockerCorp',
-    siret: '12345678901234',
     siren: '123456789',
-    ape: '6201Z',
-    juridicForm: 'SAS',
-    phone: '+33123456789',
     address: address,
-    createdAt: now,
-    updatedAt: now,
   );
 
-  final lockerBay = LockerBay(
+  const lockerBay = LockerBay(
     id: 1,
     name: 'Gare du Nord',
     latitude: 48.8809,
@@ -32,8 +25,6 @@ void main() {
     company: company,
     maxDuration: 72,
     minDuration: 1,
-    createdAt: now,
-    updatedAt: now,
   );
 
   group('LockerBay', () {
@@ -48,15 +39,13 @@ void main() {
     });
 
     test('nullable fields default to null', () {
-      final minimal = LockerBay(
+      const minimal = LockerBay(
         id: 2,
         name: 'Test Bay',
         latitude: 0.0,
         longitude: 0.0,
-        company: company,
-        createdAt: now,
-        updatedAt: now,
       );
+      expect(minimal.company, isNull);
       expect(minimal.maxDuration, isNull);
       expect(minimal.minDuration, isNull);
     });
@@ -77,7 +66,7 @@ void main() {
     });
 
     test('equality works correctly', () {
-      final same = LockerBay(
+      const same = LockerBay(
         id: 1,
         name: 'Gare du Nord',
         latitude: 48.8809,
@@ -85,8 +74,6 @@ void main() {
         company: company,
         maxDuration: 72,
         minDuration: 1,
-        createdAt: now,
-        updatedAt: now,
       );
       expect(lockerBay, equals(same));
       expect(lockerBay.hashCode, same.hashCode);

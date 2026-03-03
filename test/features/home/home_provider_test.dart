@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:locked_in_mobile/core/models/locker.dart';
 import 'package:locked_in_mobile/core/models/locker_bay.dart';
-import 'package:locked_in_mobile/features/home/data/datasources/locker_bay_datasource.dart';
 import 'package:locked_in_mobile/features/home/data/datasources/mock_locker_bay_datasource.dart';
 import 'package:locked_in_mobile/features/home/data/repositories/mock_locker_bay_repository.dart';
 import 'package:locked_in_mobile/features/home/presentation/providers/home_provider.dart';
@@ -102,7 +101,7 @@ void main() {
       for (final bay in results) {
         final matches =
             bay.name.toLowerCase().contains('lyon') ||
-            bay.company.address.city.toLowerCase().contains('lyon');
+            bay.company?.address.city.toLowerCase().contains('lyon') == true;
         expect(matches, true);
       }
     });

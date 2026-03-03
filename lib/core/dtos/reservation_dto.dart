@@ -1,5 +1,6 @@
 import '../models/reservation.dart';
 import '../models/reservation_status.dart';
+import '../utils/json_helpers.dart';
 import 'customer_dto.dart';
 import 'locker_dto.dart';
 
@@ -27,26 +28,26 @@ class ReservationDto {
   factory ReservationDto.fromJson(Map<String, dynamic> json) {
     return ReservationDto(
       id: json['id'] as int,
-      startsAt: DateTime.parse(json['starts_at'] as String),
-      endsAt: DateTime.parse(json['ends_at'] as String),
+      startsAt: JsonHelpers.parseDateTime(json, 'startsAt', 'starts_at'),
+      endsAt: JsonHelpers.parseDateTime(json, 'endsAt', 'ends_at'),
       customer: CustomerDto.fromJson(json['customer'] as Map<String, dynamic>),
       locker: LockerDto.fromJson(json['locker'] as Map<String, dynamic>),
       status: json['status'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      createdAt: JsonHelpers.parseDateTime(json, 'createdAt', 'created_at'),
+      updatedAt: JsonHelpers.parseDateTime(json, 'updatedAt', 'updated_at'),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'starts_at': startsAt.toIso8601String(),
-      'ends_at': endsAt.toIso8601String(),
+      'startsAt': startsAt.toIso8601String(),
+      'endsAt': endsAt.toIso8601String(),
       'customer': customer.toJson(),
       'locker': locker.toJson(),
       'status': status,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String(),
     };
   }
 

@@ -45,8 +45,39 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       ),
     ),
-    navigationBarTheme: const NavigationBarThemeData(
+    navigationBarTheme: NavigationBarThemeData(
+      height: 68,
+      elevation: 0,
+      backgroundColor: _lightColorScheme.surface,
+      surfaceTintColor: Colors.transparent,
+      indicatorColor: Colors.transparent,
+      iconTheme: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const IconThemeData(color: _primaryColor, size: 22);
+        }
+        return IconThemeData(
+          color: _lightColorScheme.onSurfaceVariant,
+          size: 22,
+        );
+      }),
+      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+            color: _primaryColor,
+            fontFamily: 'Poppins',
+          );
+        }
+        return TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w500,
+          color: _lightColorScheme.onSurfaceVariant,
+          fontFamily: 'Poppins',
+        );
+      }),
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+      indicatorShape: const StadiumBorder(),
     ),
   );
 
@@ -77,8 +108,39 @@ class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       ),
     ),
-    navigationBarTheme: const NavigationBarThemeData(
+    navigationBarTheme: NavigationBarThemeData(
+      height: 68,
+      elevation: 0,
+      backgroundColor: _darkColorScheme.surface,
+      surfaceTintColor: Colors.transparent,
+      indicatorColor: Colors.transparent,
+      iconTheme: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const IconThemeData(color: Color(0xFFFF4444), size: 22);
+        }
+        return IconThemeData(
+          color: _darkColorScheme.onSurfaceVariant,
+          size: 22,
+        );
+      }),
+      labelTextStyle: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFFF4444),
+            fontFamily: 'Poppins',
+          );
+        }
+        return TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w500,
+          color: _darkColorScheme.onSurfaceVariant,
+          fontFamily: 'Poppins',
+        );
+      }),
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+      indicatorShape: const StadiumBorder(),
     ),
   );
 }

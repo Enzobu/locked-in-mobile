@@ -142,11 +142,7 @@ class MockData {
     {
       'id': 1,
       'name': 'LockerBox France',
-      'siret': '12345678901234',
       'siren': '123456789',
-      'ape': '5221Z',
-      'juridic_form': 'SAS',
-      'phone': '+33 1 23 45 67 89',
       'address': {
         'id': 13,
         'number': '100',
@@ -155,17 +151,11 @@ class MockData {
         'street': 'Boulevard Haussmann',
         'complement': '3ème étage',
       },
-      'created_at': '2024-01-15T10:00:00.000',
-      'updated_at': '2024-06-01T14:30:00.000',
     },
     {
       'id': 2,
       'name': 'SmartLocker Lyon',
-      'siret': '98765432109876',
       'siren': '987654321',
-      'ape': '5221Z',
-      'juridic_form': 'SARL',
-      'phone': '+33 4 56 78 90 12',
       'address': {
         'id': 14,
         'number': '55',
@@ -174,17 +164,11 @@ class MockData {
         'street': 'Rue Garibaldi',
         'complement': null,
       },
-      'created_at': '2024-03-20T09:00:00.000',
-      'updated_at': '2024-07-15T11:00:00.000',
     },
     {
       'id': 3,
       'name': 'CasierSud',
-      'siret': '45678912345678',
       'siren': '456789123',
-      'ape': '5221Z',
-      'juridic_form': 'SAS',
-      'phone': '+33 4 91 23 45 67',
       'address': {
         'id': 15,
         'number': '30',
@@ -193,8 +177,6 @@ class MockData {
         'street': 'Boulevard Longchamp',
         'complement': null,
       },
-      'created_at': '2024-05-10T08:00:00.000',
-      'updated_at': '2024-08-20T16:00:00.000',
     },
   ];
 
@@ -307,8 +289,6 @@ class MockData {
       'company': company,
       'max_duration': maxDuration,
       'min_duration': minDuration,
-      'created_at': '2024-01-01T00:00:00.000',
-      'updated_at': '2024-06-01T00:00:00.000',
     };
   }
 
