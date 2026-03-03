@@ -78,8 +78,10 @@
 - [x] Tests unitaires pour chaque model
 
 ### TK-007 — Créer les DTOs et mock datasources
-**Status**: `TODO`
+**Status**: `DONE`
 **Branch**: `feature/TK-007-dtos-mock-data`
+**Start date**: 2026-03-03
+**End date**: 2026-03-03
 **Description**: Créer les DTOs avec fromJson/toJson pour chaque model. Créer des mock datasources avec des données réalistes basées sur le MCD (casiers à Paris, Lyon, Marseille, etc.). Les mock datasources implémentent les mêmes interfaces que les futures API datasources.
 **Acceptance Criteria**:
 - [ ] DTOs avec sérialisation JSON pour chaque model
