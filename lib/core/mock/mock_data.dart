@@ -273,7 +273,16 @@ class MockData {
     _lockerBay(6, 'Port de Marseille', 43.2965, 5.3698, 6, 3, 60, 30),
     _lockerBay(7, 'Capitole Toulouse', 43.6047, 1.4442, 7, 1, 90, 30),
     _lockerBay(8, 'Nice Promenade', 43.6955, 7.2655, 8, 3, 120, 60),
-    _lockerBay(9, 'Place de la Bourse Bordeaux', 44.8413, -0.5703, 9, 1, 60, 30),
+    _lockerBay(
+      9,
+      'Place de la Bourse Bordeaux',
+      44.8413,
+      -0.5703,
+      9,
+      1,
+      60,
+      30,
+    ),
     _lockerBay(10, 'Kléber Strasbourg', 48.5839, 7.7455, 10, 2, 90, 30),
     _lockerBay(11, 'Gare de Lille', 50.6372, 3.0700, 11, 1, 60, 30),
     _lockerBay(12, 'Commerce Nantes', 47.2132, -1.5566, 12, 2, 120, 60),
@@ -289,10 +298,7 @@ class MockData {
     int maxDuration,
     int minDuration,
   ) {
-    final address =
-        addresses.firstWhere((a) => a['id'] == addressId);
-    final company =
-        companies.firstWhere((c) => c['id'] == companyId);
+    final company = companies.firstWhere((c) => c['id'] == companyId);
     return {
       'id': id,
       'name': name,
@@ -321,7 +327,8 @@ class MockData {
         result.add({
           'id': lockerId,
           'number': i + 1,
-          'hardware_id': 'HW-${bayId.toString().padLeft(3, '0')}-${(i + 1).toString().padLeft(2, '0')}',
+          'hardware_id':
+              'HW-${bayId.toString().padLeft(3, '0')}-${(i + 1).toString().padLeft(2, '0')}',
           'specification': spec,
           'price_cents': _priceForSpec(spec['id'] as int),
           'locker_bay': bay,

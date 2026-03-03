@@ -13,9 +13,7 @@ class MockLockerBayRepository implements LockerBayRepository {
   @override
   Future<List<LockerBay>> getLockerBays() async {
     final data = await datasource.getLockerBays();
-    return data
-        .map((json) => LockerBayDto.fromJson(json).toDomain())
-        .toList();
+    return data.map((json) => LockerBayDto.fromJson(json).toDomain()).toList();
   }
 
   @override
@@ -27,16 +25,12 @@ class MockLockerBayRepository implements LockerBayRepository {
   @override
   Future<List<Locker>> getLockersByBayId(int lockerBayId) async {
     final data = await datasource.getLockersByBayId(lockerBayId);
-    return data
-        .map((json) => LockerDto.fromJson(json).toDomain())
-        .toList();
+    return data.map((json) => LockerDto.fromJson(json).toDomain()).toList();
   }
 
   @override
   Future<List<LockerBay>> searchLockerBays(String query) async {
     final data = await datasource.searchLockerBays(query);
-    return data
-        .map((json) => LockerBayDto.fromJson(json).toDomain())
-        .toList();
+    return data.map((json) => LockerBayDto.fromJson(json).toDomain()).toList();
   }
 }

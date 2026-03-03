@@ -30,8 +30,7 @@ class LockerBayDto {
       name: json['name'] as String,
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
-      company:
-          CompanyDto.fromJson(json['company'] as Map<String, dynamic>),
+      company: CompanyDto.fromJson(json['company'] as Map<String, dynamic>),
       maxDuration: json['max_duration'] as int?,
       minDuration: json['min_duration'] as int?,
       createdAt: DateTime.parse(json['created_at'] as String),

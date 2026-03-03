@@ -29,8 +29,7 @@ class ReservationDto {
       id: json['id'] as int,
       startsAt: DateTime.parse(json['starts_at'] as String),
       endsAt: DateTime.parse(json['ends_at'] as String),
-      customer:
-          CustomerDto.fromJson(json['customer'] as Map<String, dynamic>),
+      customer: CustomerDto.fromJson(json['customer'] as Map<String, dynamic>),
       locker: LockerDto.fromJson(json['locker'] as Map<String, dynamic>),
       status: json['status'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),

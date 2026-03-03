@@ -19,16 +19,12 @@ class MockLockerBayDatasource implements LockerBayDatasource {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> getLockersByBayId(
-    int lockerBayId,
-  ) async {
+  Future<List<Map<String, dynamic>>> getLockersByBayId(int lockerBayId) async {
     await Future<void>.delayed(const Duration(milliseconds: 200));
-    return MockData.lockers
-        .where((locker) {
-          final bay = locker['locker_bay'] as Map<String, dynamic>;
-          return bay['id'] == lockerBayId;
-        })
-        .toList();
+    return MockData.lockers.where((locker) {
+      final bay = locker['locker_bay'] as Map<String, dynamic>;
+      return bay['id'] == lockerBayId;
+    }).toList();
   }
 
   @override

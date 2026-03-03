@@ -5,10 +5,7 @@ class MockAuthDatasource implements AuthDatasource {
   bool _isLoggedIn = false;
 
   @override
-  Future<Map<String, dynamic>> login(
-    String email,
-    String password,
-  ) async {
+  Future<Map<String, dynamic>> login(String email, String password) async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
 
     if (email.isEmpty || password.isEmpty) {
