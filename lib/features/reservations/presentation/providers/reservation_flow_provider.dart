@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -147,13 +145,11 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
         endsAt: state.endsAt!,
       );
 
-      final publicForm = _generatePublicForm();
-
       state = state.copyWith(
         step: ReservationFlowStep.confirmed,
         isSubmitting: false,
         reservation: () => reservation,
-        publicForm: () => publicForm,
+        publicForm: () => reservation.publicForm,
       );
 
       _ref.read(reservationsProvider.notifier).refresh();
@@ -162,9 +158,4 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
     }
   }
 
-  String _generatePublicForm() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    final random = Random();
-    return 'LI-${List.generate(8, (_) => chars[random.nextInt(chars.length)]).join()}';
-  }
 }

@@ -63,6 +63,7 @@ void main() {
 
   final reservation = Reservation(
     id: 1,
+    publicForm: 'RES-TEST-001',
     startsAt: startsAt,
     endsAt: endsAt,
     customer: customer,
@@ -85,6 +86,7 @@ void main() {
     test('status defaults to pending', () {
       final defaultReservation = Reservation(
         id: 2,
+        publicForm: 'RES-TEST-002',
         startsAt: startsAt,
         endsAt: endsAt,
         customer: customer,
@@ -108,6 +110,7 @@ void main() {
     test('equality works correctly', () {
       final same = Reservation(
         id: 1,
+        publicForm: 'RES-TEST-001',
         startsAt: startsAt,
         endsAt: endsAt,
         customer: customer,

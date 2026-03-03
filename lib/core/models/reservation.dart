@@ -5,6 +5,7 @@ import 'reservation_status.dart';
 class Reservation {
   const Reservation({
     required this.id,
+    required this.publicForm,
     required this.startsAt,
     required this.endsAt,
     required this.customer,
@@ -15,6 +16,7 @@ class Reservation {
   });
 
   final int id;
+  final String publicForm;
   final DateTime startsAt;
   final DateTime endsAt;
   final Customer customer;
@@ -28,6 +30,7 @@ class Reservation {
 
   Reservation copyWith({
     int? id,
+    String? publicForm,
     DateTime? startsAt,
     DateTime? endsAt,
     Customer? customer,
@@ -38,6 +41,7 @@ class Reservation {
   }) {
     return Reservation(
       id: id ?? this.id,
+      publicForm: publicForm ?? this.publicForm,
       startsAt: startsAt ?? this.startsAt,
       endsAt: endsAt ?? this.endsAt,
       customer: customer ?? this.customer,
@@ -53,6 +57,7 @@ class Reservation {
     if (identical(this, other)) return true;
     return other is Reservation &&
         other.id == id &&
+        other.publicForm == publicForm &&
         other.startsAt == startsAt &&
         other.endsAt == endsAt &&
         other.customer == customer &&
@@ -65,6 +70,7 @@ class Reservation {
   @override
   int get hashCode => Object.hash(
     id,
+    publicForm,
     startsAt,
     endsAt,
     customer,
@@ -76,6 +82,6 @@ class Reservation {
 
   @override
   String toString() {
-    return 'Reservation(id: $id, status: ${status.value}, startsAt: $startsAt, endsAt: $endsAt, customer: ${customer.fullName}, locker: ${locker.number})';
+    return 'Reservation(id: $id, publicForm: $publicForm, status: ${status.value}, startsAt: $startsAt, endsAt: $endsAt, customer: ${customer.fullName}, locker: ${locker.number})';
   }
 }

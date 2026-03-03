@@ -7,6 +7,7 @@ import 'locker_dto.dart';
 class ReservationDto {
   const ReservationDto({
     required this.id,
+    required this.publicForm,
     required this.startsAt,
     required this.endsAt,
     required this.customer,
@@ -17,6 +18,7 @@ class ReservationDto {
   });
 
   final int id;
+  final String publicForm;
   final DateTime startsAt;
   final DateTime endsAt;
   final CustomerDto customer;
@@ -28,6 +30,7 @@ class ReservationDto {
   factory ReservationDto.fromJson(Map<String, dynamic> json) {
     return ReservationDto(
       id: json['id'] as int,
+      publicForm: (json['publicForm'] ?? json['public_form'] ?? '') as String,
       startsAt: JsonHelpers.parseDateTime(json, 'startsAt', 'starts_at'),
       endsAt: JsonHelpers.parseDateTime(json, 'endsAt', 'ends_at'),
       customer: CustomerDto.fromJson(json['customer'] as Map<String, dynamic>),
@@ -41,6 +44,7 @@ class ReservationDto {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'publicForm': publicForm,
       'startsAt': startsAt.toIso8601String(),
       'endsAt': endsAt.toIso8601String(),
       'customer': customer.toJson(),
@@ -54,6 +58,7 @@ class ReservationDto {
   Reservation toDomain() {
     return Reservation(
       id: id,
+      publicForm: publicForm,
       startsAt: startsAt,
       endsAt: endsAt,
       customer: customer.toDomain(),
@@ -67,6 +72,7 @@ class ReservationDto {
   factory ReservationDto.fromDomain(Reservation reservation) {
     return ReservationDto(
       id: reservation.id,
+      publicForm: reservation.publicForm,
       startsAt: reservation.startsAt,
       endsAt: reservation.endsAt,
       customer: CustomerDto.fromDomain(reservation.customer),

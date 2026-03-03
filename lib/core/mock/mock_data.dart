@@ -375,6 +375,7 @@ class MockData {
     return [
       {
         'id': 1,
+        'public_form': 'RES-2026-A1B2C3',
         'starts_at': '2026-03-03T09:00:00.000',
         'ends_at': '2026-03-03T11:00:00.000',
         'customer': currentCustomer,
@@ -385,6 +386,7 @@ class MockData {
       },
       {
         'id': 2,
+        'public_form': 'RES-2026-D4E5F6',
         'starts_at': '2026-03-05T14:00:00.000',
         'ends_at': '2026-03-05T16:00:00.000',
         'customer': currentCustomer,
@@ -395,6 +397,7 @@ class MockData {
       },
       {
         'id': 3,
+        'public_form': 'RES-2026-G7H8I9',
         'starts_at': '2026-02-20T10:00:00.000',
         'ends_at': '2026-02-20T12:00:00.000',
         'customer': currentCustomer,
@@ -405,6 +408,7 @@ class MockData {
       },
       {
         'id': 4,
+        'public_form': 'RES-2026-J1K2L3',
         'starts_at': '2026-02-15T08:00:00.000',
         'ends_at': '2026-02-15T10:00:00.000',
         'customer': currentCustomer,
@@ -415,6 +419,7 @@ class MockData {
       },
       {
         'id': 5,
+        'public_form': 'RES-2026-M4N5O6',
         'starts_at': '2026-01-28T16:00:00.000',
         'ends_at': '2026-01-28T18:00:00.000',
         'customer': currentCustomer,

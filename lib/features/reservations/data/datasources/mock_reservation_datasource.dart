@@ -37,8 +37,10 @@ class MockReservationDatasource implements ReservationDatasource {
       orElse: () => throw Exception('Locker not found: $lockerId'),
     );
 
+    final id = _nextId++;
     final reservation = {
-      'id': _nextId++,
+      'id': id,
+      'public_form': 'RES-2026-${id.toRadixString(36).toUpperCase().padLeft(6, '0')}',
       'starts_at': startsAt,
       'ends_at': endsAt,
       'customer': MockData.currentCustomer,
