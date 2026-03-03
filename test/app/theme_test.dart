@@ -31,6 +31,11 @@ void main() {
       final shape = AppTheme.light.cardTheme.shape as RoundedRectangleBorder;
       expect(shape.borderRadius, BorderRadius.circular(12));
     });
+
+    test('themes use Geist font family', () {
+      expect(AppTheme.light.textTheme.bodyMedium?.fontFamily, 'Geist');
+      expect(AppTheme.dark.textTheme.bodyMedium?.fontFamily, 'Geist');
+    });
   });
 
   group('ThemeModeNotifier', () {

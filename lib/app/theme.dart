@@ -10,23 +10,17 @@ class AppTheme {
   static final _lightColorScheme = ColorScheme.fromSeed(
     seedColor: _primaryColor,
     brightness: Brightness.light,
-  ).copyWith(
-    primary: _primaryColor,
-    onPrimary: Colors.white,
-  );
+  ).copyWith(primary: _primaryColor, onPrimary: Colors.white);
 
   static final _darkColorScheme = ColorScheme.fromSeed(
     seedColor: _primaryColor,
     brightness: Brightness.dark,
-  ).copyWith(
-    primary: const Color(0xFFFF4444),
-    onPrimary: Colors.white,
-  );
+  ).copyWith(primary: const Color(0xFFFF4444), onPrimary: Colors.white);
 
   static final light = ThemeData(
     useMaterial3: true,
     colorScheme: _lightColorScheme,
-    fontFamily: 'Roboto',
+    fontFamily: 'Geist',
     appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
     cardTheme: CardThemeData(
       elevation: 1,
@@ -59,7 +53,7 @@ class AppTheme {
   static final dark = ThemeData(
     useMaterial3: true,
     colorScheme: _darkColorScheme,
-    fontFamily: 'Roboto',
+    fontFamily: 'Geist',
     appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
     cardTheme: CardThemeData(
       elevation: 1,
