@@ -73,7 +73,7 @@ Référence : `assets/mcd.json`
 - Branche de développement : `dev`
 - Convention de nommage : `feature/TK-XXX-short-description`, `fix/TK-XXX-short-description`, `refactor/TK-XXX-short-description`
 - **1 ticket = 1 branche = 1 PR sur dev**
-- Tickets référencés dans `tickets.md`
+- Tickets gérés via GitHub Issues (`gh issue list/view`)
 - Commits conventionnels : `feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`
 
 ## Mock Data

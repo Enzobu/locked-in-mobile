@@ -28,8 +28,7 @@ void main() {
   }
 
   group('Router and Navigation', () {
-    testWidgets('displays navigation bar with 4 destinations',
-        (tester) async {
+    testWidgets('displays navigation bar with 4 destinations', (tester) async {
       await tester.pumpWidget(createTestApp());
       await tester.pumpAndSettle();
 
