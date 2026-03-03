@@ -139,5 +139,49 @@
   "mapLocationDeniedForever": "Standortzugriff ist deaktiviert. Aktivieren Sie ihn in den Einstellungen.",
   "mapLocationServiceDisabled": "Ortungsdienst ist deaktiviert",
   "mapOpenSettings": "Einstellungen öffnen",
-  "mapMyPosition": "Meine Position"
+  "mapMyPosition": "Meine Position",
+
+  "reservationFlowTitle": "Schließfach reservieren",
+  "reservationSelectDate": "Wählen Sie Ihre Daten",
+  "reservationStartDate": "Startdatum",
+  "reservationEndDate": "Enddatum",
+  "reservationDuration": "{days} Tag(e)",
+  "@reservationDuration": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "reservationNext": "Weiter",
+  "reservationSummaryTitle": "Zusammenfassung",
+  "reservationLocker": "Schließfach",
+  "reservationLocation": "Standort",
+  "reservationPeriod": "Zeitraum",
+  "reservationTotalPrice": "Gesamt",
+  "reservationPrice": "{price} €",
+  "@reservationPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "reservationConfirm": "Reservierung bestätigen",
+  "reservationSuccessTitle": "Reservierung bestätigt!",
+  "reservationSuccessSubtitle": "Ihr Schließfach ist reserviert. Zeigen Sie diesen Code bei der Ankunft.",
+  "reservationCode": "Reservierungscode",
+  "reservationBackToHome": "Zurück zur Startseite",
+  "reservationViewAll": "Meine Reservierungen anzeigen",
+  "reservationSelectDateHint": "Tippen zum Auswählen",
+  "reservationDateFrom": "Von",
+  "reservationDateTo": "Bis",
+  "reservationErrorGeneric": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+
+  "reservationsEmpty": "Keine Reservierungen",
+  "reservationsEmptySubtitle": "Sie haben noch keine Reservierungen. Buchen Sie Ihr erstes Schließfach!",
+  "reservationStatusPending": "Ausstehend",
+  "reservationStatusConfirmed": "Bestätigt",
+  "reservationStatusActive": "Aktiv",
+  "reservationStatusCompleted": "Abgeschlossen",
+  "reservationStatusCancelled": "Storniert",
+  "reservationStatusExpired": "Abgelaufen",
+  "reservationsUpcoming": "Bevorstehend",
+  "reservationsPast": "Vergangene"
 }

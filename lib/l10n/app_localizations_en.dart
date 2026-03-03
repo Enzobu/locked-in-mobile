@@ -316,4 +316,106 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapMyPosition => 'My position';
+
+  @override
+  String get reservationFlowTitle => 'Reserve a locker';
+
+  @override
+  String get reservationSelectDate => 'Select your dates';
+
+  @override
+  String get reservationStartDate => 'Start date';
+
+  @override
+  String get reservationEndDate => 'End date';
+
+  @override
+  String reservationDuration(int days) {
+    return '$days day(s)';
+  }
+
+  @override
+  String get reservationNext => 'Continue';
+
+  @override
+  String get reservationSummaryTitle => 'Summary';
+
+  @override
+  String get reservationLocker => 'Locker';
+
+  @override
+  String get reservationLocation => 'Location';
+
+  @override
+  String get reservationPeriod => 'Period';
+
+  @override
+  String get reservationTotalPrice => 'Total';
+
+  @override
+  String reservationPrice(String price) {
+    return '$price €';
+  }
+
+  @override
+  String get reservationConfirm => 'Confirm reservation';
+
+  @override
+  String get reservationSuccessTitle => 'Reservation confirmed!';
+
+  @override
+  String get reservationSuccessSubtitle =>
+      'Your locker is reserved. Show this code on arrival.';
+
+  @override
+  String get reservationCode => 'Reservation code';
+
+  @override
+  String get reservationBackToHome => 'Back to home';
+
+  @override
+  String get reservationViewAll => 'View my reservations';
+
+  @override
+  String get reservationSelectDateHint => 'Tap to select';
+
+  @override
+  String get reservationDateFrom => 'From';
+
+  @override
+  String get reservationDateTo => 'To';
+
+  @override
+  String get reservationErrorGeneric => 'An error occurred. Please try again.';
+
+  @override
+  String get reservationsEmpty => 'No reservations';
+
+  @override
+  String get reservationsEmptySubtitle =>
+      'You don\'t have any reservations yet. Book your first locker!';
+
+  @override
+  String get reservationStatusPending => 'Pending';
+
+  @override
+  String get reservationStatusConfirmed => 'Confirmed';
+
+  @override
+  String get reservationStatusActive => 'Active';
+
+  @override
+  String get reservationStatusCompleted => 'Completed';
+
+  @override
+  String get reservationStatusCancelled => 'Cancelled';
+
+  @override
+  String get reservationStatusExpired => 'Expired';
+
+  @override
+  String get reservationsUpcoming => 'Upcoming';
+
+  @override
+  String get reservationsPast => 'Past';
 }

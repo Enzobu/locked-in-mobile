@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../core/models/locker.dart';
@@ -70,7 +71,7 @@ class LockerCard extends StatelessWidget {
                 if (isAvailable)
                   FilledButton.icon(
                     onPressed: () {
-                      // TODO: TK-018 navigate to reservation flow
+                      context.push('/reservation', extra: locker);
                     },
                     icon: const Icon(LucideIcons.calendarPlus, size: 16),
                     label: Text(l10n.reserveLocker),

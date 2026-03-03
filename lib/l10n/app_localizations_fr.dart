@@ -319,4 +319,107 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mapMyPosition => 'Ma position';
+
+  @override
+  String get reservationFlowTitle => 'Réserver un casier';
+
+  @override
+  String get reservationSelectDate => 'Sélectionnez vos dates';
+
+  @override
+  String get reservationStartDate => 'Date de début';
+
+  @override
+  String get reservationEndDate => 'Date de fin';
+
+  @override
+  String reservationDuration(int days) {
+    return '$days jour(s)';
+  }
+
+  @override
+  String get reservationNext => 'Continuer';
+
+  @override
+  String get reservationSummaryTitle => 'Récapitulatif';
+
+  @override
+  String get reservationLocker => 'Casier';
+
+  @override
+  String get reservationLocation => 'Emplacement';
+
+  @override
+  String get reservationPeriod => 'Période';
+
+  @override
+  String get reservationTotalPrice => 'Total';
+
+  @override
+  String reservationPrice(String price) {
+    return '$price €';
+  }
+
+  @override
+  String get reservationConfirm => 'Confirmer la réservation';
+
+  @override
+  String get reservationSuccessTitle => 'Réservation confirmée !';
+
+  @override
+  String get reservationSuccessSubtitle =>
+      'Votre casier est réservé. Présentez ce code à l\'arrivée.';
+
+  @override
+  String get reservationCode => 'Code de réservation';
+
+  @override
+  String get reservationBackToHome => 'Retour à l\'accueil';
+
+  @override
+  String get reservationViewAll => 'Voir mes réservations';
+
+  @override
+  String get reservationSelectDateHint => 'Touchez pour sélectionner';
+
+  @override
+  String get reservationDateFrom => 'Du';
+
+  @override
+  String get reservationDateTo => 'Au';
+
+  @override
+  String get reservationErrorGeneric =>
+      'Une erreur est survenue. Veuillez réessayer.';
+
+  @override
+  String get reservationsEmpty => 'Aucune réservation';
+
+  @override
+  String get reservationsEmptySubtitle =>
+      'Vous n\'avez pas encore de réservation. Réservez votre premier casier !';
+
+  @override
+  String get reservationStatusPending => 'En attente';
+
+  @override
+  String get reservationStatusConfirmed => 'Confirmée';
+
+  @override
+  String get reservationStatusActive => 'Active';
+
+  @override
+  String get reservationStatusCompleted => 'Terminée';
+
+  @override
+  String get reservationStatusCancelled => 'Annulée';
+
+  @override
+  String get reservationStatusExpired => 'Expirée';
+
+  @override
+  String get reservationsUpcoming => 'À venir';
+
+  @override
+  String get reservationsPast => 'Passées';
 }

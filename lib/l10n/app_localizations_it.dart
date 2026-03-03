@@ -319,4 +319,106 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mapMyPosition => 'La mia posizione';
+
+  @override
+  String get reservationFlowTitle => 'Prenota un armadietto';
+
+  @override
+  String get reservationSelectDate => 'Seleziona le date';
+
+  @override
+  String get reservationStartDate => 'Data di inizio';
+
+  @override
+  String get reservationEndDate => 'Data di fine';
+
+  @override
+  String reservationDuration(int days) {
+    return '$days giorno/i';
+  }
+
+  @override
+  String get reservationNext => 'Continua';
+
+  @override
+  String get reservationSummaryTitle => 'Riepilogo';
+
+  @override
+  String get reservationLocker => 'Armadietto';
+
+  @override
+  String get reservationLocation => 'Posizione';
+
+  @override
+  String get reservationPeriod => 'Periodo';
+
+  @override
+  String get reservationTotalPrice => 'Totale';
+
+  @override
+  String reservationPrice(String price) {
+    return '$price €';
+  }
+
+  @override
+  String get reservationConfirm => 'Conferma prenotazione';
+
+  @override
+  String get reservationSuccessTitle => 'Prenotazione confermata!';
+
+  @override
+  String get reservationSuccessSubtitle =>
+      'Il tuo armadietto è prenotato. Mostra questo codice all\'arrivo.';
+
+  @override
+  String get reservationCode => 'Codice di prenotazione';
+
+  @override
+  String get reservationBackToHome => 'Torna alla home';
+
+  @override
+  String get reservationViewAll => 'Vedi le mie prenotazioni';
+
+  @override
+  String get reservationSelectDateHint => 'Tocca per selezionare';
+
+  @override
+  String get reservationDateFrom => 'Dal';
+
+  @override
+  String get reservationDateTo => 'Al';
+
+  @override
+  String get reservationErrorGeneric => 'Si è verificato un errore. Riprova.';
+
+  @override
+  String get reservationsEmpty => 'Nessuna prenotazione';
+
+  @override
+  String get reservationsEmptySubtitle =>
+      'Non hai ancora prenotazioni. Prenota il tuo primo armadietto!';
+
+  @override
+  String get reservationStatusPending => 'In attesa';
+
+  @override
+  String get reservationStatusConfirmed => 'Confermata';
+
+  @override
+  String get reservationStatusActive => 'Attiva';
+
+  @override
+  String get reservationStatusCompleted => 'Completata';
+
+  @override
+  String get reservationStatusCancelled => 'Annullata';
+
+  @override
+  String get reservationStatusExpired => 'Scaduta';
+
+  @override
+  String get reservationsUpcoming => 'Prossime';
+
+  @override
+  String get reservationsPast => 'Passate';
 }
