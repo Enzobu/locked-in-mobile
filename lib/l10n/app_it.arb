@@ -64,5 +64,12 @@
   "rechargeable": "Ricarica",
   "noLockersTitle": "Nessun armadietto disponibile",
   "noLockersSubtitle": "Nessun punto armadietti è disponibile al momento. Riprova più tardi.",
-  "lockerBays": "Punti armadietti"
+  "lockerBays": "Punti armadietti",
+  "searchLockerBays": "Cerca punti armadietti...",
+  "noSearchResults": "Nessun risultato per \"{query}\". Prova con un altro termine.",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": { "type": "String" }
+    }
+  }
 }

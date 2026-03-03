@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/network/dio_client.dart';
@@ -45,3 +47,58 @@ class LockerBaySummariesNotifier extends AsyncNotifier<List<LockerBaySummary>> {
     state = await AsyncValue.guard(_fetchSummaries);
   }
 }
+
+final searchQueryProvider = StateProvider<String>((ref) => '');
+
+final _debouncedSearchQueryProvider = StateProvider<String>((ref) => '');
+
+final searchDebounceProvider = Provider<_SearchDebounce>((ref) {
+  final debounce = _SearchDebounce(ref);
+  ref.onDispose(debounce.dispose);
+  return debounce;
+});
+
+class _SearchDebounce {
+  _SearchDebounce(this._ref);
+
+  final Ref _ref;
+  Timer? _timer;
+
+  void onQueryChanged(String query) {
+    _timer?.cancel();
+    if (query.isEmpty) {
+      _ref.read(_debouncedSearchQueryProvider.notifier).state = '';
+      return;
+    }
+    _timer = Timer(const Duration(milliseconds: 300), () {
+      _ref.read(_debouncedSearchQueryProvider.notifier).state = query;
+    });
+  }
+
+  void dispose() {
+    _timer?.cancel();
+  }
+}
+
+final filteredSummariesProvider = Provider<AsyncValue<List<LockerBaySummary>>>((
+  ref,
+) {
+  final query = ref.watch(_debouncedSearchQueryProvider).toLowerCase();
+  final summariesAsync = ref.watch(lockerBaySummariesProvider);
+
+  if (query.isEmpty) return summariesAsync;
+
+  return summariesAsync.whenData((summaries) {
+    return summaries.where((summary) {
+      final bay = summary.lockerBay;
+      final name = bay.name.toLowerCase();
+      final city = summary.city.toLowerCase();
+      final companyName = bay.company?.name.toLowerCase() ?? '';
+      final street = bay.company?.address.street.toLowerCase() ?? '';
+      return name.contains(query) ||
+          city.contains(query) ||
+          companyName.contains(query) ||
+          street.contains(query);
+    }).toList();
+  });
+});
