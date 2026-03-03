@@ -8,6 +8,7 @@ import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/auth/presentation/screens/register_screen.dart';
 import '../features/auth/presentation/screens/splash_screen.dart';
 import '../features/home/presentation/screens/home_screen.dart';
+import '../features/home/presentation/screens/locker_bay_detail_screen.dart';
 import '../features/map/presentation/screens/map_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
 import '../features/reservations/presentation/screens/reservations_screen.dart';
@@ -59,6 +60,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/register',
         pageBuilder: (context, state) =>
             const NoTransitionPage(child: RegisterScreen()),
+      ),
+      GoRoute(
+        path: '/home/:id',
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          return LockerBayDetailScreen(lockerBayId: id);
+        },
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
