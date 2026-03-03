@@ -476,4 +476,35 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reservationDetailCancelReservation => 'Annulla prenotazione';
+
+  @override
+  String get profilePersonalInfo => 'Informazioni personali';
+
+  @override
+  String get profilePreferences => 'Preferenze';
+
+  @override
+  String get profileAbout => 'Informazioni';
+
+  @override
+  String profileVersion(String version) {
+    return 'Versione $version';
+  }
+
+  @override
+  String profileMemberSince(String date) {
+    return 'Membro dal $date';
+  }
+
+  @override
+  String get profileTerms => 'Condizioni d\'uso';
+
+  @override
+  String get profilePrivacy => 'Informativa sulla privacy';
+
+  @override
+  String get profileHelp => 'Aiuto e supporto';
+
+  @override
+  String get profileLogoutConfirm => 'Sei sicuro di voler uscire?';
 }

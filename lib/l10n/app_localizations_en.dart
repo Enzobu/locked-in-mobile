@@ -473,4 +473,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reservationDetailCancelReservation => 'Cancel reservation';
+
+  @override
+  String get profilePersonalInfo => 'Personal information';
+
+  @override
+  String get profilePreferences => 'Preferences';
+
+  @override
+  String get profileAbout => 'About';
+
+  @override
+  String profileVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String profileMemberSince(String date) {
+    return 'Member since $date';
+  }
+
+  @override
+  String get profileTerms => 'Terms of use';
+
+  @override
+  String get profilePrivacy => 'Privacy policy';
+
+  @override
+  String get profileHelp => 'Help & support';
+
+  @override
+  String get profileLogoutConfirm => 'Are you sure you want to log out?';
 }

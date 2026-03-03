@@ -218,5 +218,25 @@
     }
   },
   "reservationDetailMaterial": "Material",
-  "reservationDetailCancelReservation": "Reservierung stornieren"
+  "reservationDetailCancelReservation": "Reservierung stornieren",
+
+  "profilePersonalInfo": "Persönliche Informationen",
+  "profilePreferences": "Einstellungen",
+  "profileAbout": "Über",
+  "profileVersion": "Version {version}",
+  "@profileVersion": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "profileMemberSince": "Mitglied seit {date}",
+  "@profileMemberSince": {
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "profileTerms": "Nutzungsbedingungen",
+  "profilePrivacy": "Datenschutzrichtlinie",
+  "profileHelp": "Hilfe & Support",
+  "profileLogoutConfirm": "Möchten Sie sich wirklich abmelden?"
 }
