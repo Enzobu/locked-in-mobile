@@ -335,5 +335,33 @@
   "reservationCancelMessage": "Êtes-vous sûr de vouloir annuler cette réservation ?",
   "@reservationCancelMessage": { "description": "Message dialogue annulation réservation" },
   "reservationCancelConfirm": "Confirmer l'annulation",
-  "@reservationCancelConfirm": { "description": "Bouton confirmer annulation" }
+  "@reservationCancelConfirm": { "description": "Bouton confirmer annulation" },
+
+  "reservationDetailTitle": "Détail de la réservation",
+  "@reservationDetailTitle": { "description": "Titre écran détail réservation" },
+  "reservationDetailLocker": "Casier",
+  "@reservationDetailLocker": { "description": "Section casier détail réservation" },
+  "reservationDetailLockerBay": "Point de retrait",
+  "@reservationDetailLockerBay": { "description": "Section locker bay détail réservation" },
+  "reservationDetailPeriod": "Période",
+  "@reservationDetailPeriod": { "description": "Section période détail réservation" },
+  "reservationDetailDuration": "Durée",
+  "@reservationDetailDuration": { "description": "Label durée détail réservation" },
+  "reservationDetailPrice": "Prix",
+  "@reservationDetailPrice": { "description": "Section prix détail réservation" },
+  "reservationDetailSpecifications": "Spécifications",
+  "@reservationDetailSpecifications": { "description": "Section spécifications détail réservation" },
+  "reservationDetailDimensions": "{width} × {height} × {depth} cm",
+  "@reservationDetailDimensions": {
+    "description": "Dimensions du casier",
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "depth": { "type": "int" }
+    }
+  },
+  "reservationDetailMaterial": "Matériau",
+  "@reservationDetailMaterial": { "description": "Label matériau" },
+  "reservationDetailCancelReservation": "Annuler la réservation",
+  "@reservationDetailCancelReservation": { "description": "Bouton annuler réservation détail" }
 }

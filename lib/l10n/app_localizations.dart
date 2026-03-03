@@ -911,6 +911,66 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Confirmer l\'annulation'**
   String get reservationCancelConfirm;
+
+  /// Titre écran détail réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Détail de la réservation'**
+  String get reservationDetailTitle;
+
+  /// Section casier détail réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Casier'**
+  String get reservationDetailLocker;
+
+  /// Section locker bay détail réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Point de retrait'**
+  String get reservationDetailLockerBay;
+
+  /// Section période détail réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Période'**
+  String get reservationDetailPeriod;
+
+  /// Label durée détail réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée'**
+  String get reservationDetailDuration;
+
+  /// Section prix détail réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix'**
+  String get reservationDetailPrice;
+
+  /// Section spécifications détail réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Spécifications'**
+  String get reservationDetailSpecifications;
+
+  /// Dimensions du casier
+  ///
+  /// In fr, this message translates to:
+  /// **'{width} × {height} × {depth} cm'**
+  String reservationDetailDimensions(int width, int height, int depth);
+
+  /// Label matériau
+  ///
+  /// In fr, this message translates to:
+  /// **'Matériau'**
+  String get reservationDetailMaterial;
+
+  /// Bouton annuler réservation détail
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler la réservation'**
+  String get reservationDetailCancelReservation;
 }
 
 class _AppLocalizationsDelegate
