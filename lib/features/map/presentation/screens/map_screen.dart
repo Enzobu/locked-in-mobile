@@ -106,7 +106,11 @@ class _MapScreenState extends ConsumerState<MapScreen>
       SnackBar(
         content: Row(
           children: [
-            Icon(LucideIcons.mapPinOff, size: 18, color: colorScheme.onInverseSurface),
+            Icon(
+              LucideIcons.mapPinOff,
+              size: 18,
+              color: colorScheme.onInverseSurface,
+            ),
             const SizedBox(width: 12),
             Expanded(child: Text(message)),
           ],
@@ -149,10 +153,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
       begin: camera.center.longitude,
       end: destLocation.longitude,
     );
-    final zoomTween = Tween<double>(
-      begin: camera.zoom,
-      end: destZoom,
-    );
+    final zoomTween = Tween<double>(begin: camera.zoom, end: destZoom);
 
     final controller = AnimationController(
       duration: const Duration(milliseconds: 400),
@@ -306,8 +307,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                     icon: geoState.hasPosition
                         ? LucideIcons.navigation
                         : LucideIcons.locate,
-                    onPressed:
-                        geoState.hasPosition ? () => _animatedMove(geoState.position!, 13.0) : _resetCenter,
+                    onPressed: geoState.hasPosition
+                        ? () => _animatedMove(geoState.position!, 13.0)
+                        : _resetCenter,
                     isAccented: geoState.hasPosition,
                   ),
                 ],
@@ -407,9 +409,7 @@ class _AroundMeButton extends StatelessWidget {
                 Icon(
                   LucideIcons.crosshair,
                   size: 16,
-                  color: isActive
-                      ? colorScheme.onPrimary
-                      : colorScheme.primary,
+                  color: isActive ? colorScheme.onPrimary : colorScheme.primary,
                 ),
               const SizedBox(width: 8),
               Text(
@@ -430,10 +430,7 @@ class _AroundMeButton extends StatelessWidget {
 }
 
 class _SortToggleButton extends StatelessWidget {
-  const _SortToggleButton({
-    required this.sortMode,
-    required this.onPressed,
-  });
+  const _SortToggleButton({required this.sortMode, required this.onPressed});
 
   final SortMode sortMode;
   final VoidCallback onPressed;

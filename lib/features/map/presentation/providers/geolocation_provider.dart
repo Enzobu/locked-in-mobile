@@ -24,10 +24,7 @@ class GeolocationState {
 
   bool get hasPosition => position != null;
 
-  GeolocationState copyWith({
-    GeolocationStatus? status,
-    LatLng? position,
-  }) {
+  GeolocationState copyWith({GeolocationStatus? status, LatLng? position}) {
     return GeolocationState(
       status: status ?? this.status,
       position: position ?? this.position,
@@ -82,15 +79,16 @@ class GeolocationNotifier extends StateNotifier<GeolocationState> {
 
 final geolocationProvider =
     StateNotifierProvider<GeolocationNotifier, GeolocationState>(
-  (ref) => GeolocationNotifier(),
-);
+      (ref) => GeolocationNotifier(),
+    );
 
 /// Calculates distance in km between two LatLng points (Haversine formula).
 double distanceKm(LatLng from, LatLng to) {
   const earthRadius = 6371.0;
   final dLat = _toRadians(to.latitude - from.latitude);
   final dLng = _toRadians(to.longitude - from.longitude);
-  final a = sin(dLat / 2) * sin(dLat / 2) +
+  final a =
+      sin(dLat / 2) * sin(dLat / 2) +
       cos(_toRadians(from.latitude)) *
           cos(_toRadians(to.latitude)) *
           sin(dLng / 2) *

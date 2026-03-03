@@ -23,26 +23,27 @@ final mapLockerBaySummariesProvider =
 /// Summaries sorted by proximity when sort mode is proximity and position available.
 final sortedMapLockerBaySummariesProvider =
     Provider<AsyncValue<List<LockerBaySummary>>>((ref) {
-  final summariesAsync = ref.watch(mapLockerBaySummariesProvider);
-  final sortMode = ref.watch(sortModeProvider);
-  final geoState = ref.watch(geolocationProvider);
+      final summariesAsync = ref.watch(mapLockerBaySummariesProvider);
+      final sortMode = ref.watch(sortModeProvider);
+      final geoState = ref.watch(geolocationProvider);
 
-  return summariesAsync.whenData((summaries) {
-    if (sortMode == SortMode.proximity && geoState.hasPosition) {
-      final userPos = geoState.position!;
-      final sorted = List<LockerBaySummary>.from(summaries)..sort((a, b) {
-        final distA = distanceKm(
-          userPos,
-          LatLng(a.lockerBay.latitude, a.lockerBay.longitude),
-        );
-        final distB = distanceKm(
-          userPos,
-          LatLng(b.lockerBay.latitude, b.lockerBay.longitude),
-        );
-        return distA.compareTo(distB);
+      return summariesAsync.whenData((summaries) {
+        if (sortMode == SortMode.proximity && geoState.hasPosition) {
+          final userPos = geoState.position!;
+          final sorted = List<LockerBaySummary>.from(summaries)
+            ..sort((a, b) {
+              final distA = distanceKm(
+                userPos,
+                LatLng(a.lockerBay.latitude, a.lockerBay.longitude),
+              );
+              final distB = distanceKm(
+                userPos,
+                LatLng(b.lockerBay.latitude, b.lockerBay.longitude),
+              );
+              return distA.compareTo(distB);
+            });
+          return sorted;
+        }
+        return summaries;
       });
-      return sorted;
-    }
-    return summaries;
-  });
-});
+    });
