@@ -9,9 +9,10 @@ class CustomerDto {
     required this.firstname,
     required this.lastname,
     required this.birthDate,
-    required this.address,
     required this.createdAt,
     required this.updatedAt,
+    this.roles = const [],
+    this.addresses = const [],
   });
 
   final int id;
@@ -19,18 +20,26 @@ class CustomerDto {
   final String firstname;
   final String lastname;
   final DateTime birthDate;
-  final AddressDto address;
+  final List<String> roles;
+  final List<AddressDto> addresses;
   final DateTime createdAt;
   final DateTime updatedAt;
 
   factory CustomerDto.fromJson(Map<String, dynamic> json) {
+    final addressesJson = json['addresses'] as List<dynamic>? ?? [];
     return CustomerDto(
       id: json['id'] as int,
       email: json['email'] as String,
       firstname: json['firstname'] as String,
       lastname: json['lastname'] as String,
       birthDate: JsonHelpers.parseDateTime(json, 'birthDate', 'birth_date'),
-      address: AddressDto.fromJson(json['address'] as Map<String, dynamic>),
+      roles: (json['roles'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      addresses: addressesJson
+          .map((e) => AddressDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       createdAt: JsonHelpers.parseDateTime(json, 'createdAt', 'created_at'),
       updatedAt: JsonHelpers.parseDateTime(json, 'updatedAt', 'updated_at'),
     );
@@ -43,7 +52,8 @@ class CustomerDto {
       'firstname': firstname,
       'lastname': lastname,
       'birthDate': birthDate.toIso8601String(),
-      'address': address.toJson(),
+      'roles': roles,
+      'addresses': addresses.map((e) => e.toJson()).toList(),
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
     };
@@ -56,7 +66,8 @@ class CustomerDto {
       firstname: firstname,
       lastname: lastname,
       birthDate: birthDate,
-      address: address.toDomain(),
+      roles: roles,
+      addresses: addresses.map((e) => e.toDomain()).toList(),
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
@@ -69,7 +80,10 @@ class CustomerDto {
       firstname: customer.firstname,
       lastname: customer.lastname,
       birthDate: customer.birthDate,
-      address: AddressDto.fromDomain(customer.address),
+      roles: customer.roles,
+      addresses: customer.addresses
+          .map((e) => AddressDto.fromDomain(e))
+          .toList(),
       createdAt: customer.createdAt,
       updatedAt: customer.updatedAt,
     );
