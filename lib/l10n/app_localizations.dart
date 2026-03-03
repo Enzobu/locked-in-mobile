@@ -323,6 +323,96 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Italiano'**
   String get italian;
+
+  /// Titre page inscription
+  ///
+  /// In fr, this message translates to:
+  /// **'Créez votre compte'**
+  String get registerTitle;
+
+  /// Sous-titre page inscription
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscrivez-vous pour réserver vos casiers'**
+  String get registerSubtitle;
+
+  /// Label champ prénom
+  ///
+  /// In fr, this message translates to:
+  /// **'Prénom'**
+  String get firstname;
+
+  /// Label champ nom
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom'**
+  String get lastname;
+
+  /// Label champ téléphone
+  ///
+  /// In fr, this message translates to:
+  /// **'Téléphone'**
+  String get phone;
+
+  /// Label champ confirmation mot de passe
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer le mot de passe'**
+  String get confirmPassword;
+
+  /// Erreur prénom vide
+  ///
+  /// In fr, this message translates to:
+  /// **'Le prénom est requis'**
+  String get firstnameRequired;
+
+  /// Erreur nom vide
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nom est requis'**
+  String get lastnameRequired;
+
+  /// Erreur téléphone vide
+  ///
+  /// In fr, this message translates to:
+  /// **'Le téléphone est requis'**
+  String get phoneRequired;
+
+  /// Erreur téléphone invalide
+  ///
+  /// In fr, this message translates to:
+  /// **'Le numéro de téléphone n\'est pas valide'**
+  String get phoneInvalid;
+
+  /// Erreur confirmation vide
+  ///
+  /// In fr, this message translates to:
+  /// **'La confirmation du mot de passe est requise'**
+  String get confirmPasswordRequired;
+
+  /// Erreur mots de passe différents
+  ///
+  /// In fr, this message translates to:
+  /// **'Les mots de passe ne correspondent pas'**
+  String get passwordsDoNotMatch;
+
+  /// Texte avant lien connexion
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà un compte ?'**
+  String get alreadyHaveAccount;
+
+  /// Message succès inscription
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription réussie ! Connectez-vous.'**
+  String get registerSuccess;
+
+  /// Erreur identifiants incorrects
+  ///
+  /// In fr, this message translates to:
+  /// **'Email ou mot de passe incorrect'**
+  String get invalidCredentials;
 }
 
 class _AppLocalizationsDelegate

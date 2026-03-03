@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../features/auth/presentation/providers/auth_provider.dart';
 import '../features/auth/presentation/screens/login_screen.dart';
+import '../features/auth/presentation/screens/register_screen.dart';
 import '../features/home/presentation/screens/home_screen.dart';
 import '../features/map/presentation/screens/map_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
@@ -25,12 +26,18 @@ final routerProvider = Provider<GoRouter>((ref) {
         return null;
       }
 
-      if (!isAuthenticated && !isOnLogin) return '/login';
-      if (isAuthenticated && isOnLogin) return '/home';
+      final isOnAuth = isOnLogin || state.matchedLocation == '/register';
+
+      if (!isAuthenticated && !isOnAuth) return '/login';
+      if (isAuthenticated && isOnAuth) return '/home';
       return null;
     },
     routes: [
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
+      GoRoute(
+        path: '/register',
+        builder: (context, state) => const RegisterScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return ScaffoldWithNavBar(navigationShell: navigationShell);

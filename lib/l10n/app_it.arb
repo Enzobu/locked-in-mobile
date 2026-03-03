@@ -36,5 +36,20 @@
   "french": "Français",
   "english": "English",
   "german": "Deutsch",
-  "italian": "Italiano"
+  "italian": "Italiano",
+  "registerTitle": "Crea il tuo account",
+  "registerSubtitle": "Registrati per prenotare i tuoi armadietti",
+  "firstname": "Nome",
+  "lastname": "Cognome",
+  "phone": "Telefono",
+  "confirmPassword": "Conferma password",
+  "firstnameRequired": "Il nome è obbligatorio",
+  "lastnameRequired": "Il cognome è obbligatorio",
+  "phoneRequired": "Il telefono è obbligatorio",
+  "phoneInvalid": "Il numero di telefono non è valido",
+  "confirmPasswordRequired": "La conferma della password è obbligatoria",
+  "passwordsDoNotMatch": "Le password non corrispondono",
+  "alreadyHaveAccount": "Hai già un account?",
+  "registerSuccess": "Registrazione riuscita! Effettua l'accesso.",
+  "invalidCredentials": "Email o password non validi"
 }

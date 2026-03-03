@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:locked_in_mobile/core/network/api_exception.dart';
 import 'package:locked_in_mobile/core/network/token_storage.dart';
 import 'package:locked_in_mobile/features/auth/data/datasources/auth_datasource.dart';
 import 'package:locked_in_mobile/features/auth/presentation/providers/auth_provider.dart';
@@ -11,6 +12,12 @@ class _FakeAuthDatasource implements AuthDatasource {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     if (email.isEmpty || password.isEmpty) {
       throw Exception('Email and password are required');
+    }
+    if (email == 'wrong@test.com') {
+      throw const ApiException(
+        statusCode: 401,
+        message: 'Invalid credentials.',
+      );
     }
     if (password.length < 6) {
       throw Exception('Invalid credentials');
@@ -27,6 +34,16 @@ class _FakeAuthDatasource implements AuthDatasource {
     required String birthDate,
     required String phone,
   }) async {
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+    if (email.isEmpty || password.isEmpty) {
+      throw Exception('All fields are required');
+    }
+    if (email == 'existing@test.com') {
+      throw const ApiException(
+        statusCode: 422,
+        message: 'Email already exists',
+      );
+    }
     return {'id': 1, 'email': email};
   }
 
@@ -60,7 +77,7 @@ void main() {
     container.dispose();
   });
 
-  group('AuthNotifier', () {
+  group('AuthNotifier - login', () {
     test('initial state is initial then becomes unauthenticated', () async {
       final state = container.read(authProvider);
       expect(state.status, AuthStatus.initial);
@@ -101,6 +118,21 @@ void main() {
       expect(state.status, AuthStatus.error);
     });
 
+    test(
+      'login with wrong credentials sets error with invalidCredentials',
+      () async {
+        await Future<void>.delayed(const Duration(milliseconds: 300));
+
+        await container
+            .read(authProvider.notifier)
+            .login('wrong@test.com', 'password123');
+
+        final state = container.read(authProvider);
+        expect(state.status, AuthStatus.error);
+        expect(state.errorMessage, 'invalidCredentials');
+      },
+    );
+
     test('login saves token to storage', () async {
       await Future<void>.delayed(const Duration(milliseconds: 300));
 
@@ -130,6 +162,60 @@ void main() {
       final tokenStorage = container.read(tokenStorageProvider);
       final token = await tokenStorage.getAccessToken();
       expect(token, isNull);
+    });
+  });
+
+  group('AuthNotifier - register', () {
+    test('register with valid data sets registerSuccess state', () async {
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      await container
+          .read(authProvider.notifier)
+          .register(
+            email: 'new@test.com',
+            password: 'password123',
+            firstname: 'Jean',
+            lastname: 'Dupont',
+            phone: '+33612345678',
+          );
+
+      final state = container.read(authProvider);
+      expect(state.status, AuthStatus.registerSuccess);
+    });
+
+    test('register with existing email sets error state', () async {
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      await container
+          .read(authProvider.notifier)
+          .register(
+            email: 'existing@test.com',
+            password: 'password123',
+            firstname: 'Jean',
+            lastname: 'Dupont',
+            phone: '+33612345678',
+          );
+
+      final state = container.read(authProvider);
+      expect(state.status, AuthStatus.error);
+      expect(state.errorMessage, 'Email already exists');
+    });
+
+    test('register with empty fields sets error state', () async {
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+
+      await container
+          .read(authProvider.notifier)
+          .register(
+            email: '',
+            password: '',
+            firstname: '',
+            lastname: '',
+            phone: '',
+          );
+
+      final state = container.read(authProvider);
+      expect(state.status, AuthStatus.error);
     });
   });
 

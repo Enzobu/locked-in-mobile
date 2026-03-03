@@ -119,4 +119,50 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get italian => 'Italiano';
+
+  @override
+  String get registerTitle => 'Créez votre compte';
+
+  @override
+  String get registerSubtitle => 'Inscrivez-vous pour réserver vos casiers';
+
+  @override
+  String get firstname => 'Prénom';
+
+  @override
+  String get lastname => 'Nom';
+
+  @override
+  String get phone => 'Téléphone';
+
+  @override
+  String get confirmPassword => 'Confirmer le mot de passe';
+
+  @override
+  String get firstnameRequired => 'Le prénom est requis';
+
+  @override
+  String get lastnameRequired => 'Le nom est requis';
+
+  @override
+  String get phoneRequired => 'Le téléphone est requis';
+
+  @override
+  String get phoneInvalid => 'Le numéro de téléphone n\'est pas valide';
+
+  @override
+  String get confirmPasswordRequired =>
+      'La confirmation du mot de passe est requise';
+
+  @override
+  String get passwordsDoNotMatch => 'Les mots de passe ne correspondent pas';
+
+  @override
+  String get alreadyHaveAccount => 'Déjà un compte ?';
+
+  @override
+  String get registerSuccess => 'Inscription réussie ! Connectez-vous.';
+
+  @override
+  String get invalidCredentials => 'Email ou mot de passe incorrect';
 }

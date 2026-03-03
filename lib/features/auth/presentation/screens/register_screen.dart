@@ -9,31 +9,46 @@ import '../widgets/auth_error_banner.dart';
 import '../widgets/auth_tab_selector.dart';
 import '../widgets/auth_text_field.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends ConsumerStatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _firstnameController = TextEditingController();
+  final _lastnameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
+    _firstnameController.dispose();
+    _lastnameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
-  Future<void> _onLogin() async {
+  Future<void> _onRegister() async {
     if (!_formKey.currentState!.validate()) return;
     await ref
         .read(authProvider.notifier)
-        .login(_emailController.text.trim(), _passwordController.text);
+        .register(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          firstname: _firstnameController.text.trim(),
+          lastname: _lastnameController.text.trim(),
+          phone: _phoneController.text.trim(),
+        );
   }
 
   @override
@@ -42,6 +57,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final authState = ref.watch(authProvider);
     final theme = Theme.of(context);
     final isLoading = authState.status == AuthStatus.loading;
+
+    ref.listen<AuthState>(authProvider, (previous, next) {
+      if (next.status == AuthStatus.registerSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(l10n.registerSuccess),
+            backgroundColor: theme.colorScheme.primary,
+          ),
+        );
+        context.go('/login');
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -57,7 +84,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       children: [
                         const SizedBox(height: 48),
                         Text(
-                          l10n.loginTitle,
+                          l10n.registerTitle,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.w700,
@@ -66,7 +93,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          l10n.loginSubtitle,
+                          l10n.registerSubtitle,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
@@ -74,11 +101,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                         const SizedBox(height: 32),
                         AuthTabSelector(
-                          selectedIndex: 0,
+                          selectedIndex: 1,
                           loginLabel: l10n.login,
                           registerLabel: l10n.register,
                           onTabChanged: (index) {
-                            if (index == 1) context.go('/register');
+                            if (index == 0) context.go('/login');
                           },
                         ),
                         const SizedBox(height: 32),
@@ -87,6 +114,44 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: AuthTextField(
+                                      label: l10n.firstname,
+                                      controller: _firstnameController,
+                                      enabled: !isLoading,
+                                      hintText: 'Jean',
+                                      textInputAction: TextInputAction.next,
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.trim().isEmpty) {
+                                          return l10n.firstnameRequired;
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: AuthTextField(
+                                      label: l10n.lastname,
+                                      controller: _lastnameController,
+                                      enabled: !isLoading,
+                                      hintText: 'Dupont',
+                                      textInputAction: TextInputAction.next,
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.trim().isEmpty) {
+                                          return l10n.lastnameRequired;
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
                               AuthTextField(
                                 label: l10n.email,
                                 controller: _emailController,
@@ -108,15 +173,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   return null;
                                 },
                               ),
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 16),
+                              AuthTextField(
+                                label: l10n.phone,
+                                controller: _phoneController,
+                                enabled: !isLoading,
+                                hintText: '+33 6 12 34 56 78',
+                                keyboardType: TextInputType.phone,
+                                textInputAction: TextInputAction.next,
+                                validator: (value) {
+                                  if (value == null || value.trim().isEmpty) {
+                                    return l10n.phoneRequired;
+                                  }
+                                  final phoneRegex = RegExp(
+                                    r'^[+]?[\d\s\-().]{7,}$',
+                                  );
+                                  if (!phoneRegex.hasMatch(value.trim())) {
+                                    return l10n.phoneInvalid;
+                                  }
+                                  return null;
+                                },
+                              ),
+                              const SizedBox(height: 16),
                               AuthTextField(
                                 label: l10n.password,
                                 controller: _passwordController,
                                 enabled: !isLoading,
                                 hintText: '••••••••',
                                 obscureText: _obscurePassword,
-                                textInputAction: TextInputAction.done,
-                                onFieldSubmitted: (_) => _onLogin(),
+                                textInputAction: TextInputAction.next,
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscurePassword
@@ -141,45 +226,54 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   return null;
                                 },
                               ),
-                              const SizedBox(height: 8),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () {},
-                                  style: TextButton.styleFrom(
-                                    padding: EdgeInsets.zero,
-                                    minimumSize: const Size(0, 36),
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
+                              const SizedBox(height: 16),
+                              AuthTextField(
+                                label: l10n.confirmPassword,
+                                controller: _confirmPasswordController,
+                                enabled: !isLoading,
+                                hintText: '••••••••',
+                                obscureText: _obscureConfirmPassword,
+                                textInputAction: TextInputAction.done,
+                                onFieldSubmitted: (_) => _onRegister(),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscureConfirmPassword
+                                        ? LucideIcons.eyeOff
+                                        : LucideIcons.eye,
+                                    size: 20,
+                                    color: theme.colorScheme.onSurfaceVariant,
                                   ),
-                                  child: Text(
-                                    l10n.forgotPassword,
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      color: theme.colorScheme.primary,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscureConfirmPassword =
+                                          !_obscureConfirmPassword;
+                                    });
+                                  },
                                 ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return l10n.confirmPasswordRequired;
+                                  }
+                                  if (value != _passwordController.text) {
+                                    return l10n.passwordsDoNotMatch;
+                                  }
+                                  return null;
+                                },
                               ),
                             ],
                           ),
                         ),
                         if (authState.status == AuthStatus.error &&
                             authState.errorMessage != null) ...[
-                          const SizedBox(height: 8),
-                          AuthErrorBanner(
-                            message:
-                                authState.errorMessage == 'invalidCredentials'
-                                ? l10n.invalidCredentials
-                                : authState.errorMessage!,
-                          ),
+                          const SizedBox(height: 12),
+                          AuthErrorBanner(message: authState.errorMessage!),
                         ],
                         const SizedBox(height: 24),
                         SizedBox(
                           width: double.infinity,
                           height: 52,
                           child: FilledButton(
-                            onPressed: isLoading ? null : _onLogin,
+                            onPressed: isLoading ? null : _onRegister,
                             style: FilledButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(28),
@@ -195,7 +289,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                     ),
                                   )
                                 : Text(
-                                    l10n.login,
+                                    l10n.register,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
@@ -210,13 +304,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                l10n.noAccount,
+                                l10n.alreadyHaveAccount,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),
                               TextButton(
-                                onPressed: () => context.go('/register'),
+                                onPressed: () => context.go('/login'),
                                 style: TextButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 4,
@@ -226,7 +320,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                       MaterialTapTargetSize.shrinkWrap,
                                 ),
                                 child: Text(
-                                  l10n.register,
+                                  l10n.login,
                                   style: theme.textTheme.bodyMedium?.copyWith(
                                     color: theme.colorScheme.primary,
                                     fontWeight: FontWeight.w700,

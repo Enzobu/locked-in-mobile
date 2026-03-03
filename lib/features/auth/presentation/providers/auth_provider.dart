@@ -19,7 +19,14 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
   );
 });
 
-enum AuthStatus { initial, loading, authenticated, unauthenticated, error }
+enum AuthStatus {
+  initial,
+  loading,
+  authenticated,
+  unauthenticated,
+  error,
+  registerSuccess,
+}
 
 class AuthState {
   const AuthState({
@@ -73,14 +80,43 @@ class AuthNotifier extends Notifier<AuthState> {
     try {
       final data = await _datasource.login(email, password);
       final token = data['token'] as String?;
-      if (token == null) {
+      if (token == null || token.isEmpty) {
         throw const ApiException(
           statusCode: 401,
-          message: 'Invalid response from server',
+          message: 'invalidCredentials',
         );
       }
       await _tokenStorage.saveTokens(accessToken: token);
       state = const AuthState(status: AuthStatus.authenticated);
+    } on ApiException catch (e) {
+      final message = e.isUnauthorized ? 'invalidCredentials' : e.message;
+      state = AuthState(status: AuthStatus.error, errorMessage: message);
+    } on Exception catch (e) {
+      state = AuthState(
+        status: AuthStatus.error,
+        errorMessage: e.toString().replaceFirst('Exception: ', ''),
+      );
+    }
+  }
+
+  Future<void> register({
+    required String email,
+    required String password,
+    required String firstname,
+    required String lastname,
+    required String phone,
+  }) async {
+    state = state.copyWith(status: AuthStatus.loading);
+    try {
+      await _datasource.register(
+        email: email,
+        password: password,
+        firstname: firstname,
+        lastname: lastname,
+        birthDate: DateTime.now().toIso8601String(),
+        phone: phone,
+      );
+      state = const AuthState(status: AuthStatus.registerSuccess);
     } on ApiException catch (e) {
       state = AuthState(status: AuthStatus.error, errorMessage: e.message);
     } on Exception catch (e) {

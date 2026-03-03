@@ -119,4 +119,50 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get italian => 'Italiano';
+
+  @override
+  String get registerTitle => 'Crea il tuo account';
+
+  @override
+  String get registerSubtitle => 'Registrati per prenotare i tuoi armadietti';
+
+  @override
+  String get firstname => 'Nome';
+
+  @override
+  String get lastname => 'Cognome';
+
+  @override
+  String get phone => 'Telefono';
+
+  @override
+  String get confirmPassword => 'Conferma password';
+
+  @override
+  String get firstnameRequired => 'Il nome è obbligatorio';
+
+  @override
+  String get lastnameRequired => 'Il cognome è obbligatorio';
+
+  @override
+  String get phoneRequired => 'Il telefono è obbligatorio';
+
+  @override
+  String get phoneInvalid => 'Il numero di telefono non è valido';
+
+  @override
+  String get confirmPasswordRequired =>
+      'La conferma della password è obbligatoria';
+
+  @override
+  String get passwordsDoNotMatch => 'Le password non corrispondono';
+
+  @override
+  String get alreadyHaveAccount => 'Hai già un account?';
+
+  @override
+  String get registerSuccess => 'Registrazione riuscita! Effettua l\'accesso.';
+
+  @override
+  String get invalidCredentials => 'Email o password non validi';
 }
