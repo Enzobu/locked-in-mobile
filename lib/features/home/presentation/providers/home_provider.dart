@@ -159,6 +159,16 @@ bool _summaryMatchesQuery(LockerBaySummary summary, String query) {
       street.contains(query);
 }
 
+final lockerBayDetailProvider = FutureProvider.family<LockerBaySummary, int>((
+  ref,
+  id,
+) async {
+  final repository = ref.watch(lockerBayRepositoryProvider);
+  final bay = await repository.getLockerBayById(id);
+  final lockers = await repository.getLockersByBayId(id);
+  return LockerBaySummary(lockerBay: bay, lockers: lockers);
+});
+
 final filteredSummariesProvider = Provider<AsyncValue<List<LockerBaySummary>>>((
   ref,
 ) {
