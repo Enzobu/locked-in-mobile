@@ -200,5 +200,23 @@
   "reservationsPast": "Vergangene",
   "reservationCancelTitle": "Reservierung stornieren",
   "reservationCancelMessage": "Möchten Sie diese Reservierung wirklich stornieren?",
-  "reservationCancelConfirm": "Stornierung bestätigen"
+  "reservationCancelConfirm": "Stornierung bestätigen",
+
+  "reservationDetailTitle": "Reservierungsdetail",
+  "reservationDetailLocker": "Schließfach",
+  "reservationDetailLockerBay": "Abholpunkt",
+  "reservationDetailPeriod": "Zeitraum",
+  "reservationDetailDuration": "Dauer",
+  "reservationDetailPrice": "Preis",
+  "reservationDetailSpecifications": "Spezifikationen",
+  "reservationDetailDimensions": "{width} × {height} × {depth} cm",
+  "@reservationDetailDimensions": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "depth": { "type": "int" }
+    }
+  },
+  "reservationDetailMaterial": "Material",
+  "reservationDetailCancelReservation": "Reservierung stornieren"
 }

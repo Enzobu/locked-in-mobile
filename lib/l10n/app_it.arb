@@ -200,5 +200,23 @@
   "reservationsPast": "Passate",
   "reservationCancelTitle": "Annulla prenotazione",
   "reservationCancelMessage": "Sei sicuro di voler annullare questa prenotazione?",
-  "reservationCancelConfirm": "Conferma annullamento"
+  "reservationCancelConfirm": "Conferma annullamento",
+
+  "reservationDetailTitle": "Dettaglio prenotazione",
+  "reservationDetailLocker": "Armadietto",
+  "reservationDetailLockerBay": "Punto di ritiro",
+  "reservationDetailPeriod": "Periodo",
+  "reservationDetailDuration": "Durata",
+  "reservationDetailPrice": "Prezzo",
+  "reservationDetailSpecifications": "Specifiche",
+  "reservationDetailDimensions": "{width} × {height} × {depth} cm",
+  "@reservationDetailDimensions": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "depth": { "type": "int" }
+    }
+  },
+  "reservationDetailMaterial": "Materiale",
+  "reservationDetailCancelReservation": "Annulla prenotazione"
 }

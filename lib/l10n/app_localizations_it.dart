@@ -444,4 +444,36 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reservationCancelConfirm => 'Conferma annullamento';
+
+  @override
+  String get reservationDetailTitle => 'Dettaglio prenotazione';
+
+  @override
+  String get reservationDetailLocker => 'Armadietto';
+
+  @override
+  String get reservationDetailLockerBay => 'Punto di ritiro';
+
+  @override
+  String get reservationDetailPeriod => 'Periodo';
+
+  @override
+  String get reservationDetailDuration => 'Durata';
+
+  @override
+  String get reservationDetailPrice => 'Prezzo';
+
+  @override
+  String get reservationDetailSpecifications => 'Specifiche';
+
+  @override
+  String reservationDetailDimensions(int width, int height, int depth) {
+    return '$width × $height × $depth cm';
+  }
+
+  @override
+  String get reservationDetailMaterial => 'Materiale';
+
+  @override
+  String get reservationDetailCancelReservation => 'Annulla prenotazione';
 }

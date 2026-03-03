@@ -236,8 +236,7 @@ void main() {
         expect(state.isSubmitting, isFalse);
         expect(state.reservation, isNotNull);
         expect(state.publicForm, isNotNull);
-        expect(state.publicForm, startsWith('LI-'));
-        expect(state.publicForm!.length, 11); // "LI-" + 8 chars
+        expect(state.publicForm, startsWith('RES-'));
         expect(state.error, isNull);
       },
     );

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../core/models/locker.dart';
+import '../core/models/reservation.dart';
 import '../features/auth/presentation/providers/auth_provider.dart';
 import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/auth/presentation/screens/register_screen.dart';
@@ -12,6 +13,7 @@ import '../features/home/presentation/screens/home_screen.dart';
 import '../features/home/presentation/screens/locker_bay_detail_screen.dart';
 import '../features/map/presentation/screens/map_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
+import '../features/reservations/presentation/screens/reservation_detail_screen.dart';
 import '../features/reservations/presentation/screens/reservation_flow_screen.dart';
 import '../features/reservations/presentation/screens/reservations_screen.dart';
 import '../l10n/app_localizations.dart';
@@ -75,6 +77,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final locker = state.extra! as Locker;
           return ReservationFlowScreen(locker: locker);
+        },
+      ),
+      GoRoute(
+        path: '/reservation/detail',
+        builder: (context, state) {
+          final reservation = state.extra! as Reservation;
+          return ReservationDetailScreen(reservation: reservation);
         },
       ),
       StatefulShellRoute.indexedStack(

@@ -71,6 +71,7 @@ void main() {
     testWidgets('displays locker bay name', (tester) async {
       final reservation = Reservation(
         id: 1,
+        publicForm: 'RES-TEST-001',
         startsAt: DateTime(2026, 4, 1),
         endsAt: DateTime(2026, 4, 3),
         customer: testCustomer,
@@ -89,6 +90,7 @@ void main() {
     testWidgets('displays status badge for active reservation', (tester) async {
       final reservation = Reservation(
         id: 1,
+        publicForm: 'RES-TEST-001',
         startsAt: DateTime(2026, 4, 1),
         endsAt: DateTime(2026, 4, 3),
         customer: testCustomer,
@@ -110,6 +112,7 @@ void main() {
     ) async {
       final reservation = Reservation(
         id: 1,
+        publicForm: 'RES-TEST-001',
         startsAt: DateTime(2026, 4, 1),
         endsAt: DateTime(2026, 4, 3),
         customer: testCustomer,

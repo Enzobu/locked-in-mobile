@@ -200,5 +200,23 @@
   "reservationsPast": "Past",
   "reservationCancelTitle": "Cancel reservation",
   "reservationCancelMessage": "Are you sure you want to cancel this reservation?",
-  "reservationCancelConfirm": "Confirm cancellation"
+  "reservationCancelConfirm": "Confirm cancellation",
+
+  "reservationDetailTitle": "Reservation detail",
+  "reservationDetailLocker": "Locker",
+  "reservationDetailLockerBay": "Pickup point",
+  "reservationDetailPeriod": "Period",
+  "reservationDetailDuration": "Duration",
+  "reservationDetailPrice": "Price",
+  "reservationDetailSpecifications": "Specifications",
+  "reservationDetailDimensions": "{width} × {height} × {depth} cm",
+  "@reservationDetailDimensions": {
+    "placeholders": {
+      "width": { "type": "int" },
+      "height": { "type": "int" },
+      "depth": { "type": "int" }
+    }
+  },
+  "reservationDetailMaterial": "Material",
+  "reservationDetailCancelReservation": "Cancel reservation"
 }
