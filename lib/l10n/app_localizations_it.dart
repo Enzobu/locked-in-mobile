@@ -434,4 +434,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reservationsPast => 'Passate';
+
+  @override
+  String get reservationCancelTitle => 'Annulla prenotazione';
+
+  @override
+  String get reservationCancelMessage =>
+      'Sei sicuro di voler annullare questa prenotazione?';
+
+  @override
+  String get reservationCancelConfirm => 'Conferma annullamento';
 }

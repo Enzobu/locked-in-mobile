@@ -329,5 +329,11 @@
   "reservationsUpcoming": "À venir",
   "@reservationsUpcoming": { "description": "Section réservations à venir" },
   "reservationsPast": "Passées",
-  "@reservationsPast": { "description": "Section réservations passées" }
+  "@reservationsPast": { "description": "Section réservations passées" },
+  "reservationCancelTitle": "Annuler la réservation",
+  "@reservationCancelTitle": { "description": "Titre dialogue annulation réservation" },
+  "reservationCancelMessage": "Êtes-vous sûr de vouloir annuler cette réservation ?",
+  "@reservationCancelMessage": { "description": "Message dialogue annulation réservation" },
+  "reservationCancelConfirm": "Confirmer l'annulation",
+  "@reservationCancelConfirm": { "description": "Bouton confirmer annulation" }
 }

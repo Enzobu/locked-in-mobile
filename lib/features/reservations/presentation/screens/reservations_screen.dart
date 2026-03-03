@@ -34,13 +34,20 @@ class ReservationsScreen extends ConsumerWidget {
   }
 }
 
-class _ReservationsList extends StatelessWidget {
+class _ReservationsList extends ConsumerWidget {
   const _ReservationsList({required this.reservations});
 
   final List<Reservation> reservations;
 
+  bool _isCancellable(Reservation r) {
+    return (r.status == ReservationStatus.active ||
+            r.status == ReservationStatus.confirmed ||
+            r.status == ReservationStatus.pending) &&
+        r.endsAt.isAfter(DateTime.now());
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final now = DateTime.now();
 
@@ -60,38 +67,81 @@ class _ReservationsList extends StatelessWidget {
       return isDone || r.endsAt.isBefore(now);
     }).toList()..sort((a, b) => b.startsAt.compareTo(a.startsAt));
 
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-      children: [
-        if (upcoming.isNotEmpty) ...[
-          _SectionHeader(
-            icon: LucideIcons.calendarClock,
-            title: l10n.reservationsUpcoming,
-          ),
-          const SizedBox(height: 8),
-          ...upcoming.map(
-            (r) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: ReservationCard(reservation: r),
+    return RefreshIndicator(
+      onRefresh: () => ref.read(reservationsProvider.notifier).refresh(),
+      child: ListView(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+        children: [
+          if (upcoming.isNotEmpty) ...[
+            _SectionHeader(
+              icon: LucideIcons.calendarClock,
+              title: l10n.reservationsUpcoming,
             ),
-          ),
-          const SizedBox(height: 16),
-        ],
-        if (past.isNotEmpty) ...[
-          _SectionHeader(
-            icon: LucideIcons.history,
-            title: l10n.reservationsPast,
-          ),
-          const SizedBox(height: 8),
-          ...past.map(
-            (r) => Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: ReservationCard(reservation: r),
+            const SizedBox(height: 8),
+            ...upcoming.map(
+              (r) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ReservationCard(
+                  reservation: r,
+                  onCancel: _isCancellable(r)
+                      ? () => _showCancelDialog(context, ref, r)
+                      : null,
+                ),
+              ),
             ),
-          ),
+            const SizedBox(height: 16),
+          ],
+          if (past.isNotEmpty) ...[
+            _SectionHeader(
+              icon: LucideIcons.history,
+              title: l10n.reservationsPast,
+            ),
+            const SizedBox(height: 8),
+            ...past.map(
+              (r) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ReservationCard(reservation: r),
+              ),
+            ),
+          ],
         ],
-      ],
+      ),
     );
+  }
+
+  void _showCancelDialog(
+    BuildContext context,
+    WidgetRef ref,
+    Reservation reservation,
+  ) {
+    final l10n = AppLocalizations.of(context)!;
+
+    showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.reservationCancelTitle),
+        content: Text(l10n.reservationCancelMessage),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: FilledButton.styleFrom(
+              backgroundColor: const Color(0xFFDC2626),
+            ),
+            child: Text(l10n.reservationCancelConfirm),
+          ),
+        ],
+      ),
+    ).then((confirmed) {
+      if (confirmed == true) {
+        ref
+            .read(reservationsProvider.notifier)
+            .cancelReservation(reservation.id);
+      }
+    });
   }
 }
 

@@ -7,9 +7,14 @@ import '../../../../core/models/reservation_status.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class ReservationCard extends StatelessWidget {
-  const ReservationCard({required this.reservation, super.key});
+  const ReservationCard({
+    required this.reservation,
+    this.onCancel,
+    super.key,
+  });
 
   final Reservation reservation;
+  final VoidCallback? onCancel;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +114,21 @@ class ReservationCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (onCancel != null) ...[
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: onCancel,
+                  icon: const Icon(LucideIcons.x, size: 16),
+                  label: Text(l10n.cancel),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: const Color(0xFFDC2626),
+                    side: const BorderSide(color: Color(0xFFDC2626)),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),

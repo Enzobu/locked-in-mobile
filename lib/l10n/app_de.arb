@@ -197,5 +197,8 @@
   "reservationStatusCancelled": "Storniert",
   "reservationStatusExpired": "Abgelaufen",
   "reservationsUpcoming": "Bevorstehend",
-  "reservationsPast": "Vergangene"
+  "reservationsPast": "Vergangene",
+  "reservationCancelTitle": "Reservierung stornieren",
+  "reservationCancelMessage": "Möchten Sie diese Reservierung wirklich stornieren?",
+  "reservationCancelConfirm": "Stornierung bestätigen"
 }
