@@ -11,8 +11,9 @@
 ## Epic 1 : Setup & Configuration
 
 ### TK-001 — Initialiser le projet et les dépendances
-**Status**: `TODO`
+**Status**: `DONE`
 **Branch**: `feature/TK-001-project-setup`
+**Date de fin**: 2026-03-03
 **Description**: Ajouter toutes les dépendances au pubspec.yaml (riverpod, go_router, dio, flutter_svg, lucide_icons, flutter_map, latlong2, shared_preferences, intl). Configurer analysis_options.yaml. Mettre en place la structure de dossiers feature-first.
 **Acceptance Criteria**:
 - [ ] Toutes les dépendances installées
