@@ -51,5 +51,18 @@
   "passwordsDoNotMatch": "Passwords do not match",
   "alreadyHaveAccount": "Already have an account?",
   "registerSuccess": "Registration successful! Please sign in.",
-  "invalidCredentials": "Invalid email or password"
+  "invalidCredentials": "Invalid email or password",
+  "homeGreeting": "Welcome",
+  "homeTitle": "Find your locker",
+  "availableLockers": "{available}/{total} available",
+  "@availableLockers": {
+    "placeholders": {
+      "available": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "rechargeable": "Charging",
+  "noLockersTitle": "No lockers available",
+  "noLockersSubtitle": "No locker points are available at the moment. Please check back later.",
+  "lockerBays": "Locker points"
 }

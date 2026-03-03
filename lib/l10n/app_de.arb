@@ -51,5 +51,18 @@
   "passwordsDoNotMatch": "Passwörter stimmen nicht überein",
   "alreadyHaveAccount": "Bereits ein Konto?",
   "registerSuccess": "Registrierung erfolgreich! Bitte melden Sie sich an.",
-  "invalidCredentials": "Ungültige E-Mail oder Passwort"
+  "invalidCredentials": "Ungültige E-Mail oder Passwort",
+  "homeGreeting": "Willkommen",
+  "homeTitle": "Finden Sie Ihr Schließfach",
+  "availableLockers": "{available}/{total} verfügbar",
+  "@availableLockers": {
+    "placeholders": {
+      "available": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "rechargeable": "Aufladen",
+  "noLockersTitle": "Keine Schließfächer verfügbar",
+  "noLockersSubtitle": "Derzeit sind keine Schließfachpunkte verfügbar. Bitte versuchen Sie es später erneut.",
+  "lockerBays": "Schließfachpunkte"
 }

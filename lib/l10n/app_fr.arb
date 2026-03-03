@@ -103,5 +103,25 @@
   "registerSuccess": "Inscription réussie ! Connectez-vous.",
   "@registerSuccess": { "description": "Message succès inscription" },
   "invalidCredentials": "Email ou mot de passe incorrect",
-  "@invalidCredentials": { "description": "Erreur identifiants incorrects" }
+  "@invalidCredentials": { "description": "Erreur identifiants incorrects" },
+  "homeGreeting": "Bienvenue",
+  "@homeGreeting": { "description": "Salutation page accueil" },
+  "homeTitle": "Trouvez votre casier",
+  "@homeTitle": { "description": "Titre principal page accueil" },
+  "availableLockers": "{available}/{total} disponibles",
+  "@availableLockers": {
+    "description": "Nombre de casiers disponibles sur le total",
+    "placeholders": {
+      "available": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "rechargeable": "Recharge",
+  "@rechargeable": { "description": "Label casier rechargeable" },
+  "noLockersTitle": "Aucun casier disponible",
+  "@noLockersTitle": { "description": "Titre état vide casiers" },
+  "noLockersSubtitle": "Aucun point de casiers n'est disponible pour le moment. Revenez plus tard.",
+  "@noLockersSubtitle": { "description": "Sous-titre état vide casiers" },
+  "lockerBays": "Points de casiers",
+  "@lockerBays": { "description": "Label liste des points de casiers" }
 }

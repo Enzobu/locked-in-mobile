@@ -51,5 +51,18 @@
   "passwordsDoNotMatch": "Le password non corrispondono",
   "alreadyHaveAccount": "Hai già un account?",
   "registerSuccess": "Registrazione riuscita! Effettua l'accesso.",
-  "invalidCredentials": "Email o password non validi"
+  "invalidCredentials": "Email o password non validi",
+  "homeGreeting": "Benvenuto",
+  "homeTitle": "Trova il tuo armadietto",
+  "availableLockers": "{available}/{total} disponibili",
+  "@availableLockers": {
+    "placeholders": {
+      "available": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "rechargeable": "Ricarica",
+  "noLockersTitle": "Nessun armadietto disponibile",
+  "noLockersSubtitle": "Nessun punto armadietti è disponibile al momento. Riprova più tardi.",
+  "lockerBays": "Punti armadietti"
 }
