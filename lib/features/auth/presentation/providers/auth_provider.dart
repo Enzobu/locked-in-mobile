@@ -55,10 +55,7 @@ class AuthNotifier extends Notifier<AuthState> {
     if (hasToken) {
       try {
         final customer = await _repository.getCurrentCustomer();
-        state = AuthState(
-          status: AuthStatus.authenticated,
-          customer: customer,
-        );
+        state = AuthState(status: AuthStatus.authenticated, customer: customer);
       } on Exception {
         await _tokenStorage.clearTokens();
         state = const AuthState(status: AuthStatus.unauthenticated);
@@ -72,11 +69,10 @@ class AuthNotifier extends Notifier<AuthState> {
     state = state.copyWith(status: AuthStatus.loading);
     try {
       final customer = await _repository.login(email, password);
-      await _tokenStorage.saveTokens(accessToken: 'mock_jwt_token_${customer.id}');
-      state = AuthState(
-        status: AuthStatus.authenticated,
-        customer: customer,
+      await _tokenStorage.saveTokens(
+        accessToken: 'mock_jwt_token_${customer.id}',
       );
+      state = AuthState(status: AuthStatus.authenticated, customer: customer);
     } on Exception catch (e) {
       state = AuthState(
         status: AuthStatus.error,
