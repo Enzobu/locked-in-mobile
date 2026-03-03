@@ -2,17 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const _primaryColor = Color(0xFFE60024);
+const _primaryColor = Color(0xFFC10000);
 
 class AppTheme {
   AppTheme._();
 
+  static final _lightColorScheme = ColorScheme.fromSeed(
+    seedColor: _primaryColor,
+    brightness: Brightness.light,
+  ).copyWith(
+    primary: _primaryColor,
+    onPrimary: Colors.white,
+  );
+
+  static final _darkColorScheme = ColorScheme.fromSeed(
+    seedColor: _primaryColor,
+    brightness: Brightness.dark,
+  ).copyWith(
+    primary: const Color(0xFFFF4444),
+    onPrimary: Colors.white,
+  );
+
   static final light = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: _primaryColor,
-      brightness: Brightness.light,
-    ),
+    colorScheme: _lightColorScheme,
     fontFamily: 'Roboto',
     appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
     cardTheme: CardThemeData(
@@ -25,14 +38,17 @@ class AppTheme {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
+        backgroundColor: _primaryColor,
+        foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
+        foregroundColor: _primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       ),
     ),
     navigationBarTheme: const NavigationBarThemeData(
@@ -42,10 +58,7 @@ class AppTheme {
 
   static final dark = ThemeData(
     useMaterial3: true,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: _primaryColor,
-      brightness: Brightness.dark,
-    ),
+    colorScheme: _darkColorScheme,
     fontFamily: 'Roboto',
     appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
     cardTheme: CardThemeData(
@@ -58,14 +71,16 @@ class AppTheme {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
+        backgroundColor: const Color(0xFFFF4444),
+        foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
       ),
     ),
     navigationBarTheme: const NavigationBarThemeData(
