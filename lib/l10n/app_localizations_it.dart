@@ -277,4 +277,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String pricePerDay(String price) {
     return '$price €';
   }
+
+  @override
+  String get mapLockerBays => 'Punti armadietti';
+
+  @override
+  String mapLockerBayCount(int count) {
+    return '$count armadietti';
+  }
+
+  @override
+  String get mapSeeDetails => 'Vedi dettagli';
 }

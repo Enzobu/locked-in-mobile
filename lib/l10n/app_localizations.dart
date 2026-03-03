@@ -611,6 +611,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{price} €'**
   String pricePerDay(String price);
+
+  /// Titre des markers sur la carte
+  ///
+  /// In fr, this message translates to:
+  /// **'Points de casiers'**
+  String get mapLockerBays;
+
+  /// Nombre de casiers dans un point
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} casiers'**
+  String mapLockerBayCount(int count);
+
+  /// Bouton voir détails sur la carte
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir les détails'**
+  String get mapSeeDetails;
 }
 
 class _AppLocalizationsDelegate

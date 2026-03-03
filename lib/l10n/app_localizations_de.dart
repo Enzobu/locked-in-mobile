@@ -279,4 +279,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String pricePerDay(String price) {
     return '$price €';
   }
+
+  @override
+  String get mapLockerBays => 'Schließfachpunkte';
+
+  @override
+  String mapLockerBayCount(int count) {
+    return '$count Schließfächer';
+  }
+
+  @override
+  String get mapSeeDetails => 'Details anzeigen';
 }

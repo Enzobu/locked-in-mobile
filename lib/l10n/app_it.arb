@@ -117,5 +117,13 @@
     "placeholders": {
       "price": { "type": "String" }
     }
-  }
+  },
+  "mapLockerBays": "Punti armadietti",
+  "mapLockerBayCount": "{count} armadietti",
+  "@mapLockerBayCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "mapSeeDetails": "Vedi dettagli"
 }

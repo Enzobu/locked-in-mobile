@@ -117,5 +117,13 @@
     "placeholders": {
       "price": { "type": "String" }
     }
-  }
+  },
+  "mapLockerBays": "Locker points",
+  "mapLockerBayCount": "{count} lockers",
+  "@mapLockerBayCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "mapSeeDetails": "See details"
 }
