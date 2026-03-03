@@ -118,4 +118,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get italian => 'Italiano';
+
+  @override
+  String get registerTitle => 'Create your account';
+
+  @override
+  String get registerSubtitle => 'Sign up to book your lockers';
+
+  @override
+  String get firstname => 'First name';
+
+  @override
+  String get lastname => 'Last name';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get confirmPassword => 'Confirm password';
+
+  @override
+  String get firstnameRequired => 'First name is required';
+
+  @override
+  String get lastnameRequired => 'Last name is required';
+
+  @override
+  String get phoneRequired => 'Phone is required';
+
+  @override
+  String get phoneInvalid => 'Phone number is not valid';
+
+  @override
+  String get confirmPasswordRequired => 'Password confirmation is required';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get alreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get registerSuccess => 'Registration successful! Please sign in.';
+
+  @override
+  String get invalidCredentials => 'Invalid email or password';
 }

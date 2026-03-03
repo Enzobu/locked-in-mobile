@@ -120,4 +120,51 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get italian => 'Italiano';
+
+  @override
+  String get registerTitle => 'Erstellen Sie Ihr Konto';
+
+  @override
+  String get registerSubtitle =>
+      'Registrieren Sie sich, um Schließfächer zu buchen';
+
+  @override
+  String get firstname => 'Vorname';
+
+  @override
+  String get lastname => 'Nachname';
+
+  @override
+  String get phone => 'Telefon';
+
+  @override
+  String get confirmPassword => 'Passwort bestätigen';
+
+  @override
+  String get firstnameRequired => 'Vorname ist erforderlich';
+
+  @override
+  String get lastnameRequired => 'Nachname ist erforderlich';
+
+  @override
+  String get phoneRequired => 'Telefonnummer ist erforderlich';
+
+  @override
+  String get phoneInvalid => 'Telefonnummer ist ungültig';
+
+  @override
+  String get confirmPasswordRequired => 'Passwortbestätigung ist erforderlich';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwörter stimmen nicht überein';
+
+  @override
+  String get alreadyHaveAccount => 'Bereits ein Konto?';
+
+  @override
+  String get registerSuccess =>
+      'Registrierung erfolgreich! Bitte melden Sie sich an.';
+
+  @override
+  String get invalidCredentials => 'Ungültige E-Mail oder Passwort';
 }

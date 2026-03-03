@@ -36,5 +36,20 @@
   "french": "Français",
   "english": "English",
   "german": "Deutsch",
-  "italian": "Italiano"
+  "italian": "Italiano",
+  "registerTitle": "Create your account",
+  "registerSubtitle": "Sign up to book your lockers",
+  "firstname": "First name",
+  "lastname": "Last name",
+  "phone": "Phone",
+  "confirmPassword": "Confirm password",
+  "firstnameRequired": "First name is required",
+  "lastnameRequired": "Last name is required",
+  "phoneRequired": "Phone is required",
+  "phoneInvalid": "Phone number is not valid",
+  "confirmPasswordRequired": "Password confirmation is required",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "alreadyHaveAccount": "Already have an account?",
+  "registerSuccess": "Registration successful! Please sign in.",
+  "invalidCredentials": "Invalid email or password"
 }

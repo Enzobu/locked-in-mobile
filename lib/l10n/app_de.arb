@@ -36,5 +36,20 @@
   "french": "Français",
   "english": "English",
   "german": "Deutsch",
-  "italian": "Italiano"
+  "italian": "Italiano",
+  "registerTitle": "Erstellen Sie Ihr Konto",
+  "registerSubtitle": "Registrieren Sie sich, um Schließfächer zu buchen",
+  "firstname": "Vorname",
+  "lastname": "Nachname",
+  "phone": "Telefon",
+  "confirmPassword": "Passwort bestätigen",
+  "firstnameRequired": "Vorname ist erforderlich",
+  "lastnameRequired": "Nachname ist erforderlich",
+  "phoneRequired": "Telefonnummer ist erforderlich",
+  "phoneInvalid": "Telefonnummer ist ungültig",
+  "confirmPasswordRequired": "Passwortbestätigung ist erforderlich",
+  "passwordsDoNotMatch": "Passwörter stimmen nicht überein",
+  "alreadyHaveAccount": "Bereits ein Konto?",
+  "registerSuccess": "Registrierung erfolgreich! Bitte melden Sie sich an.",
+  "invalidCredentials": "Ungültige E-Mail oder Passwort"
 }
