@@ -1,18 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons/lucide_icons.dart';
+
 import '../../../../l10n/app_localizations.dart';
 import '../providers/home_provider.dart';
 import '../widgets/home_empty_state.dart';
 import '../widgets/home_error_state.dart';
+import '../widgets/home_search_empty_state.dart';
 import '../widgets/locker_bay_card.dart';
 import '../widgets/locker_bay_skeleton.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final summariesAsync = ref.watch(lockerBaySummariesProvider);
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final filteredAsync = ref.watch(filteredSummariesProvider);
+    final searchQuery = ref.watch(searchQueryProvider);
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
@@ -31,7 +48,7 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
               child: Text(
                 l10n.homeTitle,
                 style: theme.textTheme.headlineSmall?.copyWith(
@@ -39,8 +56,57 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+              child: SearchBar(
+                controller: _searchController,
+                hintText: l10n.searchLockerBays,
+                leading: Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Icon(
+                    LucideIcons.search,
+                    size: 20,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                trailing: searchQuery.isNotEmpty
+                    ? [
+                        IconButton(
+                          icon: Icon(
+                            LucideIcons.x,
+                            size: 20,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                          onPressed: () {
+                            _searchController.clear();
+                            ref.read(searchQueryProvider.notifier).state = '';
+                            ref.read(searchDebounceProvider).onQueryChanged('');
+                          },
+                        ),
+                      ]
+                    : null,
+                elevation: const WidgetStatePropertyAll(0),
+                backgroundColor: WidgetStatePropertyAll(
+                  theme.colorScheme.surfaceContainerHighest.withValues(
+                    alpha: 0.5,
+                  ),
+                ),
+                shape: WidgetStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                padding: const WidgetStatePropertyAll(
+                  EdgeInsets.symmetric(horizontal: 8),
+                ),
+                onChanged: (value) {
+                  ref.read(searchQueryProvider.notifier).state = value;
+                  ref.read(searchDebounceProvider).onQueryChanged(value);
+                },
+              ),
+            ),
             Expanded(
-              child: summariesAsync.when(
+              child: filteredAsync.when(
                 loading: () => const LockerBaySkeleton(),
                 error: (error, _) => HomeErrorState(
                   message: error.toString(),
@@ -48,6 +114,10 @@ class HomeScreen extends ConsumerWidget {
                       ref.read(lockerBaySummariesProvider.notifier).refresh(),
                 ),
                 data: (summaries) {
+                  if (summaries.isEmpty && searchQuery.isNotEmpty) {
+                    return HomeSearchEmptyState(query: searchQuery);
+                  }
+
                   if (summaries.isEmpty) {
                     return const HomeEmptyState();
                   }
