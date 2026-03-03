@@ -35,4 +35,9 @@ class ReservationsNotifier extends AsyncNotifier<List<Reservation>> {
     state = const AsyncLoading();
     state = await AsyncValue.guard(_fetch);
   }
+
+  Future<void> cancelReservation(int id) async {
+    await _repository.cancelReservation(id);
+    state = await AsyncValue.guard(_fetch);
+  }
 }
