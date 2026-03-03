@@ -1,13 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/customer.dart';
+import '../../../../core/network/api_exception.dart';
+import '../../../../core/network/dio_client.dart';
 import '../../../../core/network/token_storage.dart';
-import '../../data/datasources/mock_auth_datasource.dart';
-import '../../data/repositories/mock_auth_repository.dart';
+import '../../data/datasources/api_auth_datasource.dart';
+import '../../data/datasources/auth_datasource.dart';
 import '../../domain/repositories/auth_repository.dart';
 
+final authDatasourceProvider = Provider<AuthDatasource>((ref) {
+  final dioClient = ref.watch(dioClientProvider);
+  return ApiAuthDatasource(dioClient: dioClient);
+});
+
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return MockAuthRepository(datasource: MockAuthDatasource());
+  throw UnimplementedError(
+    'Not used directly — login is handled in AuthNotifier',
+  );
 });
 
 enum AuthStatus { initial, loading, authenticated, unauthenticated, error }
@@ -47,19 +56,13 @@ class AuthNotifier extends Notifier<AuthState> {
     return const AuthState();
   }
 
-  AuthRepository get _repository => ref.read(authRepositoryProvider);
+  AuthDatasource get _datasource => ref.read(authDatasourceProvider);
   TokenStorage get _tokenStorage => ref.read(tokenStorageProvider);
 
   Future<void> _checkAuth() async {
     final hasToken = await _tokenStorage.hasTokens();
     if (hasToken) {
-      try {
-        final customer = await _repository.getCurrentCustomer();
-        state = AuthState(status: AuthStatus.authenticated, customer: customer);
-      } on Exception {
-        await _tokenStorage.clearTokens();
-        state = const AuthState(status: AuthStatus.unauthenticated);
-      }
+      state = const AuthState(status: AuthStatus.authenticated);
     } else {
       state = const AuthState(status: AuthStatus.unauthenticated);
     }
@@ -68,11 +71,18 @@ class AuthNotifier extends Notifier<AuthState> {
   Future<void> login(String email, String password) async {
     state = state.copyWith(status: AuthStatus.loading);
     try {
-      final customer = await _repository.login(email, password);
-      await _tokenStorage.saveTokens(
-        accessToken: 'mock_jwt_token_${customer.id}',
-      );
-      state = AuthState(status: AuthStatus.authenticated, customer: customer);
+      final data = await _datasource.login(email, password);
+      final token = data['token'] as String?;
+      if (token == null) {
+        throw const ApiException(
+          statusCode: 401,
+          message: 'Invalid response from server',
+        );
+      }
+      await _tokenStorage.saveTokens(accessToken: token);
+      state = const AuthState(status: AuthStatus.authenticated);
+    } on ApiException catch (e) {
+      state = AuthState(status: AuthStatus.error, errorMessage: e.message);
     } on Exception catch (e) {
       state = AuthState(
         status: AuthStatus.error,
@@ -82,7 +92,6 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   Future<void> logout() async {
-    await _repository.logout();
     await _tokenStorage.clearTokens();
     state = const AuthState(status: AuthStatus.unauthenticated);
   }
