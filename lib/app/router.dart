@@ -12,12 +12,20 @@ import '../features/profile/presentation/screens/profile_screen.dart';
 import '../features/reservations/presentation/screens/reservations_screen.dart';
 import '../l10n/app_localizations.dart';
 
+class _AuthChangeNotifier extends ChangeNotifier {
+  _AuthChangeNotifier(Ref ref) {
+    ref.listen(authProvider, (_, _) => notifyListeners());
+  }
+}
+
 final routerProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authProvider);
+  final authChangeNotifier = _AuthChangeNotifier(ref);
 
   return GoRouter(
     initialLocation: '/home',
+    refreshListenable: authChangeNotifier,
     redirect: (context, state) {
+      final authState = ref.read(authProvider);
       final isAuthenticated = authState.status == AuthStatus.authenticated;
       final isOnLogin = state.matchedLocation == '/login';
 
@@ -33,10 +41,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
+      GoRoute(
+        path: '/login',
+        pageBuilder: (context, state) => const NoTransitionPage(
+          child: LoginScreen(),
+        ),
+      ),
       GoRoute(
         path: '/register',
-        builder: (context, state) => const RegisterScreen(),
+        pageBuilder: (context, state) => const NoTransitionPage(
+          child: RegisterScreen(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
