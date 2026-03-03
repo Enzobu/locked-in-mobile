@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:locked_in_mobile/core/models/address.dart';
 import 'package:locked_in_mobile/core/models/company.dart';
 import 'package:locked_in_mobile/core/models/locker.dart';
 import 'package:locked_in_mobile/core/models/locker_bay.dart';
@@ -33,6 +34,12 @@ Locker _createTestLocker() {
         id: 1,
         name: 'LockerBox France',
         siren: '123456789',
+        address: Address(
+          id: 13,
+          city: 'Paris',
+          country: 'France',
+          street: 'Boulevard Haussmann',
+        ),
       ),
     ),
     status: LockerStatus.available,
@@ -158,25 +165,33 @@ void main() {
       expect(state.endDate, isNotNull);
     });
 
-    test('confirmReservation creates reservation and generates publicForm',
-        () async {
-      final notifier = container.read(
-        reservationFlowProvider(testLocker).notifier,
-      );
-      notifier.setDateRange(DateTime(2026, 4, 1), DateTime(2026, 4, 3));
-      notifier.goToSummary();
+    test(
+      'confirmReservation creates reservation and generates publicForm',
+      () async {
+        // Keep the provider alive during async operations
+        container.listen(
+          reservationFlowProvider(testLocker),
+          (_, __) {},
+        );
 
-      await notifier.confirmReservation();
+        final notifier = container.read(
+          reservationFlowProvider(testLocker).notifier,
+        );
+        notifier.setDateRange(DateTime(2026, 4, 1), DateTime(2026, 4, 3));
+        notifier.goToSummary();
 
-      final state = container.read(reservationFlowProvider(testLocker));
-      expect(state.step, ReservationFlowStep.confirmed);
-      expect(state.isSubmitting, isFalse);
-      expect(state.reservation, isNotNull);
-      expect(state.publicForm, isNotNull);
-      expect(state.publicForm, startsWith('LI-'));
-      expect(state.publicForm!.length, 11); // "LI-" + 8 chars
-      expect(state.error, isNull);
-    });
+        await notifier.confirmReservation();
+
+        final state = container.read(reservationFlowProvider(testLocker));
+        expect(state.step, ReservationFlowStep.confirmed);
+        expect(state.isSubmitting, isFalse);
+        expect(state.reservation, isNotNull);
+        expect(state.publicForm, isNotNull);
+        expect(state.publicForm, startsWith('LI-'));
+        expect(state.publicForm!.length, 11); // "LI-" + 8 chars
+        expect(state.error, isNull);
+      },
+    );
 
     test('confirmReservation does nothing without dates', () async {
       final notifier = container.read(
@@ -192,23 +207,17 @@ void main() {
 
   group('ReservationsNotifier', () {
     test('loads reservations on build', () async {
-      final reservations = await container.read(
-        reservationsProvider.future,
-      );
+      final reservations = await container.read(reservationsProvider.future);
 
       expect(reservations, isNotEmpty);
     });
 
     test('refresh reloads data', () async {
-      final reservations1 = await container.read(
-        reservationsProvider.future,
-      );
+      final reservations1 = await container.read(reservationsProvider.future);
 
       await container.read(reservationsProvider.notifier).refresh();
 
-      final reservations2 = await container.read(
-        reservationsProvider.future,
-      );
+      final reservations2 = await container.read(reservationsProvider.future);
 
       expect(reservations2, isNotEmpty);
       expect(reservations2.length, reservations1.length);

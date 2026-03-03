@@ -42,24 +42,23 @@ class _ReservationsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
     final now = DateTime.now();
 
     final upcoming = reservations.where((r) {
-      final isActive = r.status == ReservationStatus.active ||
+      final isActive =
+          r.status == ReservationStatus.active ||
           r.status == ReservationStatus.confirmed ||
           r.status == ReservationStatus.pending;
       return isActive && r.endsAt.isAfter(now);
-    }).toList()
-      ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+    }).toList()..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
     final past = reservations.where((r) {
-      final isDone = r.status == ReservationStatus.completed ||
+      final isDone =
+          r.status == ReservationStatus.completed ||
           r.status == ReservationStatus.cancelled ||
           r.status == ReservationStatus.expired;
       return isDone || r.endsAt.isBefore(now);
-    }).toList()
-      ..sort((a, b) => b.startsAt.compareTo(a.startsAt));
+    }).toList()..sort((a, b) => b.startsAt.compareTo(a.startsAt));
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),

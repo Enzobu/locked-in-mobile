@@ -96,8 +96,9 @@ class DateSelectionStep extends ConsumerWidget {
         // Continue button
         FilledButton(
           onPressed: state.canProceed
-              ? () =>
-                    ref.read(reservationFlowProvider(locker).notifier).goToSummary()
+              ? () => ref
+                    .read(reservationFlowProvider(locker).notifier)
+                    .goToSummary()
               : null,
           style: FilledButton.styleFrom(
             minimumSize: const Size.fromHeight(52),
@@ -107,10 +108,7 @@ class DateSelectionStep extends ConsumerWidget {
           ),
           child: Text(
             l10n.reservationNext,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),
       ],
@@ -123,8 +121,8 @@ class DateSelectionStep extends ConsumerWidget {
       context: context,
       firstDate: now,
       lastDate: now.add(const Duration(days: 365)),
-      initialDateRange: ref.read(reservationFlowProvider(locker)).startDate !=
-              null
+      initialDateRange:
+          ref.read(reservationFlowProvider(locker)).startDate != null
           ? DateTimeRange(
               start: ref.read(reservationFlowProvider(locker)).startDate!,
               end: ref.read(reservationFlowProvider(locker)).endDate!,
@@ -132,9 +130,9 @@ class DateSelectionStep extends ConsumerWidget {
           : null,
       builder: (context, child) {
         return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: Theme.of(context).colorScheme,
-          ),
+          data: Theme.of(
+            context,
+          ).copyWith(colorScheme: Theme.of(context).colorScheme),
           child: child!,
         );
       },
@@ -260,7 +258,9 @@ class _DateCard extends StatelessWidget {
                   Text(
                     date != null ? dateFormat.format(date!) : hint,
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      fontWeight: date != null ? FontWeight.w600 : FontWeight.w400,
+                      fontWeight: date != null
+                          ? FontWeight.w600
+                          : FontWeight.w400,
                       color: date != null
                           ? colorScheme.onSurface
                           : colorScheme.onSurfaceVariant,

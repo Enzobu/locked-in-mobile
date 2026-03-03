@@ -72,8 +72,10 @@ class ReservationSummaryStep extends ConsumerWidget {
           title: l10n.reservationPeriod,
           children: [
             _SummaryRow(
-              label: '${l10n.reservationDateFrom} ${dateFormat.format(state.startDate!)}',
-              value: '${l10n.reservationDateTo} ${dateFormat.format(state.endDate!)}',
+              label:
+                  '${l10n.reservationDateFrom} ${dateFormat.format(state.startDate!)}',
+              value:
+                  '${l10n.reservationDateTo} ${dateFormat.format(state.endDate!)}',
             ),
             _SummaryRow(
               label: l10n.reservationDuration(state.durationDays),
@@ -100,9 +102,7 @@ class ReservationSummaryStep extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  l10n.reservationPrice(
-                    state.totalPrice.toStringAsFixed(2),
-                  ),
+                  l10n.reservationPrice(state.totalPrice.toStringAsFixed(2)),
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w800,
                     color: colorScheme.onPrimaryContainer,

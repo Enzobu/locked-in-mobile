@@ -116,10 +116,7 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
 
       _ref.read(reservationsProvider.notifier).refresh();
     } catch (e) {
-      state = state.copyWith(
-        isSubmitting: false,
-        error: () => e.toString(),
-      );
+      state = state.copyWith(isSubmitting: false, error: () => e.toString());
     }
   }
 

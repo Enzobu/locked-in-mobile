@@ -19,11 +19,10 @@ class ReservationFlowScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(reservationFlowProvider(locker));
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return PopScope(
-      canPop: state.step == ReservationFlowStep.dateSelection ||
+      canPop:
+          state.step == ReservationFlowStep.dateSelection ||
           state.step == ReservationFlowStep.confirmed,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop && state.step == ReservationFlowStep.summary) {

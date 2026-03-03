@@ -37,10 +37,7 @@ class _ReservationSuccessStepState extends State<ReservationSuccessStep>
       parent: _controller,
       curve: Curves.elasticOut,
     );
-    _fadeAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
+    _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _controller.forward();
   }
 
@@ -127,9 +124,7 @@ class _ReservationSuccessStepState extends State<ReservationSuccessStep>
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: colorScheme.outlineVariant,
-                      ),
+                      border: Border.all(color: colorScheme.outlineVariant),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -155,9 +150,7 @@ class _ReservationSuccessStepState extends State<ReservationSuccessStep>
                   // Copy button
                   TextButton.icon(
                     onPressed: () {
-                      Clipboard.setData(
-                        ClipboardData(text: widget.publicForm),
-                      );
+                      Clipboard.setData(ClipboardData(text: widget.publicForm));
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(widget.publicForm),

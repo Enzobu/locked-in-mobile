@@ -47,6 +47,13 @@ void main() {
     email: 'test@test.com',
     firstname: 'Jean',
     lastname: 'Dupont',
+    birthDate: DateTime(1995, 6, 15),
+    address: const Address(
+      id: 1,
+      city: 'Paris',
+      country: 'France',
+      street: 'Rue de Rivoli',
+    ),
     createdAt: now,
     updatedAt: now,
   );
@@ -56,9 +63,7 @@ void main() {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: const Locale('fr'),
-      home: Scaffold(
-        body: ReservationCard(reservation: reservation),
-      ),
+      home: Scaffold(body: ReservationCard(reservation: reservation)),
     );
   }
 
@@ -100,8 +105,9 @@ void main() {
       expect(find.text('Active'), findsOneWidget);
     });
 
-    testWidgets('displays status badge for cancelled reservation',
-        (tester) async {
+    testWidgets('displays status badge for cancelled reservation', (
+      tester,
+    ) async {
       final reservation = Reservation(
         id: 1,
         startsAt: DateTime(2026, 4, 1),
