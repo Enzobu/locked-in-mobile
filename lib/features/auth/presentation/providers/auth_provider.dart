@@ -89,8 +89,7 @@ class AuthNotifier extends Notifier<AuthState> {
       await _tokenStorage.saveTokens(accessToken: token);
       state = const AuthState(status: AuthStatus.authenticated);
     } on ApiException catch (e) {
-      final message =
-          e.isUnauthorized ? 'invalidCredentials' : e.message;
+      final message = e.isUnauthorized ? 'invalidCredentials' : e.message;
       state = AuthState(status: AuthStatus.error, errorMessage: message);
     } on Exception catch (e) {
       state = AuthState(

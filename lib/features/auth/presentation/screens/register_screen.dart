@@ -40,7 +40,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   Future<void> _onRegister() async {
     if (!_formKey.currentState!.validate()) return;
-    await ref.read(authProvider.notifier).register(
+    await ref
+        .read(authProvider.notifier)
+        .register(
           email: _emailController.text.trim(),
           password: _passwordController.text,
           firstname: _firstnameController.text.trim(),
@@ -183,8 +185,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   if (value == null || value.trim().isEmpty) {
                                     return l10n.phoneRequired;
                                   }
-                                  final phoneRegex =
-                                      RegExp(r'^[+]?[\d\s\-().]{7,}$');
+                                  final phoneRegex = RegExp(
+                                    r'^[+]?[\d\s\-().]{7,}$',
+                                  );
                                   if (!phoneRegex.hasMatch(value.trim())) {
                                     return l10n.phoneInvalid;
                                   }

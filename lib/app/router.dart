@@ -26,8 +26,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         return null;
       }
 
-      final isOnAuth =
-          isOnLogin || state.matchedLocation == '/register';
+      final isOnAuth = isOnLogin || state.matchedLocation == '/register';
 
       if (!isAuthenticated && !isOnAuth) return '/login';
       if (isAuthenticated && isOnAuth) return '/home';
@@ -35,7 +34,10 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
     routes: [
       GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
-      GoRoute(path: '/register', builder: (context, state) => const RegisterScreen()),
+      GoRoute(
+        path: '/register',
+        builder: (context, state) => const RegisterScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return ScaffoldWithNavBar(navigationShell: navigationShell);

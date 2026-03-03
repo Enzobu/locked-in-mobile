@@ -7,7 +7,7 @@ user_invocable: true
 
 Commit les changements en suivant les conventions du projet.
 
-## Steps
+## StepsR
 1. Run `git status` to see changed files
 2. Run `git diff --staged` to see staged changes (if any)
 3. If nothing is staged, stage relevant files with `git add <files>` (never use `git add .` or `git add -A`)

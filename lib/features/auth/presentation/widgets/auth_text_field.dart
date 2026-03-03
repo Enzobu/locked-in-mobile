@@ -54,23 +54,19 @@ class AuthTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: TextStyle(
-              color:
-                  theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
             ),
             filled: true,
-            fillColor: theme.colorScheme.surfaceContainerHighest
-                .withValues(alpha: 0.4),
+            fillColor: theme.colorScheme.surfaceContainerHighest.withValues(
+              alpha: 0.4,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(
-                color: theme.colorScheme.outlineVariant,
-              ),
+              borderSide: BorderSide(color: theme.colorScheme.outlineVariant),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(
-                color: theme.colorScheme.outlineVariant,
-              ),
+              borderSide: BorderSide(color: theme.colorScheme.outlineVariant),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
