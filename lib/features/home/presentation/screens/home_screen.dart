@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/models/locker_filter.dart';
 import '../providers/home_provider.dart';
+import '../widgets/filter_bottom_sheet.dart';
 import '../widgets/home_empty_state.dart';
 import '../widgets/home_error_state.dart';
 import '../widgets/home_search_empty_state.dart';
@@ -52,6 +54,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final filteredAsync = ref.watch(filteredSummariesProvider);
     final searchQuery = ref.watch(searchQueryProvider);
+    final filter = ref.watch(lockerFilterProvider);
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -81,90 +84,107 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeInOut,
-                decoration: BoxDecoration(
-                  color: colorScheme.brightness == Brightness.light
-                      ? Colors.white
-                      : Colors.white.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: _isFocused
-                        ? colorScheme.outline.withValues(alpha: 0.3)
-                        : colorScheme.outlineVariant.withValues(alpha: 0.3),
-                  ),
-                ),
-                child: TextField(
-                  controller: _searchController,
-                  focusNode: _focusNode,
-                  onChanged: _onSearchChanged,
-                  style: theme.textTheme.bodyMedium,
-                  textInputAction: TextInputAction.search,
-                  cursorColor: colorScheme.primary,
-                  decoration: InputDecoration(
-                    filled: false,
-                    hintText: l10n.searchLockerBays,
-                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant.withValues(
-                        alpha: 0.5,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOut,
+                      decoration: BoxDecoration(
+                        color: colorScheme.brightness == Brightness.light
+                            ? Colors.white
+                            : Colors.white.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: _isFocused
+                              ? colorScheme.outline.withValues(alpha: 0.3)
+                              : colorScheme.outlineVariant
+                                  .withValues(alpha: 0.3),
+                        ),
                       ),
-                    ),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 4),
-                      child: Icon(
-                        LucideIcons.search,
-                        size: 20,
-                        color: _isFocused
-                            ? colorScheme.onSurface
-                            : colorScheme.onSurfaceVariant.withValues(
-                                alpha: 0.5,
-                              ),
-                      ),
-                    ),
-                    prefixIconConstraints: const BoxConstraints(minWidth: 44),
-                    suffixIcon: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 150),
-                      transitionBuilder: (child, animation) => FadeTransition(
-                        opacity: animation,
-                        child: ScaleTransition(scale: animation, child: child),
-                      ),
-                      child: searchQuery.isNotEmpty
-                          ? GestureDetector(
-                              key: const ValueKey('clear'),
-                              onTap: _clearSearch,
-                              child: Container(
-                                width: 44,
-                                alignment: Alignment.center,
-                                child: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.onSurfaceVariant
-                                        .withValues(alpha: 0.15),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    LucideIcons.x,
-                                    size: 14,
-                                    color: colorScheme.onSurfaceVariant,
+                      child: TextField(
+                        controller: _searchController,
+                        focusNode: _focusNode,
+                        onChanged: _onSearchChanged,
+                        style: theme.textTheme.bodyMedium,
+                        textInputAction: TextInputAction.search,
+                        cursorColor: colorScheme.primary,
+                        decoration: InputDecoration(
+                          filled: false,
+                          hintText: l10n.searchLockerBays,
+                          hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant.withValues(
+                              alpha: 0.5,
+                            ),
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.only(left: 4),
+                            child: Icon(
+                              LucideIcons.search,
+                              size: 20,
+                              color: _isFocused
+                                  ? colorScheme.onSurface
+                                  : colorScheme.onSurfaceVariant.withValues(
+                                      alpha: 0.5,
+                                    ),
+                            ),
+                          ),
+                          prefixIconConstraints:
+                              const BoxConstraints(minWidth: 44),
+                          suffixIcon: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 150),
+                            transitionBuilder: (child, animation) =>
+                                FadeTransition(
+                                  opacity: animation,
+                                  child: ScaleTransition(
+                                    scale: animation,
+                                    child: child,
                                   ),
                                 ),
-                              ),
-                            )
-                          : const SizedBox.square(
-                              key: ValueKey('empty'),
-                              dimension: 44,
-                            ),
-                    ),
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 0,
-                      vertical: 14,
+                            child: searchQuery.isNotEmpty
+                                ? GestureDetector(
+                                    key: const ValueKey('clear'),
+                                    onTap: _clearSearch,
+                                    child: Container(
+                                      width: 44,
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          color: colorScheme.onSurfaceVariant
+                                              .withValues(alpha: 0.15),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Icon(
+                                          LucideIcons.x,
+                                          size: 14,
+                                          color: colorScheme.onSurfaceVariant,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.square(
+                                    key: ValueKey('empty'),
+                                    dimension: 44,
+                                  ),
+                          ),
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 0,
+                            vertical: 14,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  _FilterButton(
+                    activeCount: filter.activeFilterCount,
+                    onTap: () => FilterBottomSheet.show(context),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -176,8 +196,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ref.read(lockerBaySummariesProvider.notifier).refresh(),
                 ),
                 data: (summaries) {
-                  if (summaries.isEmpty && searchQuery.isNotEmpty) {
-                    return HomeSearchEmptyState(query: searchQuery);
+                  if (summaries.isEmpty &&
+                      (searchQuery.isNotEmpty || filter.isActive)) {
+                    return HomeSearchEmptyState(
+                      query: searchQuery,
+                      hasActiveFilters: filter.isActive,
+                    );
                   }
 
                   if (summaries.isEmpty) {
@@ -205,6 +229,75 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 },
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FilterButton extends StatelessWidget {
+  const _FilterButton({required this.activeCount, required this.onTap});
+
+  final int activeCount;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isActive = activeCount > 0;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: 48,
+        height: 48,
+        decoration: BoxDecoration(
+          color: isActive
+              ? colorScheme.primary
+              : colorScheme.brightness == Brightness.light
+                  ? Colors.white
+                  : Colors.white.withValues(alpha: 0.08),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isActive
+                ? colorScheme.primary
+                : colorScheme.outlineVariant.withValues(alpha: 0.3),
+          ),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Icon(
+              LucideIcons.slidersHorizontal,
+              size: 20,
+              color: isActive
+                  ? colorScheme.onPrimary
+                  : colorScheme.onSurfaceVariant,
+            ),
+            if (isActive)
+              Positioned(
+                top: 6,
+                right: 6,
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    color: colorScheme.onPrimary,
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '$activeCount',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

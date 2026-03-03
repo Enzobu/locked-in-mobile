@@ -4,9 +4,14 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class HomeSearchEmptyState extends StatelessWidget {
-  const HomeSearchEmptyState({super.key, required this.query});
+  const HomeSearchEmptyState({
+    super.key,
+    required this.query,
+    this.hasActiveFilters = false,
+  });
 
   final String query;
+  final bool hasActiveFilters;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,9 @@ class HomeSearchEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              l10n.noSearchResults(query),
+              query.isNotEmpty
+                  ? l10n.noSearchResults(query)
+                  : l10n.noFilterResults,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
               ),
