@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../features/auth/presentation/providers/auth_provider.dart';
+import '../features/auth/presentation/screens/login_screen.dart';
 import '../features/home/presentation/screens/home_screen.dart';
 import '../features/map/presentation/screens/map_screen.dart';
 import '../features/profile/presentation/screens/profile_screen.dart';
@@ -10,9 +12,28 @@ import '../features/reservations/presentation/screens/reservations_screen.dart';
 import '../l10n/app_localizations.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
+  final authState = ref.watch(authProvider);
+
   return GoRouter(
     initialLocation: '/home',
+    redirect: (context, state) {
+      final isAuthenticated = authState.status == AuthStatus.authenticated;
+      final isOnLogin = state.matchedLocation == '/login';
+
+      if (authState.status == AuthStatus.initial ||
+          authState.status == AuthStatus.loading) {
+        return null;
+      }
+
+      if (!isAuthenticated && !isOnLogin) return '/login';
+      if (isAuthenticated && isOnLogin) return '/home';
+      return null;
+    },
     routes: [
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return ScaffoldWithNavBar(navigationShell: navigationShell);

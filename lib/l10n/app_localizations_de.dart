@@ -57,6 +57,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String get password => 'Passwort';
 
   @override
+  String get loginSubtitle =>
+      'Melden Sie sich an, um auf Ihre Schließfächer zuzugreifen';
+
+  @override
+  String get emailRequired => 'E-Mail ist erforderlich';
+
+  @override
+  String get emailInvalid => 'E-Mail ist ungültig';
+
+  @override
+  String get passwordRequired => 'Passwort ist erforderlich';
+
+  @override
+  String get passwordTooShort =>
+      'Das Passwort muss mindestens 6 Zeichen lang sein';
+
+  @override
   String get search => 'Suchen';
 
   @override

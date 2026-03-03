@@ -57,6 +57,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get password => 'Password';
 
   @override
+  String get loginSubtitle => 'Accedi per utilizzare i tuoi armadietti';
+
+  @override
+  String get emailRequired => 'L\'email è obbligatoria';
+
+  @override
+  String get emailInvalid => 'L\'email non è valida';
+
+  @override
+  String get passwordRequired => 'La password è obbligatoria';
+
+  @override
+  String get passwordTooShort =>
+      'La password deve contenere almeno 6 caratteri';
+
+  @override
   String get search => 'Cerca';
 
   @override
