@@ -197,5 +197,8 @@
   "reservationStatusCancelled": "Cancelled",
   "reservationStatusExpired": "Expired",
   "reservationsUpcoming": "Upcoming",
-  "reservationsPast": "Past"
+  "reservationsPast": "Past",
+  "reservationCancelTitle": "Cancel reservation",
+  "reservationCancelMessage": "Are you sure you want to cancel this reservation?",
+  "reservationCancelConfirm": "Confirm cancellation"
 }

@@ -436,4 +436,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reservationsPast => 'Vergangene';
+
+  @override
+  String get reservationCancelTitle => 'Reservierung stornieren';
+
+  @override
+  String get reservationCancelMessage =>
+      'Möchten Sie diese Reservierung wirklich stornieren?';
+
+  @override
+  String get reservationCancelConfirm => 'Stornierung bestätigen';
 }

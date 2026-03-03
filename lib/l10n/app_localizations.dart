@@ -893,6 +893,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Passées'**
   String get reservationsPast;
+
+  /// Titre dialogue annulation réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler la réservation'**
+  String get reservationCancelTitle;
+
+  /// Message dialogue annulation réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous sûr de vouloir annuler cette réservation ?'**
+  String get reservationCancelMessage;
+
+  /// Bouton confirmer annulation
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer l\'annulation'**
+  String get reservationCancelConfirm;
 }
 
 class _AppLocalizationsDelegate

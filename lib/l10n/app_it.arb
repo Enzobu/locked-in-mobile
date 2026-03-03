@@ -197,5 +197,8 @@
   "reservationStatusCancelled": "Annullata",
   "reservationStatusExpired": "Scaduta",
   "reservationsUpcoming": "Prossime",
-  "reservationsPast": "Passate"
+  "reservationsPast": "Passate",
+  "reservationCancelTitle": "Annulla prenotazione",
+  "reservationCancelMessage": "Sei sicuro di voler annullare questa prenotazione?",
+  "reservationCancelConfirm": "Conferma annullamento"
 }
