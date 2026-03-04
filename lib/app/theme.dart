@@ -51,6 +51,8 @@ class AppTheme {
       backgroundColor: _lightColorScheme.surface,
       surfaceTintColor: Colors.transparent,
       indicatorColor: Colors.transparent,
+      indicatorShape: const RoundedRectangleBorder(),
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return const IconThemeData(color: _primaryColor, size: 22);
@@ -77,7 +79,6 @@ class AppTheme {
         );
       }),
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      indicatorShape: const StadiumBorder(),
     ),
   );
 
@@ -114,6 +115,8 @@ class AppTheme {
       backgroundColor: _darkColorScheme.surface,
       surfaceTintColor: Colors.transparent,
       indicatorColor: Colors.transparent,
+      indicatorShape: const RoundedRectangleBorder(),
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return const IconThemeData(color: Color(0xFFFF4444), size: 22);
@@ -140,7 +143,6 @@ class AppTheme {
         );
       }),
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      indicatorShape: const StadiumBorder(),
     ),
   );
 }
