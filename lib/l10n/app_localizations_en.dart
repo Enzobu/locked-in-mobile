@@ -563,4 +563,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentError => 'Payment failed. Please try again.';
+
+  @override
+  String get errorNetwork =>
+      'Unable to connect. Check your internet connection and try again.';
+
+  @override
+  String get errorServer => 'A server error occurred. Please try again later.';
+
+  @override
+  String get errorUnknown => 'An unexpected error occurred. Please try again.';
 }

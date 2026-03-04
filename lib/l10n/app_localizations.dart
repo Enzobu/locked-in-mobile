@@ -1139,6 +1139,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Le paiement a échoué. Veuillez réessayer.'**
   String get paymentError;
+
+  /// Message erreur réseau
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de se connecter. Vérifiez votre connexion internet et réessayez.'**
+  String get errorNetwork;
+
+  /// Message erreur serveur
+  ///
+  /// In fr, this message translates to:
+  /// **'Une erreur serveur est survenue. Veuillez réessayer plus tard.'**
+  String get errorServer;
+
+  /// Message erreur inconnue
+  ///
+  /// In fr, this message translates to:
+  /// **'Une erreur inattendue est survenue. Veuillez réessayer.'**
+  String get errorUnknown;
 }
 
 class _AppLocalizationsDelegate

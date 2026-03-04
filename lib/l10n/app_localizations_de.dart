@@ -569,4 +569,16 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get paymentError =>
       'Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get errorNetwork =>
+      'Verbindung nicht möglich. Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.';
+
+  @override
+  String get errorServer =>
+      'Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es später erneut.';
+
+  @override
+  String get errorUnknown =>
+      'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
 }

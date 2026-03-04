@@ -568,4 +568,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get paymentError => 'Le paiement a échoué. Veuillez réessayer.';
+
+  @override
+  String get errorNetwork =>
+      'Impossible de se connecter. Vérifiez votre connexion internet et réessayez.';
+
+  @override
+  String get errorServer =>
+      'Une erreur serveur est survenue. Veuillez réessayer plus tard.';
+
+  @override
+  String get errorUnknown =>
+      'Une erreur inattendue est survenue. Veuillez réessayer.';
 }
