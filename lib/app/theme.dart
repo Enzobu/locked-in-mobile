@@ -155,7 +155,7 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
   @override
   ThemeMode build() {
     _loadFromPrefs();
-    return ThemeMode.system;
+    return ThemeMode.dark;
   }
 
   Future<void> _loadFromPrefs() async {
@@ -164,7 +164,7 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
     if (value != null) {
       state = ThemeMode.values.firstWhere(
         (m) => m.name == value,
-        orElse: () => ThemeMode.system,
+        orElse: () => ThemeMode.dark,
       );
     }
   }
