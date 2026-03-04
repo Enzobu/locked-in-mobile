@@ -117,12 +117,12 @@ void main() {
     });
 
     test('minPriceCents returns null when no lockers', () {
-      final summary = LockerBaySummary(lockerBay: bay, lockers: const []);
+      const summary = LockerBaySummary(lockerBay: bay, lockers: []);
       expect(summary.minPriceCents, isNull);
     });
 
     test('maxPriceCents returns null when no lockers', () {
-      final summary = LockerBaySummary(lockerBay: bay, lockers: const []);
+      const summary = LockerBaySummary(lockerBay: bay, lockers: []);
       expect(summary.maxPriceCents, isNull);
     });
 
@@ -146,7 +146,7 @@ void main() {
     });
 
     test('city returns company address city', () {
-      final summary = LockerBaySummary(lockerBay: bay, lockers: const []);
+      const summary = LockerBaySummary(lockerBay: bay, lockers: []);
       expect(summary.city, 'Paris');
     });
 
@@ -173,7 +173,7 @@ void main() {
     });
 
     test('priceRange returns empty string when no lockers', () {
-      final summary = LockerBaySummary(lockerBay: bay, lockers: const []);
+      const summary = LockerBaySummary(lockerBay: bay, lockers: []);
       expect(summary.priceRange, '');
     });
 

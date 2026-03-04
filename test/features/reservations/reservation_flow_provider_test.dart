@@ -35,11 +35,11 @@ Locker _createTestLocker({int? minDuration, int? maxDuration}) {
       longitude: 2.3744,
       minDuration: minDuration ?? 30,
       maxDuration: maxDuration ?? 120,
-      company: Company(
+      company: const Company(
         id: 1,
         name: 'LockerBox France',
         siren: '123456789',
-        address: const Address(
+        address: Address(
           id: 13,
           city: 'Paris',
           country: 'France',
@@ -249,7 +249,7 @@ void main() {
     test(
       'processPayment creates intent, presents sheet, and confirms',
       () async {
-        container.listen(reservationFlowProvider(testLocker), (_, __) {});
+        container.listen(reservationFlowProvider(testLocker), (_, _) {});
 
         final notifier = container.read(
           reservationFlowProvider(testLocker).notifier,
