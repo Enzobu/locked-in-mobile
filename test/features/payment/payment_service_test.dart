@@ -42,8 +42,8 @@ void main() {
       expect(result1.clientSecret, isNot(result2.clientSecret));
     });
 
-    test('presentPaymentSheet always returns success', () async {
-      final result = await service.presentPaymentSheet(
+    test('confirmCardPayment always returns success', () async {
+      final result = await service.confirmCardPayment(
         clientSecret: 'pi_mock_123_secret',
       );
 

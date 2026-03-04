@@ -10,10 +10,9 @@ abstract class PaymentService {
     required DateTime endsAt,
   });
 
-  /// Presents the Stripe PaymentSheet to the user
-  Future<PaymentSheetResult> presentPaymentSheet({
-    required String clientSecret,
-  });
+  /// Confirms the card payment using the clientSecret
+  /// (card details are collected via Stripe CardFormField widget)
+  Future<PaymentSheetResult> confirmCardPayment({required String clientSecret});
 
   /// Closes a reservation (calculates overtime costs)
   Future<CloseReservationResult> closeReservation({required int reservationId});

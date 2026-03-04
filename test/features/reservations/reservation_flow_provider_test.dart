@@ -219,27 +219,37 @@ void main() {
       expect(state.selectedTime, isNotNull);
     });
 
-    test('goToPayment transitions to payment step', () {
+    test(
+      'goToPayment transitions to payment step and creates intent',
+      () async {
+        container.listen(reservationFlowProvider(testLocker), (_, __) {});
+
+        final notifier = container.read(
+          reservationFlowProvider(testLocker).notifier,
+        );
+        notifier.setDate(DateTime(2026, 4, 1));
+        notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
+        notifier.goToSummary();
+        await notifier.goToPayment();
+
+        final state = container.read(reservationFlowProvider(testLocker));
+        expect(state.step, ReservationFlowStep.payment);
+        expect(state.clientSecret, isNotNull);
+        expect(state.reservationId, isNotNull);
+        expect(state.isLoadingIntent, isFalse);
+      },
+    );
+
+    test('goBackToSummary returns to summary step', () async {
+      container.listen(reservationFlowProvider(testLocker), (_, __) {});
+
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
       notifier.setDate(DateTime(2026, 4, 1));
       notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
       notifier.goToSummary();
-      notifier.goToPayment();
-
-      final state = container.read(reservationFlowProvider(testLocker));
-      expect(state.step, ReservationFlowStep.payment);
-    });
-
-    test('goBackToSummary returns to summary step', () {
-      final notifier = container.read(
-        reservationFlowProvider(testLocker).notifier,
-      );
-      notifier.setDate(DateTime(2026, 4, 1));
-      notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
-      notifier.goToSummary();
-      notifier.goToPayment();
+      await notifier.goToPayment();
       notifier.goBackToSummary();
 
       final state = container.read(reservationFlowProvider(testLocker));
@@ -247,7 +257,7 @@ void main() {
     });
 
     test(
-      'processPayment creates payment intent and confirms reservation',
+      'processPayment confirms card payment and transitions to confirmed',
       () async {
         container.listen(reservationFlowProvider(testLocker), (_, __) {});
 
@@ -258,8 +268,9 @@ void main() {
         notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
         notifier.setDuration(60);
         notifier.goToSummary();
-        notifier.goToPayment();
+        await notifier.goToPayment();
 
+        notifier.setCardComplete(true);
         await notifier.processPayment();
 
         final state = container.read(reservationFlowProvider(testLocker));
@@ -272,7 +283,7 @@ void main() {
       },
     );
 
-    test('processPayment does nothing without date/time', () async {
+    test('processPayment does nothing without clientSecret', () async {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );

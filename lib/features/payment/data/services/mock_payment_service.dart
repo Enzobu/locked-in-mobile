@@ -22,7 +22,7 @@ class MockPaymentService implements PaymentService {
   }
 
   @override
-  Future<PaymentSheetResult> presentPaymentSheet({
+  Future<PaymentSheetResult> confirmCardPayment({
     required String clientSecret,
   }) async {
     await Future.delayed(const Duration(seconds: 2));
