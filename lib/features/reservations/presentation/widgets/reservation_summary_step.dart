@@ -117,66 +117,22 @@ class ReservationSummaryStep extends ConsumerWidget {
           ),
         ),
 
-        if (state.error != null) ...[
-          const SizedBox(height: 12),
-          Card(
-            margin: EdgeInsets.zero,
-            color: colorScheme.errorContainer,
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  Icon(
-                    LucideIcons.alertCircle,
-                    size: 18,
-                    color: colorScheme.onErrorContainer,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      l10n.reservationErrorGeneric,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: colorScheme.onErrorContainer,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-
         const Spacer(),
 
-        // Confirm button
+        // Proceed to payment button
         FilledButton(
-          onPressed: state.isSubmitting
-              ? null
-              : () => ref
-                    .read(reservationFlowProvider(locker).notifier)
-                    .confirmReservation(),
+          onPressed: () =>
+              ref.read(reservationFlowProvider(locker).notifier).goToPayment(),
           style: FilledButton.styleFrom(
             minimumSize: const Size.fromHeight(52),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
             ),
           ),
-          child: state.isSubmitting
-              ? const SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
-                )
-              : Text(
-                  l10n.reservationConfirm,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+          child: Text(
+            l10n.paymentProceed,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
         ),
       ],
     );

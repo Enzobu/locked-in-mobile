@@ -400,5 +400,41 @@
   "profileEditError": "Erreur lors de la mise à jour du profil",
   "@profileEditError": { "description": "Message erreur modification profil" },
   "notifications": "Notifications",
-  "@notifications": { "description": "Label toggle notifications" }
+  "@notifications": { "description": "Label toggle notifications" },
+
+  "paymentTitle": "Paiement",
+  "@paymentTitle": { "description": "Titre étape paiement" },
+  "paymentSubtitle": "Entrez vos informations de carte bancaire",
+  "@paymentSubtitle": { "description": "Sous-titre étape paiement" },
+  "paymentCardDetails": "Carte bancaire",
+  "@paymentCardDetails": { "description": "Section détails carte" },
+  "paymentCardHolder": "Titulaire de la carte",
+  "@paymentCardHolder": { "description": "Label champ titulaire" },
+  "paymentCardHolderRequired": "Le titulaire est requis",
+  "@paymentCardHolderRequired": { "description": "Erreur titulaire vide" },
+  "paymentCardNumber": "Numéro de carte",
+  "@paymentCardNumber": { "description": "Label champ numéro de carte" },
+  "paymentCardNumberInvalid": "Numéro de carte invalide",
+  "@paymentCardNumberInvalid": { "description": "Erreur numéro invalide" },
+  "paymentExpiry": "Expiration",
+  "@paymentExpiry": { "description": "Label champ expiration" },
+  "paymentExpiryInvalid": "Date invalide",
+  "@paymentExpiryInvalid": { "description": "Erreur expiration invalide" },
+  "paymentCvv": "CVV",
+  "@paymentCvv": { "description": "Label champ CVV" },
+  "paymentCvvInvalid": "CVV invalide",
+  "@paymentCvvInvalid": { "description": "Erreur CVV invalide" },
+  "paymentPay": "Payer {price} €",
+  "@paymentPay": {
+    "description": "Bouton payer avec montant",
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "paymentProceed": "Procéder au paiement",
+  "@paymentProceed": { "description": "Bouton aller au paiement" },
+  "paymentSecure": "Paiement sécurisé",
+  "@paymentSecure": { "description": "Label paiement sécurisé" },
+  "paymentError": "Le paiement a échoué. Veuillez réessayer.",
+  "@paymentError": { "description": "Message erreur paiement" }
 }

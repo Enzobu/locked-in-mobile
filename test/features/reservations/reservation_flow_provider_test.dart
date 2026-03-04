@@ -7,6 +7,8 @@ import 'package:locked_in_mobile/core/models/locker.dart';
 import 'package:locked_in_mobile/core/models/locker_bay.dart';
 import 'package:locked_in_mobile/core/models/locker_status.dart';
 import 'package:locked_in_mobile/core/models/specification.dart';
+import 'package:locked_in_mobile/features/payment/data/services/mock_payment_service.dart';
+import 'package:locked_in_mobile/features/payment/presentation/providers/payment_provider.dart';
 import 'package:locked_in_mobile/features/reservations/data/datasources/mock_reservation_datasource.dart';
 import 'package:locked_in_mobile/features/reservations/data/repositories/mock_reservation_repository.dart';
 import 'package:locked_in_mobile/features/reservations/presentation/providers/reservation_flow_provider.dart';
@@ -66,6 +68,7 @@ void main() {
           final ds = ref.watch(reservationDatasourceProvider);
           return MockReservationRepository(datasource: ds);
         }),
+        paymentServiceProvider.overrideWithValue(MockPaymentService()),
       ],
     );
   });
@@ -216,8 +219,35 @@ void main() {
       expect(state.selectedTime, isNotNull);
     });
 
+    test('goToPayment transitions to payment step', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDate(DateTime(2026, 4, 1));
+      notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
+      notifier.goToSummary();
+      notifier.goToPayment();
+
+      final state = container.read(reservationFlowProvider(testLocker));
+      expect(state.step, ReservationFlowStep.payment);
+    });
+
+    test('goBackToSummary returns to summary step', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDate(DateTime(2026, 4, 1));
+      notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
+      notifier.goToSummary();
+      notifier.goToPayment();
+      notifier.goBackToSummary();
+
+      final state = container.read(reservationFlowProvider(testLocker));
+      expect(state.step, ReservationFlowStep.summary);
+    });
+
     test(
-      'confirmReservation creates reservation and generates publicForm',
+      'processPaymentAndConfirm creates reservation and generates publicForm',
       () async {
         container.listen(reservationFlowProvider(testLocker), (_, __) {});
 
@@ -228,8 +258,14 @@ void main() {
         notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
         notifier.setDuration(60);
         notifier.goToSummary();
+        notifier.goToPayment();
 
-        await notifier.confirmReservation();
+        await notifier.processPaymentAndConfirm(
+          cardNumber: '4242424242424242',
+          expiryDate: '12/28',
+          cvv: '123',
+          cardHolder: 'JOHN DOE',
+        );
 
         final state = container.read(reservationFlowProvider(testLocker));
         expect(state.step, ReservationFlowStep.confirmed);
@@ -241,11 +277,16 @@ void main() {
       },
     );
 
-    test('confirmReservation does nothing without date/time', () async {
+    test('processPaymentAndConfirm does nothing without date/time', () async {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
-      await notifier.confirmReservation();
+      await notifier.processPaymentAndConfirm(
+        cardNumber: '4242424242424242',
+        expiryDate: '12/28',
+        cvv: '123',
+        cardHolder: 'JOHN DOE',
+      );
 
       final state = container.read(reservationFlowProvider(testLocker));
       expect(state.step, ReservationFlowStep.dateSelection);

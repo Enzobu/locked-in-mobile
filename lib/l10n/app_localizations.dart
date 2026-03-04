@@ -1043,6 +1043,102 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Erreur lors de la mise à jour du profil'**
   String get profileEditError;
+
+  /// Label toggle notifications
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// Titre étape paiement
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement'**
+  String get paymentTitle;
+
+  /// Sous-titre étape paiement
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrez vos informations de carte bancaire'**
+  String get paymentSubtitle;
+
+  /// Section détails carte
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte bancaire'**
+  String get paymentCardDetails;
+
+  /// Label champ titulaire
+  ///
+  /// In fr, this message translates to:
+  /// **'Titulaire de la carte'**
+  String get paymentCardHolder;
+
+  /// Erreur titulaire vide
+  ///
+  /// In fr, this message translates to:
+  /// **'Le titulaire est requis'**
+  String get paymentCardHolderRequired;
+
+  /// Label champ numéro de carte
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro de carte'**
+  String get paymentCardNumber;
+
+  /// Erreur numéro invalide
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro de carte invalide'**
+  String get paymentCardNumberInvalid;
+
+  /// Label champ expiration
+  ///
+  /// In fr, this message translates to:
+  /// **'Expiration'**
+  String get paymentExpiry;
+
+  /// Erreur expiration invalide
+  ///
+  /// In fr, this message translates to:
+  /// **'Date invalide'**
+  String get paymentExpiryInvalid;
+
+  /// Label champ CVV
+  ///
+  /// In fr, this message translates to:
+  /// **'CVV'**
+  String get paymentCvv;
+
+  /// Erreur CVV invalide
+  ///
+  /// In fr, this message translates to:
+  /// **'CVV invalide'**
+  String get paymentCvvInvalid;
+
+  /// Bouton payer avec montant
+  ///
+  /// In fr, this message translates to:
+  /// **'Payer {price} €'**
+  String paymentPay(String price);
+
+  /// Bouton aller au paiement
+  ///
+  /// In fr, this message translates to:
+  /// **'Procéder au paiement'**
+  String get paymentProceed;
+
+  /// Label paiement sécurisé
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement sécurisé'**
+  String get paymentSecure;
+
+  /// Message erreur paiement
+  ///
+  /// In fr, this message translates to:
+  /// **'Le paiement a échoué. Veuillez réessayer.'**
+  String get paymentError;
 }
 
 class _AppLocalizationsDelegate

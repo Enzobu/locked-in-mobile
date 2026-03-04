@@ -318,12 +318,7 @@ void main() {
 
       await container
           .read(authProvider.notifier)
-          .register(
-            email: '',
-            password: '',
-            firstname: '',
-            lastname: '',
-          );
+          .register(email: '', password: '', firstname: '', lastname: '');
 
       final state = container.read(authProvider);
       expect(state.status, AuthStatus.error);
@@ -331,28 +326,31 @@ void main() {
   });
 
   group('AuthNotifier - updateProfile', () {
-    test('updateProfile returns true and updates customer on success', () async {
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+    test(
+      'updateProfile returns true and updates customer on success',
+      () async {
+        await Future<void>.delayed(const Duration(milliseconds: 300));
 
-      await container
-          .read(authProvider.notifier)
-          .login('test@test.com', 'password123');
-      expect(container.read(authProvider).status, AuthStatus.authenticated);
+        await container
+            .read(authProvider.notifier)
+            .login('test@test.com', 'password123');
+        expect(container.read(authProvider).status, AuthStatus.authenticated);
 
-      final result = await container
-          .read(authProvider.notifier)
-          .updateProfile(
-            firstname: 'Updated',
-            lastname: 'Name',
-            email: 'updated@test.com',
-          );
+        final result = await container
+            .read(authProvider.notifier)
+            .updateProfile(
+              firstname: 'Updated',
+              lastname: 'Name',
+              email: 'updated@test.com',
+            );
 
-      expect(result, isTrue);
-      final state = container.read(authProvider);
-      expect(state.customer!.firstname, 'Updated');
-      expect(state.customer!.lastname, 'Name');
-      expect(state.customer!.email, 'updated@test.com');
-    });
+        expect(result, isTrue);
+        final state = container.read(authProvider);
+        expect(state.customer!.firstname, 'Updated');
+        expect(state.customer!.lastname, 'Name');
+        expect(state.customer!.email, 'updated@test.com');
+      },
+    );
 
     test('updateProfile returns false on failure', () async {
       await Future<void>.delayed(const Duration(milliseconds: 300));

@@ -518,4 +518,54 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get profileEditError => 'Erreur lors de la mise à jour du profil';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get paymentTitle => 'Paiement';
+
+  @override
+  String get paymentSubtitle => 'Entrez vos informations de carte bancaire';
+
+  @override
+  String get paymentCardDetails => 'Carte bancaire';
+
+  @override
+  String get paymentCardHolder => 'Titulaire de la carte';
+
+  @override
+  String get paymentCardHolderRequired => 'Le titulaire est requis';
+
+  @override
+  String get paymentCardNumber => 'Numéro de carte';
+
+  @override
+  String get paymentCardNumberInvalid => 'Numéro de carte invalide';
+
+  @override
+  String get paymentExpiry => 'Expiration';
+
+  @override
+  String get paymentExpiryInvalid => 'Date invalide';
+
+  @override
+  String get paymentCvv => 'CVV';
+
+  @override
+  String get paymentCvvInvalid => 'CVV invalide';
+
+  @override
+  String paymentPay(String price) {
+    return 'Payer $price €';
+  }
+
+  @override
+  String get paymentProceed => 'Procéder au paiement';
+
+  @override
+  String get paymentSecure => 'Paiement sécurisé';
+
+  @override
+  String get paymentError => 'Le paiement a échoué. Veuillez réessayer.';
 }

@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../core/models/locker.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../payment/presentation/widgets/payment_step.dart';
 import '../providers/reservation_flow_provider.dart';
 import '../widgets/date_selection_step.dart';
 import '../widgets/reservation_success_step.dart';
@@ -25,10 +26,13 @@ class ReservationFlowScreen extends ConsumerWidget {
           state.step == ReservationFlowStep.dateSelection ||
           state.step == ReservationFlowStep.confirmed,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && state.step == ReservationFlowStep.summary) {
-          ref
-              .read(reservationFlowProvider(locker).notifier)
-              .goBackToDateSelection();
+        if (!didPop) {
+          final notifier = ref.read(reservationFlowProvider(locker).notifier);
+          if (state.step == ReservationFlowStep.summary) {
+            notifier.goBackToDateSelection();
+          } else if (state.step == ReservationFlowStep.payment) {
+            notifier.goBackToSummary();
+          }
         }
       },
       child: Scaffold(
@@ -41,6 +45,10 @@ class ReservationFlowScreen extends ConsumerWidget {
                       ref
                           .read(reservationFlowProvider(locker).notifier)
                           .goBackToDateSelection();
+                    } else if (state.step == ReservationFlowStep.payment) {
+                      ref
+                          .read(reservationFlowProvider(locker).notifier)
+                          .goBackToSummary();
                     } else {
                       context.pop();
                     }
@@ -84,6 +92,8 @@ class ReservationFlowScreen extends ConsumerWidget {
           key: const ValueKey('summary'),
           locker: locker,
         );
+      case ReservationFlowStep.payment:
+        return PaymentStep(key: const ValueKey('payment'), locker: locker);
       case ReservationFlowStep.confirmed:
         return ReservationSuccessStep(
           key: const ValueKey('success'),
@@ -104,8 +114,9 @@ class _StepIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final progress = switch (step) {
-      ReservationFlowStep.dateSelection => 0.5,
-      ReservationFlowStep.summary => 1.0,
+      ReservationFlowStep.dateSelection => 1 / 3,
+      ReservationFlowStep.summary => 2 / 3,
+      ReservationFlowStep.payment => 1.0,
       ReservationFlowStep.confirmed => 1.0,
     };
 
