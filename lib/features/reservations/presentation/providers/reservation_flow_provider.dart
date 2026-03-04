@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/locker.dart';
 import '../../../../core/models/reservation.dart';
+import '../../../payment/domain/models/payment_result.dart';
+import '../../../payment/presentation/providers/payment_provider.dart';
 import 'reservation_provider.dart';
 
-enum ReservationFlowStep { dateSelection, summary, confirmed }
+enum ReservationFlowStep { dateSelection, summary, payment, confirmed }
 
 class ReservationFlowState {
   const ReservationFlowState({
@@ -128,16 +130,46 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
     state = state.copyWith(step: ReservationFlowStep.summary);
   }
 
+  void goToPayment() {
+    state = state.copyWith(step: ReservationFlowStep.payment);
+  }
+
   void goBackToDateSelection() {
     state = state.copyWith(step: ReservationFlowStep.dateSelection);
   }
 
-  Future<void> confirmReservation() async {
+  void goBackToSummary() {
+    state = state.copyWith(step: ReservationFlowStep.summary);
+  }
+
+  Future<void> processPaymentAndConfirm({
+    required String cardNumber,
+    required String expiryDate,
+    required String cvv,
+    required String cardHolder,
+  }) async {
     if (!state.canProceed) return;
 
     state = state.copyWith(isSubmitting: true, error: () => null);
 
     try {
+      final paymentService = _ref.read(paymentServiceProvider);
+      final paymentResult = await paymentService.processPayment(
+        amountCents: state.locker.priceCents,
+        cardNumber: cardNumber,
+        expiryDate: expiryDate,
+        cvv: cvv,
+        cardHolder: cardHolder,
+      );
+
+      if (!paymentResult.isSuccess) {
+        state = state.copyWith(
+          isSubmitting: false,
+          error: () => paymentResult.errorMessage ?? 'Payment failed',
+        );
+        return;
+      }
+
       final repository = _ref.read(reservationRepositoryProvider);
       final reservation = await repository.createReservation(
         lockerId: state.locker.id,
