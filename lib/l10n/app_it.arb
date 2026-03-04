@@ -241,5 +241,6 @@
   "profileLogoutConfirm": "Sei sicuro di voler uscire?",
   "profileEdit": "Modifica profilo",
   "profileEditSuccess": "Profilo aggiornato con successo",
-  "profileEditError": "Errore durante l'aggiornamento del profilo"
+  "profileEditError": "Errore durante l'aggiornamento del profilo",
+  "notifications": "Notifiche"
 }

@@ -241,5 +241,6 @@
   "profileLogoutConfirm": "Are you sure you want to log out?",
   "profileEdit": "Edit profile",
   "profileEditSuccess": "Profile updated successfully",
-  "profileEditError": "Failed to update profile"
+  "profileEditError": "Failed to update profile",
+  "notifications": "Notifications"
 }
