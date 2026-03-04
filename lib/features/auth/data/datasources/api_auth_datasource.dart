@@ -44,11 +44,7 @@ class ApiAuthDatasource implements AuthDatasource {
   }) async {
     final response = await dioClient.put<Map<String, dynamic>>(
       '/api/customers/me',
-      data: {
-        'firstname': firstname,
-        'lastname': lastname,
-        'email': email,
-      },
+      data: {'firstname': firstname, 'lastname': lastname, 'email': email},
     );
     return response.data!;
   }

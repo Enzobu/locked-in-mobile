@@ -33,9 +33,8 @@ class CustomerDto {
       firstname: json['firstname'] as String,
       lastname: json['lastname'] as String,
       birthDate: JsonHelpers.parseDateTime(json, 'birthDate', 'birth_date'),
-      roles: (json['roles'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
           [],
       addresses: addressesJson
           .map((e) => AddressDto.fromJson(e as Map<String, dynamic>))

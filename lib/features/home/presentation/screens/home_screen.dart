@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../../core/widgets/animated_list_item.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../providers/home_provider.dart';
 import '../widgets/filter_bottom_sheet.dart';
@@ -219,10 +220,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       separatorBuilder: (_, _) => const SizedBox(height: 12),
                       itemBuilder: (context, index) {
                         final summary = summaries[index];
-                        return LockerBayCard(
-                          summary: summary,
-                          onTap: () =>
-                              context.go('/home/${summary.lockerBay.id}'),
+                        return AnimatedListItem(
+                          index: index,
+                          child: LockerBayCard(
+                            summary: summary,
+                            onTap: () =>
+                                context.go('/home/${summary.lockerBay.id}'),
+                          ),
                         );
                       },
                     ),

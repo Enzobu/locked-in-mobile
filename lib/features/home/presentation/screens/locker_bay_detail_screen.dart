@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../../core/widgets/animated_list_item.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/models/locker_bay_summary.dart';
 import '../providers/home_provider.dart';
@@ -29,7 +30,7 @@ class LockerBayDetailScreen extends ConsumerWidget {
         centerTitle: true,
       ),
       body: detailAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => _DetailSkeleton(lockerBayId: lockerBayId),
         error: (error, _) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -162,10 +163,13 @@ class _DetailContent extends StatelessWidget {
               '${l10n.lockerBayLockers} (${summary.availableCount}/${summary.totalCount})',
         ),
         const SizedBox(height: 8),
-        ...summary.lockers.map(
-          (locker) => Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: LockerCard(locker: locker),
+        ...summary.lockers.asMap().entries.map(
+          (entry) => AnimatedListItem(
+            index: entry.key,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: LockerCard(locker: entry.value),
+            ),
           ),
         ),
       ],
@@ -193,16 +197,22 @@ class _HeaderSection extends StatelessWidget {
           children: [
             Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    LucideIcons.box,
-                    size: 24,
-                    color: colorScheme.onPrimaryContainer,
+                Hero(
+                  tag: 'locker_bay_icon_${summary.lockerBay.id}',
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        LucideIcons.box,
+                        size: 24,
+                        color: colorScheme.onPrimaryContainer,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 14),
@@ -210,10 +220,16 @@ class _HeaderSection extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        summary.lockerBay.name,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w800,
+                      Hero(
+                        tag: 'locker_bay_name_${summary.lockerBay.id}',
+                        child: Material(
+                          type: MaterialType.transparency,
+                          child: Text(
+                            summary.lockerBay.name,
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
                         ),
                       ),
                       if (summary.city.isNotEmpty) ...[
@@ -352,6 +368,195 @@ class _SectionTitle extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _DetailSkeleton extends StatefulWidget {
+  const _DetailSkeleton({required this.lockerBayId});
+
+  final int lockerBayId;
+
+  @override
+  State<_DetailSkeleton> createState() => _DetailSkeletonState();
+}
+
+class _DetailSkeletonState extends State<_DetailSkeleton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat(reverse: true);
+    _animation = Tween<double>(
+      begin: 0.3,
+      end: 0.7,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, _) {
+        final shimmerColor = colorScheme.onSurface.withValues(
+          alpha: _animation.value * 0.12,
+        );
+        return ListView(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            Card(
+              margin: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Hero(
+                          tag: 'locker_bay_icon_${widget.lockerBayId}',
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Icon(
+                                LucideIcons.box,
+                                size: 24,
+                                color: colorScheme.onPrimaryContainer,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 20,
+                                width: 180,
+                                decoration: BoxDecoration(
+                                  color: shimmerColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Container(
+                                height: 14,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  color: shimmerColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Divider(
+                      height: 1,
+                      color: colorScheme.outlineVariant.withValues(alpha: 0.3),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Container(
+                          height: 14,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            color: shimmerColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Container(
+                          height: 14,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            color: shimmerColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ...List.generate(
+              3,
+              (_) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  child: Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: shimmerColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 14,
+                                width: 140,
+                                decoration: BoxDecoration(
+                                  color: shimmerColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Container(
+                                height: 12,
+                                width: 90,
+                                decoration: BoxDecoration(
+                                  color: shimmerColor,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
