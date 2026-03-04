@@ -242,5 +242,26 @@
   "profileEdit": "Modifica profilo",
   "profileEditSuccess": "Profilo aggiornato con successo",
   "profileEditError": "Errore durante l'aggiornamento del profilo",
-  "notifications": "Notifiche"
+  "notifications": "Notifiche",
+
+  "paymentTitle": "Pagamento",
+  "paymentSubtitle": "Inserisci i dati della tua carta",
+  "paymentCardDetails": "Dettagli carta",
+  "paymentCardHolder": "Titolare della carta",
+  "paymentCardHolderRequired": "Il titolare è obbligatorio",
+  "paymentCardNumber": "Numero di carta",
+  "paymentCardNumberInvalid": "Numero di carta non valido",
+  "paymentExpiry": "Scadenza",
+  "paymentExpiryInvalid": "Data non valida",
+  "paymentCvv": "CVV",
+  "paymentCvvInvalid": "CVV non valido",
+  "paymentPay": "Paga {price} €",
+  "@paymentPay": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "paymentProceed": "Procedi al pagamento",
+  "paymentSecure": "Pagamento sicuro",
+  "paymentError": "Pagamento non riuscito. Riprova."
 }

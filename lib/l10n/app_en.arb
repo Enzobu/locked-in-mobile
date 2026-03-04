@@ -242,5 +242,26 @@
   "profileEdit": "Edit profile",
   "profileEditSuccess": "Profile updated successfully",
   "profileEditError": "Failed to update profile",
-  "notifications": "Notifications"
+  "notifications": "Notifications",
+
+  "paymentTitle": "Payment",
+  "paymentSubtitle": "Enter your card details",
+  "paymentCardDetails": "Card details",
+  "paymentCardHolder": "Cardholder name",
+  "paymentCardHolderRequired": "Cardholder name is required",
+  "paymentCardNumber": "Card number",
+  "paymentCardNumberInvalid": "Invalid card number",
+  "paymentExpiry": "Expiry",
+  "paymentExpiryInvalid": "Invalid date",
+  "paymentCvv": "CVV",
+  "paymentCvvInvalid": "Invalid CVV",
+  "paymentPay": "Pay {price} €",
+  "@paymentPay": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "paymentProceed": "Proceed to payment",
+  "paymentSecure": "Secure payment",
+  "paymentError": "Payment failed. Please try again."
 }

@@ -242,5 +242,26 @@
   "profileEdit": "Profil bearbeiten",
   "profileEditSuccess": "Profil erfolgreich aktualisiert",
   "profileEditError": "Fehler beim Aktualisieren des Profils",
-  "notifications": "Benachrichtigungen"
+  "notifications": "Benachrichtigungen",
+
+  "paymentTitle": "Zahlung",
+  "paymentSubtitle": "Geben Sie Ihre Kartendaten ein",
+  "paymentCardDetails": "Kartendaten",
+  "paymentCardHolder": "Karteninhaber",
+  "paymentCardHolderRequired": "Karteninhaber ist erforderlich",
+  "paymentCardNumber": "Kartennummer",
+  "paymentCardNumberInvalid": "Ungültige Kartennummer",
+  "paymentExpiry": "Ablaufdatum",
+  "paymentExpiryInvalid": "Ungültiges Datum",
+  "paymentCvv": "CVV",
+  "paymentCvvInvalid": "Ungültige CVV",
+  "paymentPay": "{price} € bezahlen",
+  "@paymentPay": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "paymentProceed": "Zur Zahlung",
+  "paymentSecure": "Sichere Zahlung",
+  "paymentError": "Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut."
 }

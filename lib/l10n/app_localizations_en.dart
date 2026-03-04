@@ -513,4 +513,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileEditError => 'Failed to update profile';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get paymentTitle => 'Payment';
+
+  @override
+  String get paymentSubtitle => 'Enter your card details';
+
+  @override
+  String get paymentCardDetails => 'Card details';
+
+  @override
+  String get paymentCardHolder => 'Cardholder name';
+
+  @override
+  String get paymentCardHolderRequired => 'Cardholder name is required';
+
+  @override
+  String get paymentCardNumber => 'Card number';
+
+  @override
+  String get paymentCardNumberInvalid => 'Invalid card number';
+
+  @override
+  String get paymentExpiry => 'Expiry';
+
+  @override
+  String get paymentExpiryInvalid => 'Invalid date';
+
+  @override
+  String get paymentCvv => 'CVV';
+
+  @override
+  String get paymentCvvInvalid => 'Invalid CVV';
+
+  @override
+  String paymentPay(String price) {
+    return 'Pay $price €';
+  }
+
+  @override
+  String get paymentProceed => 'Proceed to payment';
+
+  @override
+  String get paymentSecure => 'Secure payment';
+
+  @override
+  String get paymentError => 'Payment failed. Please try again.';
 }
