@@ -57,6 +57,7 @@ class _FakeProfileRepository implements ProfileRepository {
 
   @override
   Future<Customer> updateProfile({
+    required int customerId,
     required String firstname,
     required String lastname,
     required String email,

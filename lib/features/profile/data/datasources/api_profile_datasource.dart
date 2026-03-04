@@ -15,7 +15,9 @@ class ApiProfileDatasource implements ProfileDatasource {
   }
 
   @override
+  // TODO: Remplacer par PATCH /api/customers/me quand le backend le supportera
   Future<Map<String, dynamic>> updateProfile({
+    required int customerId,
     required String firstname,
     required String lastname,
     required String email,
@@ -31,7 +33,7 @@ class ApiProfileDatasource implements ProfileDatasource {
     }
 
     final response = await dioClient.patch<Map<String, dynamic>>(
-      '/api/customers/me',
+      '/api/customers/$customerId',
       data: data,
     );
     return response.data!;

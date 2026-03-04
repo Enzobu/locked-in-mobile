@@ -85,97 +85,119 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final updateState = ref.watch(profileUpdateProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.profileEdit),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: FilledButton(
-              onPressed: updateState.isLoading ? null : _submit,
-              child: updateState.isLoading
-                  ? SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: theme.colorScheme.onPrimary,
-                      ),
-                    )
-                  : Text(l10n.save),
+      appBar: AppBar(title: Text(l10n.profileEdit)),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AuthTextField(
+                      label: l10n.firstname,
+                      controller: _firstnameController,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return l10n.firstnameRequired;
+                        }
+                        final serverError =
+                            updateState.fieldErrors['firstname'];
+                        if (serverError != null) return serverError;
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: l10n.lastname,
+                      controller: _lastnameController,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return l10n.lastnameRequired;
+                        }
+                        final serverError = updateState.fieldErrors['lastname'];
+                        if (serverError != null) return serverError;
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: l10n.email,
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      autocorrect: false,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return l10n.emailRequired;
+                        }
+                        final emailRegex = RegExp(
+                          r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
+                        );
+                        if (!emailRegex.hasMatch(value.trim())) {
+                          return l10n.emailInvalid;
+                        }
+                        final serverError = updateState.fieldErrors['email'];
+                        if (serverError != null) return serverError;
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: l10n.phone,
+                      controller: _phoneController,
+                      keyboardType: TextInputType.phone,
+                      textInputAction: TextInputAction.done,
+                      autocorrect: false,
+                      validator: (value) {
+                        final serverError = updateState.fieldErrors['phone'];
+                        if (serverError != null) return serverError;
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+              child: SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: updateState.isLoading ? null : _submit,
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: updateState.isLoading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: theme.colorScheme.onPrimary,
+                          ),
+                        )
+                      : Text(
+                          l10n.save,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.colorScheme.onPrimary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                ),
+              ),
             ),
           ),
         ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AuthTextField(
-                label: l10n.firstname,
-                controller: _firstnameController,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return l10n.firstnameRequired;
-                  }
-                  final serverError = updateState.fieldErrors['firstname'];
-                  if (serverError != null) return serverError;
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              AuthTextField(
-                label: l10n.lastname,
-                controller: _lastnameController,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return l10n.lastnameRequired;
-                  }
-                  final serverError = updateState.fieldErrors['lastname'];
-                  if (serverError != null) return serverError;
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              AuthTextField(
-                label: l10n.email,
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                autocorrect: false,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return l10n.emailRequired;
-                  }
-                  final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
-                  if (!emailRegex.hasMatch(value.trim())) {
-                    return l10n.emailInvalid;
-                  }
-                  final serverError = updateState.fieldErrors['email'];
-                  if (serverError != null) return serverError;
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              AuthTextField(
-                label: l10n.phone,
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                textInputAction: TextInputAction.done,
-                autocorrect: false,
-                validator: (value) {
-                  final serverError = updateState.fieldErrors['phone'];
-                  if (serverError != null) return serverError;
-                  return null;
-                },
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

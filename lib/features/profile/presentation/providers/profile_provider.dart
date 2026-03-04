@@ -59,8 +59,19 @@ class ProfileUpdateNotifier extends Notifier<ProfileUpdateState> {
     state = const ProfileUpdateState(status: ProfileUpdateStatus.loading);
 
     try {
+      final currentCustomer = ref.read(currentCustomerProvider);
+      if (currentCustomer == null) {
+        state = const ProfileUpdateState(
+          status: ProfileUpdateStatus.error,
+          errorMessage: 'Not authenticated',
+        );
+        return false;
+      }
+
       final repository = ref.read(profileRepositoryProvider);
+      // TODO: Retirer customerId quand le backend supportera PATCH /api/customers/me
       final customer = await repository.updateProfile(
+        customerId: currentCustomer.id,
         firstname: firstname,
         lastname: lastname,
         email: email,

@@ -81,7 +81,7 @@ void main() {
   });
 
   group('updateProfile', () {
-    test('sends PATCH to /api/customers/me and returns updated data', () async {
+    test('sends PATCH to /api/customers/1 and returns updated data', () async {
       final updatedJson = {
         ..._customerJson,
         'firstname': 'Pierre',
@@ -91,7 +91,7 @@ void main() {
       };
 
       dioAdapter.registerResponses({
-        '/api/customers/me': Response(
+        '/api/customers/1': Response(
           requestOptions: RequestOptions(),
           statusCode: 200,
           data: updatedJson,
@@ -99,6 +99,7 @@ void main() {
       });
 
       final result = await datasource.updateProfile(
+        customerId: 1,
         firstname: 'Pierre',
         lastname: 'Martin',
         email: 'pierre@example.com',
@@ -113,7 +114,7 @@ void main() {
 
     test('sends PATCH without phone when phone is null', () async {
       dioAdapter.registerResponses({
-        '/api/customers/me': Response(
+        '/api/customers/1': Response(
           requestOptions: RequestOptions(),
           statusCode: 200,
           data: _customerJson,
@@ -121,6 +122,7 @@ void main() {
       });
 
       final result = await datasource.updateProfile(
+        customerId: 1,
         firstname: 'Jean',
         lastname: 'Dupont',
         email: 'jean@example.com',
@@ -131,11 +133,11 @@ void main() {
 
     test('throws ApiException on 422 validation error', () async {
       dioAdapter.registerError(
-        '/api/customers/me',
+        '/api/customers/1',
         DioException(
-          requestOptions: RequestOptions(path: '/api/customers/me'),
+          requestOptions: RequestOptions(path: '/api/customers/1'),
           response: Response(
-            requestOptions: RequestOptions(path: '/api/customers/me'),
+            requestOptions: RequestOptions(path: '/api/customers/1'),
             statusCode: 422,
             data: {
               'detail': 'Validation failed',
@@ -153,6 +155,7 @@ void main() {
 
       expect(
         () => datasource.updateProfile(
+          customerId: 1,
           firstname: 'Jean',
           lastname: 'Dupont',
           email: 'taken@example.com',
@@ -163,11 +166,11 @@ void main() {
 
     test('throws ApiException on 401 unauthorized', () async {
       dioAdapter.registerError(
-        '/api/customers/me',
+        '/api/customers/1',
         DioException(
-          requestOptions: RequestOptions(path: '/api/customers/me'),
+          requestOptions: RequestOptions(path: '/api/customers/1'),
           response: Response(
-            requestOptions: RequestOptions(path: '/api/customers/me'),
+            requestOptions: RequestOptions(path: '/api/customers/1'),
             statusCode: 401,
             data: {'message': 'JWT Token not found'},
           ),
@@ -177,6 +180,7 @@ void main() {
 
       expect(
         () => datasource.updateProfile(
+          customerId: 1,
           firstname: 'Jean',
           lastname: 'Dupont',
           email: 'jean@example.com',

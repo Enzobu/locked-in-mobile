@@ -16,12 +16,14 @@ class ApiProfileRepository implements ProfileRepository {
 
   @override
   Future<Customer> updateProfile({
+    required int customerId,
     required String firstname,
     required String lastname,
     required String email,
     String? phone,
   }) async {
     final data = await datasource.updateProfile(
+      customerId: customerId,
       firstname: firstname,
       lastname: lastname,
       email: email,
