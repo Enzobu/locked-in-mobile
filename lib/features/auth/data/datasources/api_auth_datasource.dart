@@ -41,10 +41,19 @@ class ApiAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
+    String? phone,
   }) async {
-    final response = await dioClient.put<Map<String, dynamic>>(
+    final data = <String, dynamic>{
+      'firstname': firstname,
+      'lastname': lastname,
+      'email': email,
+    };
+    if (phone != null) {
+      data['phone'] = phone;
+    }
+    final response = await dioClient.patch<Map<String, dynamic>>(
       '/api/customers/me',
-      data: {'firstname': firstname, 'lastname': lastname, 'email': email},
+      data: data,
     );
     return response.data!;
   }

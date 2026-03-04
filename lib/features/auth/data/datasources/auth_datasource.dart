@@ -15,6 +15,7 @@ abstract class AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
+    String? phone,
   });
 
   Future<void> logout();
