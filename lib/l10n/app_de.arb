@@ -263,5 +263,9 @@
   },
   "paymentProceed": "Zur Zahlung",
   "paymentSecure": "Sichere Zahlung",
-  "paymentError": "Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut."
+  "paymentError": "Zahlung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+
+  "errorNetwork": "Verbindung nicht möglich. Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+  "errorServer": "Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
+  "errorUnknown": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
 }

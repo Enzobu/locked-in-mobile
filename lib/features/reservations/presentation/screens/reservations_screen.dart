@@ -6,6 +6,8 @@ import 'package:lucide_icons/lucide_icons.dart';
 import '../../../../core/models/reservation.dart';
 import '../../../../core/models/reservation_status.dart';
 import '../../../../core/widgets/animated_list_item.dart';
+import '../../../../core/widgets/empty_state_view.dart';
+import '../../../../core/widgets/error_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../providers/reservation_provider.dart';
 import '../widgets/reservation_card.dart';
@@ -23,12 +25,17 @@ class ReservationsScreen extends ConsumerWidget {
       appBar: AppBar(title: Text(l10n.reservations)),
       body: reservationsAsync.when(
         loading: () => const ReservationSkeleton(),
-        error: (error, _) => _ErrorState(
+        error: (error, _) => ErrorView(
+          message: l10n.errorNetwork,
           onRetry: () => ref.read(reservationsProvider.notifier).refresh(),
         ),
         data: (reservations) {
           if (reservations.isEmpty) {
-            return const _EmptyState();
+            return EmptyStateView(
+              icon: LucideIcons.calendarCheck,
+              title: l10n.reservationsEmpty,
+              subtitle: l10n.reservationsEmptySubtitle,
+            );
           }
           return _ReservationsList(reservations: reservations);
         },
@@ -136,89 +143,6 @@ class _SectionHeader extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _EmptyState extends StatelessWidget {
-  const _EmptyState();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 48),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: colorScheme.primaryContainer.withValues(alpha: 0.5),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                LucideIcons.calendarCheck,
-                size: 48,
-                color: colorScheme.primary,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              l10n.reservationsEmpty,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              l10n.reservationsEmptySubtitle,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  const _ErrorState({required this.onRetry});
-
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            LucideIcons.alertCircle,
-            size: 48,
-            color: theme.colorScheme.error,
-          ),
-          const SizedBox(height: 16),
-          Text(l10n.error, style: theme.textTheme.titleMedium),
-          const SizedBox(height: 8),
-          FilledButton.icon(
-            onPressed: onRetry,
-            icon: const Icon(LucideIcons.refreshCw, size: 16),
-            label: Text(l10n.retry),
-          ),
-        ],
-      ),
     );
   }
 }

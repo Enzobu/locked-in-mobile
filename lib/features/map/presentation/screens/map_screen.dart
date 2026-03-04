@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../../core/widgets/error_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../home/domain/models/locker_bay_summary.dart';
 import '../providers/geolocation_provider.dart';
@@ -199,28 +200,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
       ),
       body: summariesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                LucideIcons.alertTriangle,
-                size: 48,
-                color: colorScheme.error,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                l10n.error,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 8),
-              FilledButton.icon(
-                onPressed: () => ref.invalidate(mapLockerBaySummariesProvider),
-                icon: const Icon(LucideIcons.refreshCw, size: 16),
-                label: Text(l10n.retry),
-              ),
-            ],
-          ),
+        error: (error, _) => ErrorView(
+          message: l10n.errorNetwork,
+          onRetry: () => ref.invalidate(mapLockerBaySummariesProvider),
         ),
         data: (summaries) => Stack(
           children: [

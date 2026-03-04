@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
 
-class HomeErrorState extends StatelessWidget {
-  const HomeErrorState({
-    required this.message,
+class ErrorView extends StatelessWidget {
+  const ErrorView({
     required this.onRetry,
     super.key,
+    this.icon,
+    this.title,
+    this.message,
   });
 
-  final String message;
   final VoidCallback onRetry;
+  final IconData? icon;
+  final String? title;
+  final String? message;
 
   @override
   Widget build(BuildContext context) {
@@ -32,27 +36,29 @@ class HomeErrorState extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                LucideIcons.wifiOff,
+                icon ?? LucideIcons.wifiOff,
                 size: 48,
                 color: colorScheme.error,
               ),
             ),
             const SizedBox(height: 24),
             Text(
-              l10n.error,
+              title ?? l10n.error,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w700,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
+            if (message != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                message!,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
+            ],
             const SizedBox(height: 24),
             FilledButton.icon(
               onPressed: onRetry,

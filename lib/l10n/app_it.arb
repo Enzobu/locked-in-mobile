@@ -263,5 +263,9 @@
   },
   "paymentProceed": "Procedi al pagamento",
   "paymentSecure": "Pagamento sicuro",
-  "paymentError": "Pagamento non riuscito. Riprova."
+  "paymentError": "Pagamento non riuscito. Riprova.",
+
+  "errorNetwork": "Impossibile connettersi. Controlla la tua connessione internet e riprova.",
+  "errorServer": "Si è verificato un errore del server. Riprova più tardi.",
+  "errorUnknown": "Si è verificato un errore imprevisto. Riprova."
 }
