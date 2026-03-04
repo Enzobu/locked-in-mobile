@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_stripe/flutter_stripe.dart' hide Card;
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../core/models/locker.dart';
@@ -18,7 +17,6 @@ class PaymentStep extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,57 +65,33 @@ class PaymentStep extends ConsumerWidget {
         ),
         const SizedBox(height: 24),
 
-        // Card form section
+        // Stripe info card
         Card(
           margin: EdgeInsets.zero,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Icon(
-                      LucideIcons.creditCard,
-                      size: 18,
-                      color: colorScheme.primary,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      l10n.paymentCardDetails,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
+                Icon(
+                  LucideIcons.creditCard,
+                  size: 40,
+                  color: colorScheme.primary,
                 ),
-                const SizedBox(height: 16),
-
-                if (state.isLoadingIntent)
-                  const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(24),
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                else if (state.clientSecret != null)
-                  CardFormField(
-                    style: CardFormStyle(
-                      backgroundColor: isDark
-                          ? colorScheme.surfaceContainerHighest
-                          : colorScheme.surface,
-                      textColor: colorScheme.onSurface,
-                      placeholderColor: colorScheme.onSurfaceVariant,
-                      borderColor: colorScheme.outline,
-                      borderRadius: 12,
-                      fontSize: 16,
-                    ),
-                    onCardChanged: (details) {
-                      ref
-                          .read(reservationFlowProvider(locker).notifier)
-                          .setCardComplete(details?.complete ?? false);
-                    },
+                const SizedBox(height: 12),
+                Text(
+                  l10n.paymentCardDetails,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
                   ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  l10n.paymentStripeInfo,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
           ),
@@ -178,11 +152,11 @@ class PaymentStep extends ConsumerWidget {
 
         // Pay button
         FilledButton(
-          onPressed: state.canPay
-              ? () => ref
+          onPressed: state.isSubmitting
+              ? null
+              : () => ref
                     .read(reservationFlowProvider(locker).notifier)
-                    .processPayment()
-              : null,
+                    .processPayment(),
           style: FilledButton.styleFrom(
             minimumSize: const Size.fromHeight(52),
             shape: RoundedRectangleBorder(

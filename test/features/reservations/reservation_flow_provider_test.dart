@@ -84,7 +84,7 @@ void main() {
       expect(state.step, ReservationFlowStep.dateSelection);
       expect(state.selectedDate, isNull);
       expect(state.selectedTime, isNull);
-      expect(state.durationMinutes, 30); // minDuration default
+      expect(state.durationMinutes, 30);
       expect(state.canProceed, isFalse);
       expect(state.isSubmitting, isFalse);
       expect(state.reservationId, isNull);
@@ -152,19 +152,19 @@ void main() {
         reservationFlowProvider(testLocker).notifier,
       );
 
-      notifier.setDuration(10); // below min (30)
+      notifier.setDuration(10);
       expect(
         container.read(reservationFlowProvider(testLocker)).durationMinutes,
         30,
       );
 
-      notifier.setDuration(200); // above max (120)
+      notifier.setDuration(200);
       expect(
         container.read(reservationFlowProvider(testLocker)).durationMinutes,
         120,
       );
 
-      notifier.setDuration(60); // within range
+      notifier.setDuration(60);
       expect(
         container.read(reservationFlowProvider(testLocker)).durationMinutes,
         60,
@@ -219,37 +219,27 @@ void main() {
       expect(state.selectedTime, isNotNull);
     });
 
-    test(
-      'goToPayment transitions to payment step and creates intent',
-      () async {
-        container.listen(reservationFlowProvider(testLocker), (_, __) {});
-
-        final notifier = container.read(
-          reservationFlowProvider(testLocker).notifier,
-        );
-        notifier.setDate(DateTime(2026, 4, 1));
-        notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
-        notifier.goToSummary();
-        await notifier.goToPayment();
-
-        final state = container.read(reservationFlowProvider(testLocker));
-        expect(state.step, ReservationFlowStep.payment);
-        expect(state.clientSecret, isNotNull);
-        expect(state.reservationId, isNotNull);
-        expect(state.isLoadingIntent, isFalse);
-      },
-    );
-
-    test('goBackToSummary returns to summary step', () async {
-      container.listen(reservationFlowProvider(testLocker), (_, __) {});
-
+    test('goToPayment transitions to payment step', () {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
       notifier.setDate(DateTime(2026, 4, 1));
       notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
       notifier.goToSummary();
-      await notifier.goToPayment();
+      notifier.goToPayment();
+
+      final state = container.read(reservationFlowProvider(testLocker));
+      expect(state.step, ReservationFlowStep.payment);
+    });
+
+    test('goBackToSummary returns to summary step', () {
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      notifier.setDate(DateTime(2026, 4, 1));
+      notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
+      notifier.goToSummary();
+      notifier.goToPayment();
       notifier.goBackToSummary();
 
       final state = container.read(reservationFlowProvider(testLocker));
@@ -257,7 +247,7 @@ void main() {
     });
 
     test(
-      'processPayment confirms card payment and transitions to confirmed',
+      'processPayment creates intent, presents sheet, and confirms',
       () async {
         container.listen(reservationFlowProvider(testLocker), (_, __) {});
 
@@ -268,9 +258,8 @@ void main() {
         notifier.setTime(const TimeOfDay(hour: 14, minute: 0));
         notifier.setDuration(60);
         notifier.goToSummary();
-        await notifier.goToPayment();
+        notifier.goToPayment();
 
-        notifier.setCardComplete(true);
         await notifier.processPayment();
 
         final state = container.read(reservationFlowProvider(testLocker));
@@ -283,7 +272,7 @@ void main() {
       },
     );
 
-    test('processPayment does nothing without clientSecret', () async {
+    test('processPayment does nothing without date/time', () async {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );

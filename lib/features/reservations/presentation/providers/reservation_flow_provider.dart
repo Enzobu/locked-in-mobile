@@ -15,11 +15,8 @@ class ReservationFlowState {
     this.selectedTime,
     this.durationMinutes,
     this.isSubmitting = false,
-    this.isLoadingIntent = false,
-    this.clientSecret,
     this.reservationId,
     this.publicForm,
-    this.cardComplete = false,
     this.error,
   });
 
@@ -29,17 +26,12 @@ class ReservationFlowState {
   final TimeOfDay? selectedTime;
   final int? durationMinutes;
   final bool isSubmitting;
-  final bool isLoadingIntent;
-  final String? clientSecret;
   final int? reservationId;
   final String? publicForm;
-  final bool cardComplete;
   final String? error;
 
   bool get canProceed =>
       selectedDate != null && selectedTime != null && durationMinutes != null;
-
-  bool get canPay => cardComplete && clientSecret != null && !isSubmitting;
 
   int get minDuration => locker.lockerBay.minDuration ?? 30;
   int get maxDuration => locker.lockerBay.maxDuration ?? 120;
@@ -82,11 +74,8 @@ class ReservationFlowState {
     TimeOfDay? Function()? selectedTime,
     int? Function()? durationMinutes,
     bool? isSubmitting,
-    bool? isLoadingIntent,
-    String? Function()? clientSecret,
     int? Function()? reservationId,
     String? Function()? publicForm,
-    bool? cardComplete,
     String? Function()? error,
   }) {
     return ReservationFlowState(
@@ -98,13 +87,10 @@ class ReservationFlowState {
           ? durationMinutes()
           : this.durationMinutes,
       isSubmitting: isSubmitting ?? this.isSubmitting,
-      isLoadingIntent: isLoadingIntent ?? this.isLoadingIntent,
-      clientSecret: clientSecret != null ? clientSecret() : this.clientSecret,
       reservationId: reservationId != null
           ? reservationId()
           : this.reservationId,
       publicForm: publicForm != null ? publicForm() : this.publicForm,
-      cardComplete: cardComplete ?? this.cardComplete,
       error: error != null ? error() : this.error,
     );
   }
@@ -144,34 +130,8 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
     state = state.copyWith(step: ReservationFlowStep.summary);
   }
 
-  void setCardComplete(bool complete) {
-    state = state.copyWith(cardComplete: complete);
-  }
-
-  /// Transition to payment step and create PaymentIntent
-  Future<void> goToPayment() async {
-    state = state.copyWith(
-      step: ReservationFlowStep.payment,
-      isLoadingIntent: true,
-      error: () => null,
-    );
-
-    try {
-      final paymentService = _ref.read(paymentServiceProvider);
-      final intentResult = await paymentService.createPaymentIntent(
-        lockerId: state.locker.id,
-        startsAt: state.startsAt!,
-        endsAt: state.endsAt!,
-      );
-
-      state = state.copyWith(
-        isLoadingIntent: false,
-        clientSecret: () => intentResult.clientSecret,
-        reservationId: () => intentResult.reservationId,
-      );
-    } catch (e) {
-      state = state.copyWith(isLoadingIntent: false, error: () => e.toString());
-    }
+  void goToPayment() {
+    state = state.copyWith(step: ReservationFlowStep.payment);
   }
 
   void goBackToDateSelection() {
@@ -182,23 +142,28 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
     state = state.copyWith(step: ReservationFlowStep.summary);
   }
 
-  /// Confirm payment with card details already collected by CardFormField
   Future<void> processPayment() async {
-    if (state.clientSecret == null) return;
+    if (!state.canProceed) return;
 
     state = state.copyWith(isSubmitting: true, error: () => null);
 
     try {
       final paymentService = _ref.read(paymentServiceProvider);
 
-      final result = await paymentService.confirmCardPayment(
-        clientSecret: state.clientSecret!,
+      final intentResult = await paymentService.createPaymentIntent(
+        lockerId: state.locker.id,
+        startsAt: state.startsAt!,
+        endsAt: state.endsAt!,
       );
 
-      if (!result.isSuccess) {
+      final sheetResult = await paymentService.presentPaymentSheet(
+        clientSecret: intentResult.clientSecret,
+      );
+
+      if (!sheetResult.isSuccess) {
         state = state.copyWith(
           isSubmitting: false,
-          error: () => result.errorMessage ?? 'Payment failed',
+          error: () => sheetResult.errorMessage ?? 'Payment cancelled',
         );
         return;
       }
@@ -206,7 +171,8 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
       state = state.copyWith(
         step: ReservationFlowStep.confirmed,
         isSubmitting: false,
-        publicForm: () => 'RES-${state.reservationId}',
+        reservationId: () => intentResult.reservationId,
+        publicForm: () => 'RES-${intentResult.reservationId}',
       );
 
       _ref.read(reservationsProvider.notifier).refresh();

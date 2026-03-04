@@ -34,25 +34,21 @@ class StripePaymentService implements PaymentService {
   }
 
   @override
-  Future<PaymentSheetResult> confirmCardPayment({
+  Future<PaymentSheetResult> presentPaymentSheet({
     required String clientSecret,
   }) async {
     try {
-      final paymentIntent = await Stripe.instance.confirmPayment(
-        paymentIntentClientSecret: clientSecret,
-        options: const PaymentMethodOptions(
-          setupFutureUsage: PaymentIntentsFutureUsage.OffSession,
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: clientSecret,
+          merchantDisplayName: 'Locked In',
+          returnURL: 'lockedin://stripe-redirect',
         ),
       );
 
-      if (paymentIntent.status == PaymentIntentsStatus.Succeeded) {
-        return const PaymentSheetResult(status: PaymentSheetStatus.success);
-      }
+      await Stripe.instance.presentPaymentSheet();
 
-      return PaymentSheetResult(
-        status: PaymentSheetStatus.failed,
-        errorMessage: 'Payment status: ${paymentIntent.status}',
-      );
+      return const PaymentSheetResult(status: PaymentSheetStatus.success);
     } on StripeException catch (e) {
       if (e.error.code == FailureCode.Canceled) {
         return const PaymentSheetResult(status: PaymentSheetStatus.cancelled);
