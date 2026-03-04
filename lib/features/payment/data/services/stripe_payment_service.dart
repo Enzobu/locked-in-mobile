@@ -42,6 +42,7 @@ class StripePaymentService implements PaymentService {
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: clientSecret,
           merchantDisplayName: 'Locked In',
+          returnURL: 'lockedin://stripe-redirect',
         ),
       );
 
@@ -55,6 +56,11 @@ class StripePaymentService implements PaymentService {
       return PaymentSheetResult(
         status: PaymentSheetStatus.failed,
         errorMessage: e.error.localizedMessage,
+      );
+    } catch (e) {
+      return PaymentSheetResult(
+        status: PaymentSheetStatus.failed,
+        errorMessage: e.toString(),
       );
     }
   }

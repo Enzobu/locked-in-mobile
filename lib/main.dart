@@ -8,5 +8,6 @@ import 'core/network/api_constants.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Stripe.publishableKey = ApiConstants.stripePublishableKey;
+  Stripe.urlScheme = 'lockedin';
   runApp(const ProviderScope(child: LockedInApp()));
 }
