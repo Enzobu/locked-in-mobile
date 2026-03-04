@@ -68,28 +68,40 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/home/:id',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final id = int.parse(state.pathParameters['id']!);
-          return LockerBayDetailScreen(lockerBayId: id);
+          return _buildSlideTransitionPage(
+            key: state.pageKey,
+            child: LockerBayDetailScreen(lockerBayId: id),
+          );
         },
       ),
       GoRoute(
         path: '/reservation',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final locker = state.extra! as Locker;
-          return ReservationFlowScreen(locker: locker);
+          return _buildSlideTransitionPage(
+            key: state.pageKey,
+            child: ReservationFlowScreen(locker: locker),
+          );
         },
       ),
       GoRoute(
         path: '/reservation/detail',
-        builder: (context, state) {
+        pageBuilder: (context, state) {
           final reservation = state.extra! as Reservation;
-          return ReservationDetailScreen(reservation: reservation);
+          return _buildSlideTransitionPage(
+            key: state.pageKey,
+            child: ReservationDetailScreen(reservation: reservation),
+          );
         },
       ),
       GoRoute(
         path: '/profile/edit',
-        builder: (context, state) => const EditProfileScreen(),
+        pageBuilder: (context, state) => _buildSlideTransitionPage(
+          key: state.pageKey,
+          child: const EditProfileScreen(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -133,6 +145,35 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
+
+CustomTransitionPage<void> _buildSlideTransitionPage({
+  required LocalKey key,
+  required Widget child,
+}) {
+  return CustomTransitionPage<void>(
+    key: key,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 300),
+    reverseTransitionDuration: const Duration(milliseconds: 250),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curvedAnimation = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      );
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(1, 0),
+          end: Offset.zero,
+        ).animate(curvedAnimation),
+        child: FadeTransition(
+          opacity: Tween<double>(begin: 0.5, end: 1).animate(curvedAnimation),
+          child: child,
+        ),
+      );
+    },
+  );
+}
 
 class ScaffoldWithNavBar extends StatelessWidget {
   const ScaffoldWithNavBar({required this.navigationShell, super.key});
