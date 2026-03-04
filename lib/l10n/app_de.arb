@@ -245,16 +245,9 @@
   "notifications": "Benachrichtigungen",
 
   "paymentTitle": "Zahlung",
-  "paymentSubtitle": "Geben Sie Ihre Kartendaten ein",
-  "paymentCardDetails": "Kartendaten",
-  "paymentCardHolder": "Karteninhaber",
-  "paymentCardHolderRequired": "Karteninhaber ist erforderlich",
-  "paymentCardNumber": "Kartennummer",
-  "paymentCardNumberInvalid": "Ungültige Kartennummer",
-  "paymentExpiry": "Ablaufdatum",
-  "paymentExpiryInvalid": "Ungültiges Datum",
-  "paymentCvv": "CVV",
-  "paymentCvvInvalid": "Ungültige CVV",
+  "paymentSubtitle": "Schließen Sie Ihre Reservierung sicher ab",
+  "paymentCardDetails": "Kartenzahlung",
+  "paymentStripeInfo": "Sie werden zu einem sicheren Stripe-Zahlungsformular weitergeleitet.",
   "paymentPay": "{price} € bezahlen",
   "@paymentPay": {
     "placeholders": {

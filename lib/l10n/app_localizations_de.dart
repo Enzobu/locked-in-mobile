@@ -526,34 +526,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get paymentTitle => 'Zahlung';
 
   @override
-  String get paymentSubtitle => 'Geben Sie Ihre Kartendaten ein';
+  String get paymentSubtitle => 'Schließen Sie Ihre Reservierung sicher ab';
 
   @override
-  String get paymentCardDetails => 'Kartendaten';
+  String get paymentCardDetails => 'Kartenzahlung';
 
   @override
-  String get paymentCardHolder => 'Karteninhaber';
-
-  @override
-  String get paymentCardHolderRequired => 'Karteninhaber ist erforderlich';
-
-  @override
-  String get paymentCardNumber => 'Kartennummer';
-
-  @override
-  String get paymentCardNumberInvalid => 'Ungültige Kartennummer';
-
-  @override
-  String get paymentExpiry => 'Ablaufdatum';
-
-  @override
-  String get paymentExpiryInvalid => 'Ungültiges Datum';
-
-  @override
-  String get paymentCvv => 'CVV';
-
-  @override
-  String get paymentCvvInvalid => 'Ungültige CVV';
+  String get paymentStripeInfo =>
+      'Sie werden zu einem sicheren Stripe-Zahlungsformular weitergeleitet.';
 
   @override
   String paymentPay(String price) {

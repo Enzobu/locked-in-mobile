@@ -1059,62 +1059,20 @@ abstract class AppLocalizations {
   /// Sous-titre étape paiement
   ///
   /// In fr, this message translates to:
-  /// **'Entrez vos informations de carte bancaire'**
+  /// **'Finalisez votre réservation en toute sécurité'**
   String get paymentSubtitle;
 
   /// Section détails carte
   ///
   /// In fr, this message translates to:
-  /// **'Carte bancaire'**
+  /// **'Paiement par carte'**
   String get paymentCardDetails;
 
-  /// Label champ titulaire
+  /// Info redirection Stripe
   ///
   /// In fr, this message translates to:
-  /// **'Titulaire de la carte'**
-  String get paymentCardHolder;
-
-  /// Erreur titulaire vide
-  ///
-  /// In fr, this message translates to:
-  /// **'Le titulaire est requis'**
-  String get paymentCardHolderRequired;
-
-  /// Label champ numéro de carte
-  ///
-  /// In fr, this message translates to:
-  /// **'Numéro de carte'**
-  String get paymentCardNumber;
-
-  /// Erreur numéro invalide
-  ///
-  /// In fr, this message translates to:
-  /// **'Numéro de carte invalide'**
-  String get paymentCardNumberInvalid;
-
-  /// Label champ expiration
-  ///
-  /// In fr, this message translates to:
-  /// **'Expiration'**
-  String get paymentExpiry;
-
-  /// Erreur expiration invalide
-  ///
-  /// In fr, this message translates to:
-  /// **'Date invalide'**
-  String get paymentExpiryInvalid;
-
-  /// Label champ CVV
-  ///
-  /// In fr, this message translates to:
-  /// **'CVV'**
-  String get paymentCvv;
-
-  /// Erreur CVV invalide
-  ///
-  /// In fr, this message translates to:
-  /// **'CVV invalide'**
-  String get paymentCvvInvalid;
+  /// **'Vous serez redirigé vers un formulaire de paiement sécurisé Stripe.'**
+  String get paymentStripeInfo;
 
   /// Bouton payer avec montant
   ///
