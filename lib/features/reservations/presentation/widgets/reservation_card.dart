@@ -4,6 +4,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../core/models/reservation.dart';
 import '../../../../core/models/reservation_status.dart';
+import '../../../../core/widgets/animated_pressable.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class ReservationCard extends StatelessWidget {
@@ -21,12 +22,14 @@ class ReservationCard extends StatelessWidget {
     final dateFormat = DateFormat.yMMMd(locale);
     final (statusLabel, statusColor) = _statusInfo(l10n);
 
-    return Card(
-      margin: EdgeInsets.zero,
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
+    return AnimatedPressable(
+      onTap: onTap,
+      child: Card(
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
           padding: const EdgeInsets.all(14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,6 +126,7 @@ class ReservationCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

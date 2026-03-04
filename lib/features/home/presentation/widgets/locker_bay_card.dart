@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../../core/widgets/animated_pressable.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/models/locker_bay_summary.dart';
 
@@ -36,12 +37,14 @@ class LockerBayCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final l10n = AppLocalizations.of(context)!;
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      margin: EdgeInsets.zero,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
+    return AnimatedPressable(
+      onTap: onTap,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        margin: EdgeInsets.zero,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,6 +166,7 @@ class LockerBayCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }
