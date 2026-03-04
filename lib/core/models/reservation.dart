@@ -84,13 +84,16 @@ class Reservation {
           ? plannedAmountCents()
           : this.plannedAmountCents,
       currency: currency != null ? currency() : this.currency,
-      paymentIntentId:
-          paymentIntentId != null ? paymentIntentId() : this.paymentIntentId,
-      paymentStatus:
-          paymentStatus != null ? paymentStatus() : this.paymentStatus,
+      paymentIntentId: paymentIntentId != null
+          ? paymentIntentId()
+          : this.paymentIntentId,
+      paymentStatus: paymentStatus != null
+          ? paymentStatus()
+          : this.paymentStatus,
       actualEndsAt: actualEndsAt != null ? actualEndsAt() : this.actualEndsAt,
-      overtimeMinutes:
-          overtimeMinutes != null ? overtimeMinutes() : this.overtimeMinutes,
+      overtimeMinutes: overtimeMinutes != null
+          ? overtimeMinutes()
+          : this.overtimeMinutes,
       overtimeAmountCents: overtimeAmountCents != null
           ? overtimeAmountCents()
           : this.overtimeAmountCents,

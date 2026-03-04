@@ -87,8 +87,9 @@ class ReservationFlowState {
           ? durationMinutes()
           : this.durationMinutes,
       isSubmitting: isSubmitting ?? this.isSubmitting,
-      reservationId:
-          reservationId != null ? reservationId() : this.reservationId,
+      reservationId: reservationId != null
+          ? reservationId()
+          : this.reservationId,
       publicForm: publicForm != null ? publicForm() : this.publicForm,
       error: error != null ? error() : this.error,
     );

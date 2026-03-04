@@ -65,7 +65,8 @@ class ReservationDto {
           (json['paymentIntentId'] ?? json['payment_intent_id']) as String?,
       paymentStatus:
           (json['paymentStatus'] ?? json['payment_status']) as String?,
-      actualEndsAt: json['actualEndsAt'] != null || json['actual_ends_at'] != null
+      actualEndsAt:
+          json['actualEndsAt'] != null || json['actual_ends_at'] != null
           ? DateTime.parse(
               (json['actualEndsAt'] ?? json['actual_ends_at']) as String,
             )
@@ -77,7 +78,8 @@ class ReservationDto {
               as int?,
       overtimePaymentIntentId:
           (json['overtimePaymentIntentId'] ??
-              json['overtime_payment_intent_id']) as String?,
+                  json['overtime_payment_intent_id'])
+              as String?,
       overtimePaymentStatus:
           (json['overtimePaymentStatus'] ?? json['overtime_payment_status'])
               as String?,

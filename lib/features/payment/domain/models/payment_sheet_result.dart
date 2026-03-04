@@ -1,10 +1,7 @@
 enum PaymentSheetStatus { success, failed, cancelled }
 
 class PaymentSheetResult {
-  const PaymentSheetResult({
-    required this.status,
-    this.errorMessage,
-  });
+  const PaymentSheetResult({required this.status, this.errorMessage});
 
   final PaymentSheetStatus status;
   final String? errorMessage;

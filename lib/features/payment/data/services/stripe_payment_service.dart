@@ -8,7 +8,7 @@ import '../datasources/payment_datasource.dart';
 
 class StripePaymentService implements PaymentService {
   const StripePaymentService({required PaymentDatasource datasource})
-      : _datasource = datasource;
+    : _datasource = datasource;
 
   final PaymentDatasource _datasource;
 

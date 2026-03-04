@@ -8,7 +8,8 @@ class ApiConstants {
 
   static const stripePublishableKey = String.fromEnvironment(
     'STRIPE_PUBLISHABLE_KEY',
-    defaultValue: 'pk_test_51RMWNkQGSJgCMEAEXJzZlxlJzKqV2IjqxFGJ1rKhdXQ36iNO3bJLuSGNEVMmB4H6dftXE2cYcWPY7X8vRn1TkMp00jW77oZT4',
+    defaultValue:
+        'pk_test_51RMWNkQGSJgCMEAEXJzZlxlJzKqV2IjqxFGJ1rKhdXQ36iNO3bJLuSGNEVMmB4H6dftXE2cYcWPY7X8vRn1TkMp00jW77oZT4',
   );
 
   static const connectTimeout = Duration(seconds: 15);

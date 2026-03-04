@@ -78,9 +78,7 @@ void main() {
     });
 
     test('isSuccess returns false for cancelled status', () {
-      const result = PaymentSheetResult(
-        status: PaymentSheetStatus.cancelled,
-      );
+      const result = PaymentSheetResult(status: PaymentSheetStatus.cancelled);
       expect(result.isSuccess, isFalse);
     });
   });

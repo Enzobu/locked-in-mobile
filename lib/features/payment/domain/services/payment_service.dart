@@ -16,7 +16,5 @@ abstract class PaymentService {
   });
 
   /// Closes a reservation (calculates overtime costs)
-  Future<CloseReservationResult> closeReservation({
-    required int reservationId,
-  });
+  Future<CloseReservationResult> closeReservation({required int reservationId});
 }
