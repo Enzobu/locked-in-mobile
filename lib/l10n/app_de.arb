@@ -241,5 +241,6 @@
   "profileLogoutConfirm": "Möchten Sie sich wirklich abmelden?",
   "profileEdit": "Profil bearbeiten",
   "profileEditSuccess": "Profil erfolgreich aktualisiert",
-  "profileEditError": "Fehler beim Aktualisieren des Profils"
+  "profileEditError": "Fehler beim Aktualisieren des Profils",
+  "notifications": "Benachrichtigungen"
 }

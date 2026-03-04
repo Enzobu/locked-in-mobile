@@ -74,12 +74,14 @@ class ProfileSectionTile extends StatelessWidget {
     required this.label,
     this.value,
     this.onTap,
+    this.trailing,
   });
 
   final IconData icon;
   final String label;
   final String? value;
   final VoidCallback? onTap;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +104,7 @@ class ProfileSectionTile extends StatelessWidget {
                   color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
+            ?trailing,
             if (onTap != null) ...[
               const SizedBox(width: 4),
               Icon(

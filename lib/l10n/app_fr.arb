@@ -398,5 +398,7 @@
   "profileEditSuccess": "Profil mis à jour avec succès",
   "@profileEditSuccess": { "description": "Message succès modification profil" },
   "profileEditError": "Erreur lors de la mise à jour du profil",
-  "@profileEditError": { "description": "Message erreur modification profil" }
+  "@profileEditError": { "description": "Message erreur modification profil" },
+  "notifications": "Notifications",
+  "@notifications": { "description": "Label toggle notifications" }
 }
