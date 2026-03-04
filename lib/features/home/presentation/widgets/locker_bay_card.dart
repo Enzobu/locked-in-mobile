@@ -5,10 +5,30 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/models/locker_bay_summary.dart';
 
 class LockerBayCard extends StatelessWidget {
-  const LockerBayCard({required this.summary, required this.onTap, super.key});
+  const LockerBayCard({
+    required this.summary,
+    required this.onTap,
+    this.enableHero = true,
+    super.key,
+  });
 
   final LockerBaySummary summary;
   final VoidCallback onTap;
+  final bool enableHero;
+
+  Widget _maybeHero({required String tag, required Widget child}) {
+    if (!enableHero) return child;
+    return Hero(
+      tag: tag,
+      flightShuttleBuilder: (_, animation, direction, fromContext, toContext) {
+        return FadeTransition(
+          opacity: animation,
+          child: toContext.widget,
+        );
+      },
+      child: Material(type: MaterialType.transparency, child: child),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +48,19 @@ class LockerBayCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(
-                      LucideIcons.box,
-                      size: 20,
-                      color: colorScheme.onPrimaryContainer,
+                  _maybeHero(
+                    tag: 'locker_bay_icon_${summary.lockerBay.id}',
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        LucideIcons.box,
+                        size: 20,
+                        color: colorScheme.onPrimaryContainer,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -45,13 +68,16 @@ class LockerBayCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          summary.lockerBay.name,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
+                        _maybeHero(
+                          tag: 'locker_bay_name_${summary.lockerBay.id}',
+                          child: Text(
+                            summary.lockerBay.name,
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 2),
                         Row(
