@@ -28,14 +28,18 @@ class ApiProfileDatasource implements ProfileDatasource {
       'lastname': lastname,
       'email': email,
     };
-    if (phone != null) {
-      data['phone'] = phone;
-    }
+    // TODO: Envoyer phone quand le backend ajoutera le champ
+    // if (phone != null) {
+    //   data['phone'] = phone;
+    // }
 
-    final response = await dioClient.patch<Map<String, dynamic>>(
+    await dioClient.patch<Map<String, dynamic>>(
       '/api/customers/$customerId',
       data: data,
     );
-    return response.data!;
+
+    // Re-fetch via /me pour avoir un format cohérent (le PATCH standard
+    // API Platform renvoie un format différent du contrôleur custom /me)
+    return getProfile();
   }
 }

@@ -81,17 +81,21 @@ void main() {
   });
 
   group('updateProfile', () {
-    test('sends PATCH to /api/customers/1 and returns updated data', () async {
+    test('sends PATCH then re-fetches via GET /me', () async {
       final updatedJson = {
         ..._customerJson,
         'firstname': 'Pierre',
         'lastname': 'Martin',
         'email': 'pierre@example.com',
-        'phone': '+33698765432',
       };
 
       dioAdapter.registerResponses({
         '/api/customers/1': Response(
+          requestOptions: RequestOptions(),
+          statusCode: 200,
+          data: {'@id': '/api/customers/1'},
+        ),
+        '/api/customers/me': Response(
           requestOptions: RequestOptions(),
           statusCode: 200,
           data: updatedJson,
@@ -103,32 +107,11 @@ void main() {
         firstname: 'Pierre',
         lastname: 'Martin',
         email: 'pierre@example.com',
-        phone: '+33698765432',
       );
 
       expect(result['firstname'], 'Pierre');
       expect(result['lastname'], 'Martin');
       expect(result['email'], 'pierre@example.com');
-      expect(result['phone'], '+33698765432');
-    });
-
-    test('sends PATCH without phone when phone is null', () async {
-      dioAdapter.registerResponses({
-        '/api/customers/1': Response(
-          requestOptions: RequestOptions(),
-          statusCode: 200,
-          data: _customerJson,
-        ),
-      });
-
-      final result = await datasource.updateProfile(
-        customerId: 1,
-        firstname: 'Jean',
-        lastname: 'Dupont',
-        email: 'jean@example.com',
-      );
-
-      expect(result['id'], 1);
     });
 
     test('throws ApiException on 422 validation error', () async {
