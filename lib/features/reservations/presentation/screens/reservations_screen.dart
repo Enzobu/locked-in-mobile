@@ -8,6 +8,7 @@ import '../../../../core/models/reservation_status.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../providers/reservation_provider.dart';
 import '../widgets/reservation_card.dart';
+import '../widgets/reservation_skeleton.dart';
 
 class ReservationsScreen extends ConsumerWidget {
   const ReservationsScreen({super.key});
@@ -20,7 +21,7 @@ class ReservationsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.reservations)),
       body: reservationsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const ReservationSkeleton(),
         error: (error, _) => _ErrorState(
           onRetry: () => ref.read(reservationsProvider.notifier).refresh(),
         ),
