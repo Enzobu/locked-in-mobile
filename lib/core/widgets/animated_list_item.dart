@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AnimatedListItem extends StatefulWidget {
-  const AnimatedListItem({
-    required this.index,
-    required this.child,
-    super.key,
-  });
+  const AnimatedListItem({required this.index, required this.child, super.key});
 
   final int index;
   final Widget child;
@@ -54,10 +50,7 @@ class _AnimatedListItemState extends State<AnimatedListItem>
   Widget build(BuildContext context) {
     return FadeTransition(
       opacity: _fadeAnimation,
-      child: SlideTransition(
-        position: _slideAnimation,
-        child: widget.child,
-      ),
+      child: SlideTransition(position: _slideAnimation, child: widget.child),
     );
   }
 }

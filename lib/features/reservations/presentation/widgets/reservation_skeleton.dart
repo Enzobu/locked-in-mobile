@@ -19,9 +19,10 @@ class _ReservationSkeletonState extends State<ReservationSkeleton>
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
-    _animation = Tween<double>(begin: 0.3, end: 0.7).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0.3,
+      end: 0.7,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -72,9 +73,9 @@ class _SectionHeaderSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shimmerColor = Theme.of(context).colorScheme.onSurface.withValues(
-      alpha: opacity * 0.12,
-    );
+    final shimmerColor = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: opacity * 0.12);
 
     return Row(
       children: [
@@ -107,9 +108,9 @@ class _ReservationCardSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shimmerColor = Theme.of(context).colorScheme.onSurface.withValues(
-      alpha: opacity * 0.12,
-    );
+    final shimmerColor = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: opacity * 0.12);
 
     return Card(
       margin: EdgeInsets.zero,

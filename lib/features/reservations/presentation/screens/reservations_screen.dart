@@ -81,10 +81,8 @@ class _ReservationsList extends ConsumerWidget {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: ReservationCard(
                     reservation: entry.value,
-                    onTap: () => context.push(
-                      '/reservation/detail',
-                      extra: entry.value,
-                    ),
+                    onTap: () =>
+                        context.push('/reservation/detail', extra: entry.value),
                   ),
                 ),
               ),
@@ -104,10 +102,8 @@ class _ReservationsList extends ConsumerWidget {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: ReservationCard(
                     reservation: entry.value,
-                    onTap: () => context.push(
-                      '/reservation/detail',
-                      extra: entry.value,
-                    ),
+                    onTap: () =>
+                        context.push('/reservation/detail', extra: entry.value),
                   ),
                 ),
               ),
