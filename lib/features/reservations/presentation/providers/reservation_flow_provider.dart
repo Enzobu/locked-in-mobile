@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/locker.dart';
-import '../../../../core/models/reservation.dart';
 import '../../../payment/presentation/providers/payment_provider.dart';
 import 'reservation_provider.dart';
 
@@ -16,7 +15,7 @@ class ReservationFlowState {
     this.selectedTime,
     this.durationMinutes,
     this.isSubmitting = false,
-    this.reservation,
+    this.reservationId,
     this.publicForm,
     this.error,
   });
@@ -27,7 +26,7 @@ class ReservationFlowState {
   final TimeOfDay? selectedTime;
   final int? durationMinutes;
   final bool isSubmitting;
-  final Reservation? reservation;
+  final int? reservationId;
   final String? publicForm;
   final String? error;
 
@@ -75,7 +74,7 @@ class ReservationFlowState {
     TimeOfDay? Function()? selectedTime,
     int? Function()? durationMinutes,
     bool? isSubmitting,
-    Reservation? Function()? reservation,
+    int? Function()? reservationId,
     String? Function()? publicForm,
     String? Function()? error,
   }) {
@@ -88,7 +87,8 @@ class ReservationFlowState {
           ? durationMinutes()
           : this.durationMinutes,
       isSubmitting: isSubmitting ?? this.isSubmitting,
-      reservation: reservation != null ? reservation() : this.reservation,
+      reservationId:
+          reservationId != null ? reservationId() : this.reservationId,
       publicForm: publicForm != null ? publicForm() : this.publicForm,
       error: error != null ? error() : this.error,
     );
@@ -141,46 +141,40 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
     state = state.copyWith(step: ReservationFlowStep.summary);
   }
 
-  Future<void> processPaymentAndConfirm({
-    required String cardNumber,
-    required String expiryDate,
-    required String cvv,
-    required String cardHolder,
-  }) async {
+  Future<void> processPayment() async {
     if (!state.canProceed) return;
 
     state = state.copyWith(isSubmitting: true, error: () => null);
 
     try {
       final paymentService = _ref.read(paymentServiceProvider);
-      final paymentResult = await paymentService.processPayment(
-        amountCents: state.locker.priceCents,
-        cardNumber: cardNumber,
-        expiryDate: expiryDate,
-        cvv: cvv,
-        cardHolder: cardHolder,
-      );
 
-      if (!paymentResult.isSuccess) {
-        state = state.copyWith(
-          isSubmitting: false,
-          error: () => paymentResult.errorMessage ?? 'Payment failed',
-        );
-        return;
-      }
-
-      final repository = _ref.read(reservationRepositoryProvider);
-      final reservation = await repository.createReservation(
+      // 1. Create PaymentIntent (backend creates reservation + Stripe intent)
+      final intentResult = await paymentService.createPaymentIntent(
         lockerId: state.locker.id,
         startsAt: state.startsAt!,
         endsAt: state.endsAt!,
       );
 
+      // 2. Present Stripe PaymentSheet
+      final sheetResult = await paymentService.presentPaymentSheet(
+        clientSecret: intentResult.clientSecret,
+      );
+
+      if (!sheetResult.isSuccess) {
+        state = state.copyWith(
+          isSubmitting: false,
+          error: () => sheetResult.errorMessage ?? 'Payment cancelled',
+        );
+        return;
+      }
+
+      // 3. Success — store reservation info
       state = state.copyWith(
         step: ReservationFlowStep.confirmed,
         isSubmitting: false,
-        reservation: () => reservation,
-        publicForm: () => reservation.publicForm,
+        reservationId: () => intentResult.reservationId,
+        publicForm: () => 'RES-${intentResult.reservationId}',
       );
 
       _ref.read(reservationsProvider.notifier).refresh();
