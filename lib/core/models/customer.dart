@@ -9,6 +9,7 @@ class Customer {
     required this.birthDate,
     required this.createdAt,
     required this.updatedAt,
+    this.phone,
     this.roles = const [],
     this.addresses = const [],
   });
@@ -17,6 +18,7 @@ class Customer {
   final String email;
   final String firstname;
   final String lastname;
+  final String? phone;
   final DateTime birthDate;
   final List<String> roles;
   final List<Address> addresses;
@@ -32,6 +34,7 @@ class Customer {
     String? email,
     String? firstname,
     String? lastname,
+    String? phone,
     DateTime? birthDate,
     List<String>? roles,
     List<Address>? addresses,
@@ -43,6 +46,7 @@ class Customer {
       email: email ?? this.email,
       firstname: firstname ?? this.firstname,
       lastname: lastname ?? this.lastname,
+      phone: phone ?? this.phone,
       birthDate: birthDate ?? this.birthDate,
       roles: roles ?? this.roles,
       addresses: addresses ?? this.addresses,

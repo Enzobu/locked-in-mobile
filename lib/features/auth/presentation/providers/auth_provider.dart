@@ -140,23 +140,8 @@ class AuthNotifier extends Notifier<AuthState> {
     }
   }
 
-  Future<bool> updateProfile({
-    required String firstname,
-    required String lastname,
-    required String email,
-  }) async {
-    try {
-      final data = await _datasource.updateCustomer(
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-      );
-      final customer = CustomerDto.fromJson(data).toDomain();
-      state = state.copyWith(customer: customer);
-      return true;
-    } on Exception {
-      return false;
-    }
+  void updateCustomerState(Customer customer) {
+    state = state.copyWith(customer: customer);
   }
 
   Future<void> logout() async {

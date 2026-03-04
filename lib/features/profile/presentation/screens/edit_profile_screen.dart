@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../auth/presentation/widgets/auth_text_field.dart';
 import '../providers/profile_provider.dart';
 
@@ -17,7 +17,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late final TextEditingController _firstnameController;
   late final TextEditingController _lastnameController;
   late final TextEditingController _emailController;
-  bool _isLoading = false;
+  late final TextEditingController _phoneController;
 
   @override
   void initState() {
@@ -26,6 +26,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _firstnameController = TextEditingController(text: customer?.firstname);
     _lastnameController = TextEditingController(text: customer?.lastname);
     _emailController = TextEditingController(text: customer?.email);
+    _phoneController = TextEditingController(text: customer?.phone ?? '');
   }
 
   @override
@@ -33,43 +34,48 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _firstnameController.dispose();
     _lastnameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _isLoading = true);
-
+    final phone = _phoneController.text.trim();
     final success = await ref
-        .read(authProvider.notifier)
+        .read(profileUpdateProvider.notifier)
         .updateProfile(
           firstname: _firstnameController.text.trim(),
           lastname: _lastnameController.text.trim(),
           email: _emailController.text.trim(),
+          phone: phone.isEmpty ? null : phone,
         );
 
     if (!mounted) return;
-    setState(() => _isLoading = false);
 
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          success ? l10n.profileEditSuccess : l10n.profileEditError,
-        ),
-        backgroundColor: success
-            ? theme.colorScheme.primary
-            : theme.colorScheme.error,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-    );
+    final updateState = ref.read(profileUpdateProvider);
 
     if (success) {
-      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.profileEditSuccess),
+          backgroundColor: theme.colorScheme.primary,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      );
+      context.go('/profile');
+    } else if (!updateState.hasFieldErrors) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(updateState.errorMessage ?? l10n.profileEditError),
+          backgroundColor: theme.colorScheme.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      );
     }
   }
 
@@ -77,80 +83,122 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final updateState = ref.watch(profileUpdateProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.profileEdit),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: FilledButton(
-              onPressed: _isLoading ? null : _submit,
-              child: _isLoading
-                  ? SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: theme.colorScheme.onPrimary,
-                      ),
-                    )
-                  : Text(l10n.save),
+      appBar: AppBar(title: Text(l10n.profileEdit)),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AuthTextField(
+                      label: l10n.firstname,
+                      controller: _firstnameController,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return l10n.firstnameRequired;
+                        }
+                        final serverError =
+                            updateState.fieldErrors['firstname'];
+                        if (serverError != null) return serverError;
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: l10n.lastname,
+                      controller: _lastnameController,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return l10n.lastnameRequired;
+                        }
+                        final serverError = updateState.fieldErrors['lastname'];
+                        if (serverError != null) return serverError;
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: l10n.email,
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      autocorrect: false,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return l10n.emailRequired;
+                        }
+                        final emailRegex = RegExp(
+                          r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
+                        );
+                        if (!emailRegex.hasMatch(value.trim())) {
+                          return l10n.emailInvalid;
+                        }
+                        final serverError = updateState.fieldErrors['email'];
+                        if (serverError != null) return serverError;
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    AuthTextField(
+                      label: l10n.phone,
+                      controller: _phoneController,
+                      keyboardType: TextInputType.phone,
+                      textInputAction: TextInputAction.done,
+                      autocorrect: false,
+                      validator: (value) {
+                        final serverError = updateState.fieldErrors['phone'];
+                        if (serverError != null) return serverError;
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+              child: SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: updateState.isLoading ? null : _submit,
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: updateState.isLoading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: theme.colorScheme.onPrimary,
+                          ),
+                        )
+                      : Text(
+                          l10n.save,
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.colorScheme.onPrimary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                ),
+              ),
             ),
           ),
         ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AuthTextField(
-                label: l10n.firstname,
-                controller: _firstnameController,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return l10n.firstnameRequired;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              AuthTextField(
-                label: l10n.lastname,
-                controller: _lastnameController,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return l10n.lastnameRequired;
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              AuthTextField(
-                label: l10n.email,
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                autocorrect: false,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return l10n.emailRequired;
-                  }
-                  final emailRegex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
-                  if (!emailRegex.hasMatch(value.trim())) {
-                    return l10n.emailInvalid;
-                  }
-                  return null;
-                },
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

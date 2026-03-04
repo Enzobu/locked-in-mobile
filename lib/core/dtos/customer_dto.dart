@@ -11,6 +11,7 @@ class CustomerDto {
     required this.birthDate,
     required this.createdAt,
     required this.updatedAt,
+    this.phone,
     this.roles = const [],
     this.addresses = const [],
   });
@@ -19,6 +20,7 @@ class CustomerDto {
   final String email;
   final String firstname;
   final String lastname;
+  final String? phone;
   final DateTime birthDate;
   final List<String> roles;
   final List<AddressDto> addresses;
@@ -32,6 +34,7 @@ class CustomerDto {
       email: json['email'] as String,
       firstname: json['firstname'] as String,
       lastname: json['lastname'] as String,
+      phone: json['phone'] as String?,
       birthDate: JsonHelpers.parseDateTime(json, 'birthDate', 'birth_date'),
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
@@ -50,6 +53,7 @@ class CustomerDto {
       'email': email,
       'firstname': firstname,
       'lastname': lastname,
+      'phone': phone,
       'birthDate': birthDate.toIso8601String(),
       'roles': roles,
       'addresses': addresses.map((e) => e.toJson()).toList(),
@@ -64,6 +68,7 @@ class CustomerDto {
       email: email,
       firstname: firstname,
       lastname: lastname,
+      phone: phone,
       birthDate: birthDate,
       roles: roles,
       addresses: addresses.map((e) => e.toDomain()).toList(),
@@ -78,6 +83,7 @@ class CustomerDto {
       email: customer.email,
       firstname: customer.firstname,
       lastname: customer.lastname,
+      phone: customer.phone,
       birthDate: customer.birthDate,
       roles: customer.roles,
       addresses: customer.addresses

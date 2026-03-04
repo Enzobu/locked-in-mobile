@@ -51,6 +51,7 @@ class MockAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
+    String? phone,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 500));
 
@@ -62,6 +63,9 @@ class MockAuthDatasource implements AuthDatasource {
     updated['firstname'] = firstname;
     updated['lastname'] = lastname;
     updated['email'] = email;
+    if (phone != null) {
+      updated['phone'] = phone;
+    }
     updated['updated_at'] = DateTime.now().toIso8601String();
     return updated;
   }

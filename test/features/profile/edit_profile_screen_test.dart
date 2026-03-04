@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:locked_in_mobile/core/models/address.dart';
 import 'package:locked_in_mobile/core/models/customer.dart';
 import 'package:locked_in_mobile/features/auth/presentation/providers/auth_provider.dart';
+import 'package:locked_in_mobile/features/profile/domain/repositories/profile_repository.dart';
+import 'package:locked_in_mobile/features/profile/presentation/providers/profile_provider.dart';
 import 'package:locked_in_mobile/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:locked_in_mobile/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +16,7 @@ final _testCustomer = Customer(
   email: 'jean.dupont@email.com',
   firstname: 'Jean',
   lastname: 'Dupont',
+  phone: '+33612345678',
   birthDate: DateTime(1995, 6, 15),
   addresses: const [
     Address(
@@ -42,22 +45,30 @@ class _FakeAuthNotifier extends AuthNotifier {
       customer: _customer,
     );
   }
+}
+
+class _FakeProfileRepository implements ProfileRepository {
+  _FakeProfileRepository(this._customer);
+
+  final Customer _customer;
 
   @override
-  Future<bool> updateProfile({
+  Future<Customer> getProfile() async => _customer;
+
+  @override
+  Future<Customer> updateProfile({
+    required int customerId,
     required String firstname,
     required String lastname,
     required String email,
+    String? phone,
   }) async {
-    if (_customer == null) return false;
-    state = state.copyWith(
-      customer: _customer.copyWith(
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-      ),
+    return _customer.copyWith(
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      phone: phone,
     );
-    return true;
   }
 }
 
@@ -68,17 +79,22 @@ void main() {
 
   Widget createTestWidget({Customer? customer}) {
     return ProviderScope(
-      overrides: [authProvider.overrideWith(() => _FakeAuthNotifier(customer))],
+      overrides: [
+        authProvider.overrideWith(() => _FakeAuthNotifier(customer)),
+        profileRepositoryProvider.overrideWithValue(
+          _FakeProfileRepository(customer ?? _testCustomer),
+        ),
+      ],
       child: const MaterialApp(
-        localizationsDelegates: const [
+        localizationsDelegates: [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [Locale('fr')],
-        locale: const Locale('fr'),
-        home: const EditProfileScreen(),
+        supportedLocales: [Locale('fr')],
+        locale: Locale('fr'),
+        home: EditProfileScreen(),
       ),
     );
   }
@@ -91,6 +107,7 @@ void main() {
       expect(find.text('Jean'), findsOneWidget);
       expect(find.text('Dupont'), findsOneWidget);
       expect(find.text('jean.dupont@email.com'), findsOneWidget);
+      expect(find.text('+33612345678'), findsOneWidget);
     });
 
     testWidgets('shows validation errors on empty required fields', (
@@ -149,6 +166,13 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Modifier le profil'), findsOneWidget);
+    });
+
+    testWidgets('displays phone field', (tester) async {
+      await tester.pumpWidget(createTestWidget(customer: _testCustomer));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Téléphone'), findsOneWidget);
     });
   });
 }

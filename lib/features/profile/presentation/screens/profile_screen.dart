@@ -89,7 +89,7 @@ class _PersonalInfoSection extends StatelessWidget {
         ProfileSectionTile(
           icon: LucideIcons.phone,
           label: l10n.phone,
-          value: '-',
+          value: customer?.phone ?? '-',
         ),
       ],
     );
