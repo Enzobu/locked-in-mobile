@@ -28,9 +28,11 @@ class ReservationDto {
   final DateTime updatedAt;
 
   factory ReservationDto.fromJson(Map<String, dynamic> json) {
+    final id = json['id'] as int;
     return ReservationDto(
-      id: json['id'] as int,
-      publicForm: (json['publicForm'] ?? json['public_form'] ?? '') as String,
+      id: id,
+      publicForm:
+          (json['publicForm'] ?? json['public_form'] ?? 'RES-$id') as String,
       startsAt: JsonHelpers.parseDateTime(json, 'startsAt', 'starts_at'),
       endsAt: JsonHelpers.parseDateTime(json, 'endsAt', 'ends_at'),
       customer: CustomerDto.fromJson(json['customer'] as Map<String, dynamic>),

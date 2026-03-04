@@ -1,13 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/reservation.dart';
-import '../../data/datasources/mock_reservation_datasource.dart';
+import '../../../../core/network/dio_client.dart';
+import '../../data/datasources/api_reservation_datasource.dart';
 import '../../data/datasources/reservation_datasource.dart';
 import '../../data/repositories/mock_reservation_repository.dart';
 import '../../domain/repositories/reservation_repository.dart';
 
 final reservationDatasourceProvider = Provider<ReservationDatasource>((ref) {
-  return MockReservationDatasource();
+  final dioClient = ref.watch(dioClientProvider);
+  return ApiReservationDatasource(dioClient: dioClient);
 });
 
 final reservationRepositoryProvider = Provider<ReservationRepository>((ref) {

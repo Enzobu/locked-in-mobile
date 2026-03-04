@@ -69,6 +69,20 @@ class DioClient {
     }
   }
 
+  Future<Response<T>> patch<T>(String path, {dynamic data}) async {
+    try {
+      return await _dio.patch<T>(
+        path,
+        data: data,
+        options: Options(
+          headers: {'Content-Type': 'application/merge-patch+json'},
+        ),
+      );
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    }
+  }
+
   Future<Response<T>> delete<T>(String path) async {
     try {
       return await _dio.delete<T>(path);
