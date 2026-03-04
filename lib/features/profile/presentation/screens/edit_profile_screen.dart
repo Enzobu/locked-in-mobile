@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../auth/presentation/widgets/auth_text_field.dart';
 import '../providers/profile_provider.dart';
 
@@ -17,7 +16,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late final TextEditingController _firstnameController;
   late final TextEditingController _lastnameController;
   late final TextEditingController _emailController;
-  bool _isLoading = false;
+  late final TextEditingController _phoneController;
 
   @override
   void initState() {
@@ -26,6 +25,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _firstnameController = TextEditingController(text: customer?.firstname);
     _lastnameController = TextEditingController(text: customer?.lastname);
     _emailController = TextEditingController(text: customer?.email);
+    _phoneController = TextEditingController(text: customer?.phone ?? '');
   }
 
   @override
@@ -33,43 +33,50 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     _firstnameController.dispose();
     _lastnameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _isLoading = true);
-
+    final phone = _phoneController.text.trim();
     final success = await ref
-        .read(authProvider.notifier)
+        .read(profileUpdateProvider.notifier)
         .updateProfile(
           firstname: _firstnameController.text.trim(),
           lastname: _lastnameController.text.trim(),
           email: _emailController.text.trim(),
+          phone: phone.isEmpty ? null : phone,
         );
 
     if (!mounted) return;
-    setState(() => _isLoading = false);
 
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          success ? l10n.profileEditSuccess : l10n.profileEditError,
-        ),
-        backgroundColor: success
-            ? theme.colorScheme.primary
-            : theme.colorScheme.error,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-    );
+    final updateState = ref.read(profileUpdateProvider);
 
     if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(l10n.profileEditSuccess),
+          backgroundColor: theme.colorScheme.primary,
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      );
       Navigator.of(context).pop();
+    } else if (!updateState.hasFieldErrors) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(updateState.errorMessage ?? l10n.profileEditError),
+          backgroundColor: theme.colorScheme.error,
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      );
     }
   }
 
@@ -77,6 +84,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final updateState = ref.watch(profileUpdateProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -85,8 +93,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: FilledButton(
-              onPressed: _isLoading ? null : _submit,
-              child: _isLoading
+              onPressed: updateState.isLoading ? null : _submit,
+              child: updateState.isLoading
                   ? SizedBox(
                       width: 18,
                       height: 18,
@@ -115,6 +123,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   if (value == null || value.trim().isEmpty) {
                     return l10n.firstnameRequired;
                   }
+                  final serverError =
+                      updateState.fieldErrors['firstname'];
+                  if (serverError != null) return serverError;
                   return null;
                 },
               ),
@@ -127,6 +138,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   if (value == null || value.trim().isEmpty) {
                     return l10n.lastnameRequired;
                   }
+                  final serverError =
+                      updateState.fieldErrors['lastname'];
+                  if (serverError != null) return serverError;
                   return null;
                 },
               ),
@@ -145,6 +159,23 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   if (!emailRegex.hasMatch(value.trim())) {
                     return l10n.emailInvalid;
                   }
+                  final serverError =
+                      updateState.fieldErrors['email'];
+                  if (serverError != null) return serverError;
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              AuthTextField(
+                label: l10n.phone,
+                controller: _phoneController,
+                keyboardType: TextInputType.phone,
+                textInputAction: TextInputAction.done,
+                autocorrect: false,
+                validator: (value) {
+                  final serverError =
+                      updateState.fieldErrors['phone'];
+                  if (serverError != null) return serverError;
                   return null;
                 },
               ),
