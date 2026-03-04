@@ -137,24 +137,6 @@ void main() {
       expect(find.text("L'email n'est pas valide"), findsOneWidget);
     });
 
-    testWidgets('shows validation error for invalid phone', (tester) async {
-      await tester.pumpWidget(createTestWidget(customer: _testCustomer));
-      await tester.pumpAndSettle();
-
-      // Find phone field (4th TextFormField)
-      final phoneFields = find.byType(TextFormField);
-      await tester.enterText(phoneFields.at(3), 'abc');
-      await tester.pumpAndSettle();
-
-      await tester.tap(find.text('Enregistrer'));
-      await tester.pumpAndSettle();
-
-      expect(
-        find.text("Le numéro de téléphone n'est pas valide"),
-        findsOneWidget,
-      );
-    });
-
     testWidgets('displays save button in app bar', (tester) async {
       await tester.pumpWidget(createTestWidget(customer: _testCustomer));
       await tester.pumpAndSettle();

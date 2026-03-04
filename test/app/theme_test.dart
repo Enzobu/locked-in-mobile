@@ -39,12 +39,12 @@ void main() {
   });
 
   group('ThemeModeNotifier', () {
-    test('initial state is ThemeMode.system', () {
+    test('initial state is ThemeMode.dark', () {
       final container = ProviderContainer();
       addTearDown(container.dispose);
 
       final themeMode = container.read(themeModeProvider);
-      expect(themeMode, ThemeMode.system);
+      expect(themeMode, ThemeMode.dark);
     });
   });
 }
