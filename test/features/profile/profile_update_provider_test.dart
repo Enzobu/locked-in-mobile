@@ -28,9 +28,7 @@ void main() {
 
       final container = ProviderContainer(
         overrides: [
-          authProvider.overrideWith(
-            () => _FakeAuthNotifier(_testCustomer),
-          ),
+          authProvider.overrideWith(() => _FakeAuthNotifier(_testCustomer)),
           profileRepositoryProvider.overrideWithValue(
             _FakeProfileRepository(updatedCustomer),
           ),
@@ -58,15 +56,10 @@ void main() {
     test('returns false and sets error on ApiException', () async {
       final container = ProviderContainer(
         overrides: [
-          authProvider.overrideWith(
-            () => _FakeAuthNotifier(_testCustomer),
-          ),
+          authProvider.overrideWith(() => _FakeAuthNotifier(_testCustomer)),
           profileRepositoryProvider.overrideWithValue(
-            _ErrorProfileRepository(
-              const ApiException(
-                message: 'Server error',
-                statusCode: 500,
-              ),
+            const _ErrorProfileRepository(
+              ApiException(message: 'Server error', statusCode: 500),
             ),
           ),
         ],
@@ -90,12 +83,10 @@ void main() {
     test('extracts field errors from violations', () async {
       final container = ProviderContainer(
         overrides: [
-          authProvider.overrideWith(
-            () => _FakeAuthNotifier(_testCustomer),
-          ),
+          authProvider.overrideWith(() => _FakeAuthNotifier(_testCustomer)),
           profileRepositoryProvider.overrideWithValue(
-            _ErrorProfileRepository(
-              const ApiException(
+            const _ErrorProfileRepository(
+              ApiException(
                 message: 'Validation failed',
                 statusCode: 422,
                 data: {
@@ -132,12 +123,10 @@ void main() {
     test('reset clears state', () async {
       final container = ProviderContainer(
         overrides: [
-          authProvider.overrideWith(
-            () => _FakeAuthNotifier(_testCustomer),
-          ),
+          authProvider.overrideWith(() => _FakeAuthNotifier(_testCustomer)),
           profileRepositoryProvider.overrideWithValue(
-            _ErrorProfileRepository(
-              const ApiException(message: 'error', statusCode: 500),
+            const _ErrorProfileRepository(
+              ApiException(message: 'error', statusCode: 500),
             ),
           ),
         ],

@@ -62,8 +62,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           content: Text(l10n.profileEditSuccess),
           backgroundColor: theme.colorScheme.primary,
           behavior: SnackBarBehavior.floating,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       );
       Navigator.of(context).pop();
@@ -73,8 +72,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           content: Text(updateState.errorMessage ?? l10n.profileEditError),
           backgroundColor: theme.colorScheme.error,
           behavior: SnackBarBehavior.floating,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       );
     }
@@ -123,8 +121,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   if (value == null || value.trim().isEmpty) {
                     return l10n.firstnameRequired;
                   }
-                  final serverError =
-                      updateState.fieldErrors['firstname'];
+                  final serverError = updateState.fieldErrors['firstname'];
                   if (serverError != null) return serverError;
                   return null;
                 },
@@ -138,8 +135,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   if (value == null || value.trim().isEmpty) {
                     return l10n.lastnameRequired;
                   }
-                  final serverError =
-                      updateState.fieldErrors['lastname'];
+                  final serverError = updateState.fieldErrors['lastname'];
                   if (serverError != null) return serverError;
                   return null;
                 },
@@ -159,8 +155,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   if (!emailRegex.hasMatch(value.trim())) {
                     return l10n.emailInvalid;
                   }
-                  final serverError =
-                      updateState.fieldErrors['email'];
+                  final serverError = updateState.fieldErrors['email'];
                   if (serverError != null) return serverError;
                   return null;
                 },
@@ -173,8 +168,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                 textInputAction: TextInputAction.done,
                 autocorrect: false,
                 validator: (value) {
-                  final serverError =
-                      updateState.fieldErrors['phone'];
+                  final serverError = updateState.fieldErrors['phone'];
                   if (serverError != null) return serverError;
                   return null;
                 },

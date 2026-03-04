@@ -43,8 +43,8 @@ class ProfileUpdateState {
 
 final profileUpdateProvider =
     NotifierProvider<ProfileUpdateNotifier, ProfileUpdateState>(
-  ProfileUpdateNotifier.new,
-);
+      ProfileUpdateNotifier.new,
+    );
 
 class ProfileUpdateNotifier extends Notifier<ProfileUpdateState> {
   @override

@@ -83,6 +83,7 @@ class _FakeAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
+    String? phone,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 50));
     if (updateShouldFail) {
@@ -325,46 +326,26 @@ void main() {
     });
   });
 
-  group('AuthNotifier - updateProfile', () {
-    test(
-      'updateProfile returns true and updates customer on success',
-      () async {
-        await Future<void>.delayed(const Duration(milliseconds: 300));
-
-        await container
-            .read(authProvider.notifier)
-            .login('test@test.com', 'password123');
-        expect(container.read(authProvider).status, AuthStatus.authenticated);
-
-        final result = await container
-            .read(authProvider.notifier)
-            .updateProfile(
-              firstname: 'Updated',
-              lastname: 'Name',
-              email: 'updated@test.com',
-            );
-
-        expect(result, isTrue);
-        final state = container.read(authProvider);
-        expect(state.customer!.firstname, 'Updated');
-        expect(state.customer!.lastname, 'Name');
-        expect(state.customer!.email, 'updated@test.com');
-      },
-    );
-
-    test('updateProfile returns false on failure', () async {
+  group('AuthNotifier - updateCustomerState', () {
+    test('updates customer in auth state', () async {
       await Future<void>.delayed(const Duration(milliseconds: 300));
-      fakeDatasource.updateShouldFail = true;
 
-      final result = await container
+      await container
           .read(authProvider.notifier)
-          .updateProfile(
-            firstname: 'Test',
-            lastname: 'User',
-            email: 'test@test.com',
-          );
+          .login('test@test.com', 'password123');
+      expect(container.read(authProvider).status, AuthStatus.authenticated);
 
-      expect(result, isFalse);
+      final updatedCustomer = container
+          .read(authProvider)
+          .customer!
+          .copyWith(firstname: 'Updated', lastname: 'Name');
+      container
+          .read(authProvider.notifier)
+          .updateCustomerState(updatedCustomer);
+
+      final state = container.read(authProvider);
+      expect(state.customer!.firstname, 'Updated');
+      expect(state.customer!.lastname, 'Name');
     });
   });
 

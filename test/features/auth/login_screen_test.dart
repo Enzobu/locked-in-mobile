@@ -54,6 +54,7 @@ class _FakeAuthDatasource implements AuthDatasource {
     required String firstname,
     required String lastname,
     required String email,
+    String? phone,
   }) async => {
     'id': 1,
     'email': email,
