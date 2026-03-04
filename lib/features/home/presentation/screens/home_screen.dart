@@ -4,11 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../core/widgets/animated_list_item.dart';
+import '../../../../core/widgets/empty_state_view.dart';
+import '../../../../core/widgets/error_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../providers/home_provider.dart';
 import '../widgets/filter_bottom_sheet.dart';
-import '../widgets/home_empty_state.dart';
-import '../widgets/home_error_state.dart';
 import '../widgets/home_search_empty_state.dart';
 import '../widgets/locker_bay_card.dart';
 import '../widgets/locker_bay_skeleton.dart';
@@ -193,8 +193,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Expanded(
               child: filteredAsync.when(
                 loading: () => const LockerBaySkeleton(),
-                error: (error, _) => HomeErrorState(
-                  message: error.toString(),
+                error: (error, _) => ErrorView(
+                  message: l10n.errorNetwork,
                   onRetry: () =>
                       ref.read(lockerBaySummariesProvider.notifier).refresh(),
                 ),
@@ -208,7 +208,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   }
 
                   if (summaries.isEmpty) {
-                    return const HomeEmptyState();
+                    return EmptyStateView(
+                      icon: LucideIcons.packageOpen,
+                      title: l10n.noLockersTitle,
+                      subtitle: l10n.noLockersSubtitle,
+                    );
                   }
 
                   return RefreshIndicator(
