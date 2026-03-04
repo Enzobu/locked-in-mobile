@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/widgets/auth_text_field.dart';
 import '../providers/profile_provider.dart';
@@ -65,7 +66,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       );
-      Navigator.of(context).pop();
+      context.go('/profile');
     } else if (!updateState.hasFieldErrors) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
