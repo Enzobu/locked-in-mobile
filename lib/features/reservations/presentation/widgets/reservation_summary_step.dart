@@ -121,9 +121,8 @@ class ReservationSummaryStep extends ConsumerWidget {
 
         // Proceed to payment button
         FilledButton(
-          onPressed: () => ref
-              .read(reservationFlowProvider(locker).notifier)
-              .goToPayment(),
+          onPressed: () =>
+              ref.read(reservationFlowProvider(locker).notifier).goToPayment(),
           style: FilledButton.styleFrom(
             minimumSize: const Size.fromHeight(52),
             shape: RoundedRectangleBorder(
@@ -132,10 +131,7 @@ class ReservationSummaryStep extends ConsumerWidget {
           ),
           child: Text(
             l10n.paymentProceed,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),
       ],

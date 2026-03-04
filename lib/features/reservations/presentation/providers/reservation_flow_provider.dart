@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/locker.dart';
 import '../../../../core/models/reservation.dart';
-import '../../../payment/domain/models/payment_result.dart';
 import '../../../payment/presentation/providers/payment_provider.dart';
 import 'reservation_provider.dart';
 

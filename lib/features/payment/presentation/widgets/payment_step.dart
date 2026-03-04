@@ -152,8 +152,7 @@ class _PaymentStepState extends ConsumerState<PaymentStep> {
                     decoration: InputDecoration(
                       labelText: l10n.paymentCardNumber,
                       hintText: '0000 0000 0000 0000',
-                      prefixIcon:
-                          const Icon(LucideIcons.creditCard, size: 18),
+                      prefixIcon: const Icon(LucideIcons.creditCard, size: 18),
                     ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [
@@ -162,7 +161,8 @@ class _PaymentStepState extends ConsumerState<PaymentStep> {
                       _CardNumberFormatter(),
                     ],
                     validator: (value) {
-                      if (value == null || value.replaceAll(' ', '').length < 16) {
+                      if (value == null ||
+                          value.replaceAll(' ', '').length < 16) {
                         return l10n.paymentCardNumberInvalid;
                       }
                       return null;
@@ -205,8 +205,7 @@ class _PaymentStepState extends ConsumerState<PaymentStep> {
                           decoration: InputDecoration(
                             labelText: l10n.paymentCvv,
                             hintText: '000',
-                            prefixIcon:
-                                const Icon(LucideIcons.lock, size: 18),
+                            prefixIcon: const Icon(LucideIcons.lock, size: 18),
                           ),
                           keyboardType: TextInputType.number,
                           obscureText: true,

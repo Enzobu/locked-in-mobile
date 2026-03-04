@@ -27,8 +27,7 @@ class ReservationFlowScreen extends ConsumerWidget {
           state.step == ReservationFlowStep.confirmed,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) {
-          final notifier =
-              ref.read(reservationFlowProvider(locker).notifier);
+          final notifier = ref.read(reservationFlowProvider(locker).notifier);
           if (state.step == ReservationFlowStep.summary) {
             notifier.goBackToDateSelection();
           } else if (state.step == ReservationFlowStep.payment) {
