@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../app/locale_provider.dart';
+import '../../../../app/notification_provider.dart';
 import '../../../../app/theme.dart';
 import '../../../../core/models/customer.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -101,6 +102,7 @@ class _PreferencesSection extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
+    final notificationsEnabled = ref.watch(notificationsProvider);
 
     final themeModeLabel = switch (themeMode) {
       ThemeMode.system => l10n.systemMode,
@@ -131,6 +133,15 @@ class _PreferencesSection extends ConsumerWidget {
           label: l10n.language,
           value: localeLabel,
           onTap: () => _showLanguagePicker(context, ref, locale),
+        ),
+        ProfileSectionTile(
+          icon: LucideIcons.bell,
+          label: l10n.notifications,
+          trailing: Switch.adaptive(
+            value: notificationsEnabled,
+            onChanged: (_) => ref.read(notificationsProvider.notifier).toggle(),
+            activeTrackColor: Theme.of(context).colorScheme.primary,
+          ),
         ),
       ],
     );
