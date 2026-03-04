@@ -87,7 +87,7 @@ void main() {
       expect(state.durationMinutes, 30); // minDuration default
       expect(state.canProceed, isFalse);
       expect(state.isSubmitting, isFalse);
-      expect(state.reservation, isNull);
+      expect(state.reservationId, isNull);
       expect(state.publicForm, isNull);
     });
 
@@ -247,7 +247,7 @@ void main() {
     });
 
     test(
-      'processPaymentAndConfirm creates reservation and generates publicForm',
+      'processPayment creates payment intent and confirms reservation',
       () async {
         container.listen(reservationFlowProvider(testLocker), (_, __) {});
 
@@ -260,37 +260,27 @@ void main() {
         notifier.goToSummary();
         notifier.goToPayment();
 
-        await notifier.processPaymentAndConfirm(
-          cardNumber: '4242424242424242',
-          expiryDate: '12/28',
-          cvv: '123',
-          cardHolder: 'JOHN DOE',
-        );
+        await notifier.processPayment();
 
         final state = container.read(reservationFlowProvider(testLocker));
         expect(state.step, ReservationFlowStep.confirmed);
         expect(state.isSubmitting, isFalse);
-        expect(state.reservation, isNotNull);
+        expect(state.reservationId, isNotNull);
         expect(state.publicForm, isNotNull);
         expect(state.publicForm, startsWith('RES-'));
         expect(state.error, isNull);
       },
     );
 
-    test('processPaymentAndConfirm does nothing without date/time', () async {
+    test('processPayment does nothing without date/time', () async {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
       );
-      await notifier.processPaymentAndConfirm(
-        cardNumber: '4242424242424242',
-        expiryDate: '12/28',
-        cvv: '123',
-        cardHolder: 'JOHN DOE',
-      );
+      await notifier.processPayment();
 
       final state = container.read(reservationFlowProvider(testLocker));
       expect(state.step, ReservationFlowStep.dateSelection);
-      expect(state.reservation, isNull);
+      expect(state.reservationId, isNull);
     });
   });
 
