@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../../core/widgets/animated_list_item.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/models/locker_bay_summary.dart';
 import '../providers/home_provider.dart';
@@ -162,10 +163,13 @@ class _DetailContent extends StatelessWidget {
               '${l10n.lockerBayLockers} (${summary.availableCount}/${summary.totalCount})',
         ),
         const SizedBox(height: 8),
-        ...summary.lockers.map(
-          (locker) => Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: LockerCard(locker: locker),
+        ...summary.lockers.asMap().entries.map(
+          (entry) => AnimatedListItem(
+            index: entry.key,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: LockerCard(locker: entry.value),
+            ),
           ),
         ),
       ],

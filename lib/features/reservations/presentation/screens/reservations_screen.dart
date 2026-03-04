@@ -5,6 +5,7 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 import '../../../../core/models/reservation.dart';
 import '../../../../core/models/reservation_status.dart';
+import '../../../../core/widgets/animated_list_item.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../providers/reservation_provider.dart';
 import '../widgets/reservation_card.dart';
@@ -73,12 +74,18 @@ class _ReservationsList extends ConsumerWidget {
               title: l10n.reservationsUpcoming,
             ),
             const SizedBox(height: 8),
-            ...upcoming.map(
-              (r) => Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: ReservationCard(
-                  reservation: r,
-                  onTap: () => context.push('/reservation/detail', extra: r),
+            ...upcoming.asMap().entries.map(
+              (entry) => AnimatedListItem(
+                index: entry.key,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: ReservationCard(
+                    reservation: entry.value,
+                    onTap: () => context.push(
+                      '/reservation/detail',
+                      extra: entry.value,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -90,12 +97,18 @@ class _ReservationsList extends ConsumerWidget {
               title: l10n.reservationsPast,
             ),
             const SizedBox(height: 8),
-            ...past.map(
-              (r) => Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: ReservationCard(
-                  reservation: r,
-                  onTap: () => context.push('/reservation/detail', extra: r),
+            ...past.asMap().entries.map(
+              (entry) => AnimatedListItem(
+                index: entry.key + upcoming.length,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: ReservationCard(
+                    reservation: entry.value,
+                    onTap: () => context.push(
+                      '/reservation/detail',
+                      extra: entry.value,
+                    ),
+                  ),
                 ),
               ),
             ),
