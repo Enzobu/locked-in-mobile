@@ -6,6 +6,12 @@ class ApiConstants {
     defaultValue: 'https://openinnov-backend.enzo-palermo.com',
   );
 
+  static const stripePublishableKey = String.fromEnvironment(
+    'STRIPE_PUBLISHABLE_KEY',
+    defaultValue:
+        'pk_test_51T7FfaRqlzFKHYHmkwJzz5BQ3Ji72OugXdqYzYAETKczgvmzCHA6S3TPAejacdO9NBUIqcfB7aHsH6LjL0762brd002p1Rayje',
+  );
+
   static const connectTimeout = Duration(seconds: 15);
   static const receiveTimeout = Duration(seconds: 15);
 
@@ -16,4 +22,8 @@ class ApiConstants {
   static String lockerIri(int id) => '/api/lockers/$id';
   static String lockerById(int id) => '/api/lockers/$id';
   static String customerMe = '/api/customers/me';
+
+  // Payment endpoints
+  static const paymentIntents = '/api/payments/intents';
+  static String closeReservation(int id) => '/api/reservations/$id/close';
 }

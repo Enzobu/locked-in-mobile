@@ -1,23 +1,44 @@
-import '../../domain/models/payment_result.dart';
+import '../../domain/models/close_reservation_result.dart';
+import '../../domain/models/payment_intent_result.dart';
+import '../../domain/models/payment_sheet_result.dart';
 import '../../domain/services/payment_service.dart';
 
 class MockPaymentService implements PaymentService {
   @override
-  Future<PaymentResult> processPayment({
-    required int amountCents,
-    required String cardNumber,
-    required String expiryDate,
-    required String cvv,
-    required String cardHolder,
+  Future<PaymentIntentResult> createPaymentIntent({
+    required int lockerId,
+    required DateTime startsAt,
+    required DateTime endsAt,
   }) async {
-    // Simulate network delay
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    return PaymentIntentResult(
+      clientSecret: 'pi_mock_${DateTime.now().millisecondsSinceEpoch}_secret',
+      reservationId: DateTime.now().millisecondsSinceEpoch % 10000,
+      amountCents: 500,
+      currency: 'eur',
+      status: 'requires_payment_method',
+    );
+  }
+
+  @override
+  Future<PaymentSheetResult> presentPaymentSheet({
+    required String clientSecret,
+  }) async {
     await Future.delayed(const Duration(seconds: 2));
 
-    // Mock always succeeds
-    return PaymentResult(
-      status: PaymentStatus.success,
-      transactionId:
-          'TXN-${DateTime.now().millisecondsSinceEpoch.toRadixString(36).toUpperCase()}',
+    return const PaymentSheetResult(status: PaymentSheetStatus.success);
+  }
+
+  @override
+  Future<CloseReservationResult> closeReservation({
+    required int reservationId,
+  }) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    return CloseReservationResult(
+      reservationId: reservationId,
+      status: 'completed',
     );
   }
 }

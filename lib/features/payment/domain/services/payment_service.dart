@@ -1,11 +1,17 @@
-import '../models/payment_result.dart';
+import '../models/close_reservation_result.dart';
+import '../models/payment_intent_result.dart';
+import '../models/payment_sheet_result.dart';
 
 abstract class PaymentService {
-  Future<PaymentResult> processPayment({
-    required int amountCents,
-    required String cardNumber,
-    required String expiryDate,
-    required String cvv,
-    required String cardHolder,
+  Future<PaymentIntentResult> createPaymentIntent({
+    required int lockerId,
+    required DateTime startsAt,
+    required DateTime endsAt,
   });
+
+  Future<PaymentSheetResult> presentPaymentSheet({
+    required String clientSecret,
+  });
+
+  Future<CloseReservationResult> closeReservation({required int reservationId});
 }

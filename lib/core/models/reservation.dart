@@ -13,6 +13,15 @@ class Reservation {
     required this.createdAt,
     required this.updatedAt,
     this.status = ReservationStatus.pending,
+    this.plannedAmountCents,
+    this.currency,
+    this.paymentIntentId,
+    this.paymentStatus,
+    this.actualEndsAt,
+    this.overtimeMinutes,
+    this.overtimeAmountCents,
+    this.overtimePaymentIntentId,
+    this.overtimePaymentStatus,
   });
 
   final int id;
@@ -24,6 +33,19 @@ class Reservation {
   final ReservationStatus status;
   final DateTime createdAt;
   final DateTime updatedAt;
+
+  // Payment fields
+  final int? plannedAmountCents;
+  final String? currency;
+  final String? paymentIntentId;
+  final String? paymentStatus;
+
+  // Overtime fields
+  final DateTime? actualEndsAt;
+  final int? overtimeMinutes;
+  final int? overtimeAmountCents;
+  final String? overtimePaymentIntentId;
+  final String? overtimePaymentStatus;
 
   /// Duration in minutes
   int get durationMinutes => endsAt.difference(startsAt).inMinutes;
@@ -38,6 +60,15 @@ class Reservation {
     ReservationStatus? status,
     DateTime? createdAt,
     DateTime? updatedAt,
+    int? Function()? plannedAmountCents,
+    String? Function()? currency,
+    String? Function()? paymentIntentId,
+    String? Function()? paymentStatus,
+    DateTime? Function()? actualEndsAt,
+    int? Function()? overtimeMinutes,
+    int? Function()? overtimeAmountCents,
+    String? Function()? overtimePaymentIntentId,
+    String? Function()? overtimePaymentStatus,
   }) {
     return Reservation(
       id: id ?? this.id,
@@ -49,6 +80,29 @@ class Reservation {
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      plannedAmountCents: plannedAmountCents != null
+          ? plannedAmountCents()
+          : this.plannedAmountCents,
+      currency: currency != null ? currency() : this.currency,
+      paymentIntentId: paymentIntentId != null
+          ? paymentIntentId()
+          : this.paymentIntentId,
+      paymentStatus: paymentStatus != null
+          ? paymentStatus()
+          : this.paymentStatus,
+      actualEndsAt: actualEndsAt != null ? actualEndsAt() : this.actualEndsAt,
+      overtimeMinutes: overtimeMinutes != null
+          ? overtimeMinutes()
+          : this.overtimeMinutes,
+      overtimeAmountCents: overtimeAmountCents != null
+          ? overtimeAmountCents()
+          : this.overtimeAmountCents,
+      overtimePaymentIntentId: overtimePaymentIntentId != null
+          ? overtimePaymentIntentId()
+          : this.overtimePaymentIntentId,
+      overtimePaymentStatus: overtimePaymentStatus != null
+          ? overtimePaymentStatus()
+          : this.overtimePaymentStatus,
     );
   }
 

@@ -245,16 +245,9 @@
   "notifications": "Notifications",
 
   "paymentTitle": "Payment",
-  "paymentSubtitle": "Enter your card details",
-  "paymentCardDetails": "Card details",
-  "paymentCardHolder": "Cardholder name",
-  "paymentCardHolderRequired": "Cardholder name is required",
-  "paymentCardNumber": "Card number",
-  "paymentCardNumberInvalid": "Invalid card number",
-  "paymentExpiry": "Expiry",
-  "paymentExpiryInvalid": "Invalid date",
-  "paymentCvv": "CVV",
-  "paymentCvvInvalid": "Invalid CVV",
+  "paymentSubtitle": "Complete your reservation securely",
+  "paymentCardDetails": "Card payment",
+  "paymentStripeInfo": "You will be redirected to a secure Stripe payment form.",
   "paymentPay": "Pay {price} €",
   "@paymentPay": {
     "placeholders": {

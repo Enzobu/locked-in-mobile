@@ -245,16 +245,9 @@
   "notifications": "Notifiche",
 
   "paymentTitle": "Pagamento",
-  "paymentSubtitle": "Inserisci i dati della tua carta",
-  "paymentCardDetails": "Dettagli carta",
-  "paymentCardHolder": "Titolare della carta",
-  "paymentCardHolderRequired": "Il titolare è obbligatorio",
-  "paymentCardNumber": "Numero di carta",
-  "paymentCardNumberInvalid": "Numero di carta non valido",
-  "paymentExpiry": "Scadenza",
-  "paymentExpiryInvalid": "Data non valida",
-  "paymentCvv": "CVV",
-  "paymentCvvInvalid": "CVV non valido",
+  "paymentSubtitle": "Completa la tua prenotazione in sicurezza",
+  "paymentCardDetails": "Pagamento con carta",
+  "paymentStripeInfo": "Verrai reindirizzato a un modulo di pagamento sicuro Stripe.",
   "paymentPay": "Paga {price} €",
   "@paymentPay": {
     "placeholders": {
