@@ -10,7 +10,7 @@ import 'package:locked_in_mobile/core/models/specification.dart';
 import 'package:locked_in_mobile/features/payment/data/services/mock_payment_service.dart';
 import 'package:locked_in_mobile/features/payment/presentation/providers/payment_provider.dart';
 import 'package:locked_in_mobile/features/reservations/data/datasources/mock_reservation_datasource.dart';
-import 'package:locked_in_mobile/features/reservations/data/repositories/mock_reservation_repository.dart';
+import 'package:locked_in_mobile/features/reservations/data/repositories/reservation_repository_impl.dart';
 import 'package:locked_in_mobile/features/reservations/presentation/providers/reservation_flow_provider.dart';
 import 'package:locked_in_mobile/features/reservations/presentation/providers/reservation_provider.dart';
 
@@ -66,7 +66,7 @@ void main() {
         ),
         reservationRepositoryProvider.overrideWith((ref) {
           final ds = ref.watch(reservationDatasourceProvider);
-          return MockReservationRepository(datasource: ds);
+          return ReservationRepositoryImpl(datasource: ds);
         }),
         paymentServiceProvider.overrideWithValue(MockPaymentService()),
       ],
