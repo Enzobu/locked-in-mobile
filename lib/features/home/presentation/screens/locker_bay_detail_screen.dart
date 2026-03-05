@@ -24,7 +24,7 @@ class LockerBayDetailScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(LucideIcons.arrowLeft),
-          onPressed: () => context.go('/home'),
+          onPressed: () => context.pop(),
         ),
         title: Text(l10n.lockerBayDetail),
         centerTitle: true,

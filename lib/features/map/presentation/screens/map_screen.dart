@@ -50,7 +50,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
   }
 
   void _onCardTapped(LockerBaySummary summary) {
-    context.push('/home/${summary.lockerBay.id}');
+    context.push('/bay/${summary.lockerBay.id}');
   }
 
   void _zoomIn() {

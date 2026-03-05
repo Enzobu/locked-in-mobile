@@ -67,7 +67,7 @@ class _NearbyCarouselState extends ConsumerState<NearbyCarousel> {
                   summary: s,
                   gradient: widget.gradients[index % widget.gradients.length],
                   distance: distance,
-                  onTap: () => context.go('/home/${s.lockerBay.id}'),
+                  onTap: () => context.push('/bay/${s.lockerBay.id}'),
                 ),
               );
             },

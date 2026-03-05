@@ -83,7 +83,7 @@ class AllBaysByCity extends ConsumerWidget {
               ? s.lockerBay.name[0].toUpperCase()
               : '?';
           return AnimatedPressable(
-            onTap: () => context.go('/home/${s.lockerBay.id}'),
+            onTap: () => context.push('/bay/${s.lockerBay.id}'),
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               padding: const EdgeInsets.all(12),
