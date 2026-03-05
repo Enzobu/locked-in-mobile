@@ -54,29 +54,41 @@ class ReservationFlowScreen extends ConsumerWidget {
                     }
                   },
                 ),
-                title: Text(l10n.reservationFlowTitle),
-                centerTitle: true,
-                bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(4),
-                  child: _StepIndicator(step: state.step),
+                title: Text(
+                  l10n.reservationFlowTitle,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
+                centerTitle: true,
               )
             : null,
         body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              16,
-              state.step == ReservationFlowStep.confirmed ? 0 : 16,
-              16,
-              24,
-            ),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (child, animation) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-              child: _buildStep(state, context),
-            ),
+          child: Column(
+            children: [
+              if (state.step != ReservationFlowStep.confirmed)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                  child: _StepIndicator(step: state.step),
+                ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    16,
+                    state.step == ReservationFlowStep.confirmed ? 0 : 16,
+                    16,
+                    24,
+                  ),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (child, animation) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
+                    child: _buildStep(state, context),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -112,26 +124,108 @@ class _StepIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final progress = switch (step) {
-      ReservationFlowStep.dateSelection => 1 / 3,
-      ReservationFlowStep.summary => 2 / 3,
-      ReservationFlowStep.payment => 1.0,
-      ReservationFlowStep.confirmed => 1.0,
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+
+    final currentIndex = switch (step) {
+      ReservationFlowStep.dateSelection => 0,
+      ReservationFlowStep.summary => 1,
+      ReservationFlowStep.payment => 2,
+      ReservationFlowStep.confirmed => 2,
     };
 
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0, end: progress),
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-      builder: (context, value, _) {
-        return LinearProgressIndicator(
-          value: value,
-          minHeight: 4,
-          backgroundColor: colorScheme.surfaceContainerHighest,
-          valueColor: AlwaysStoppedAnimation<Color>(colorScheme.primary),
-        );
-      },
+    final steps = [
+      (LucideIcons.calendarDays, l10n.reservationStartDate),
+      (LucideIcons.clipboardList, l10n.reservationSummaryTitle),
+      (LucideIcons.creditCard, l10n.paymentTitle),
+    ];
+
+    return Row(
+      children: [
+        for (int i = 0; i < steps.length; i++) ...[
+          if (i > 0)
+            Expanded(
+              child: Container(
+                height: 2,
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(1),
+                  color: i <= currentIndex
+                      ? colorScheme.primary
+                      : colorScheme.outlineVariant,
+                ),
+              ),
+            ),
+          _StepDot(
+            icon: steps[i].$1,
+            label: steps[i].$2,
+            isActive: i == currentIndex,
+            isCompleted: i < currentIndex,
+            colorScheme: colorScheme,
+            theme: theme,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _StepDot extends StatelessWidget {
+  const _StepDot({
+    required this.icon,
+    required this.label,
+    required this.isActive,
+    required this.isCompleted,
+    required this.colorScheme,
+    required this.theme,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool isActive;
+  final bool isCompleted;
+  final ColorScheme colorScheme;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final isFilled = isActive || isCompleted;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: isFilled
+                ? colorScheme.primary
+                : colorScheme.surfaceContainerHighest,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            isCompleted ? LucideIcons.check : icon,
+            size: 16,
+            color: isFilled
+                ? colorScheme.onPrimary
+                : colorScheme.onSurfaceVariant,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          style: theme.textTheme.labelSmall?.copyWith(
+            fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+            color: isFilled
+                ? colorScheme.primary
+                : colorScheme.onSurfaceVariant,
+            fontSize: 10,
+          ),
+        ),
+      ],
     );
   }
 }

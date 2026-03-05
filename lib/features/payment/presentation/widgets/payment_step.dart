@@ -37,30 +37,33 @@ class PaymentStep extends ConsumerWidget {
         const SizedBox(height: 24),
 
         // Amount card
-        Card(
-          margin: EdgeInsets.zero,
-          color: colorScheme.primaryContainer,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  l10n.reservationTotalPrice,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: colorScheme.onPrimaryContainer,
-                  ),
-                ),
-                Text(
-                  l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: colorScheme.onPrimaryContainer,
-                  ),
-                ),
-              ],
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            color: colorScheme.primary.withValues(alpha: 0.08),
+            border: Border.all(
+              color: colorScheme.primary.withValues(alpha: 0.3),
             ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                l10n.reservationTotalPrice,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: colorScheme.primary,
+                ),
+              ),
+              Text(
+                l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: colorScheme.primary,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 24),

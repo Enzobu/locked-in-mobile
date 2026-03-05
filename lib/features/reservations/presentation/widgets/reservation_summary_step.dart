@@ -30,30 +30,65 @@ class ReservationSummaryStep extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          l10n.reservationSummaryTitle,
-          style: theme.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w800,
+        // Total price — always visible at top
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            color: colorScheme.primary.withValues(alpha: 0.08),
+            border: Border.all(
+              color: colorScheme.primary.withValues(alpha: 0.3),
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                l10n.reservationTotalPrice,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: colorScheme.primary,
+                ),
+              ),
+              Text(
+                l10n.reservationPrice(
+                  locker.priceEuros.toStringAsFixed(2),
+                ),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: colorScheme.primary,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 20),
+
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
 
         // Locker section
         _SummarySection(
           icon: LucideIcons.box,
           title: l10n.reservationLocker,
           children: [
-            _SummaryRow(
+            _DetailRow(
+              icon: LucideIcons.hash,
               label: l10n.lockerNumber(locker.number),
               value: locker.specification.name,
             ),
-            _SummaryRow(
+            _DetailRow(
+              icon: LucideIcons.ruler,
               label: l10n.lockerSize(
                 locker.specification.width,
                 locker.specification.height,
                 locker.specification.depth,
               ),
               value: locker.specification.material,
+              showDivider: false,
             ),
           ],
         ),
@@ -64,9 +99,11 @@ class ReservationSummaryStep extends ConsumerWidget {
           icon: LucideIcons.mapPin,
           title: l10n.reservationLocation,
           children: [
-            _SummaryRow(
+            _DetailRow(
+              icon: LucideIcons.building2,
               label: locker.lockerBay.name,
               value: locker.lockerBay.company?.name ?? '',
+              showDivider: false,
             ),
           ],
         ),
@@ -77,47 +114,27 @@ class ReservationSummaryStep extends ConsumerWidget {
           icon: LucideIcons.calendar,
           title: l10n.reservationPeriod,
           children: [
-            _SummaryRow(label: dateFormat.format(state.startsAt!), value: ''),
-            _SummaryRow(
-              label:
-                  '${l10n.reservationDateFrom} ${timeFormat.format(state.startsAt!)}',
-              value:
-                  '${l10n.reservationDateTo} ${timeFormat.format(state.endsAt!)}',
+            _DetailRow(
+              icon: LucideIcons.calendarDays,
+              label: dateFormat.format(state.startsAt!),
             ),
-            _SummaryRow(label: durationLabel, value: ''),
+            _DetailRow(
+              icon: LucideIcons.clock,
+              label: '${l10n.reservationDateFrom} ${timeFormat.format(state.startsAt!)}',
+              value: '${l10n.reservationDateTo} ${timeFormat.format(state.endsAt!)}',
+            ),
+            _DetailRow(
+              icon: LucideIcons.timer,
+              label: durationLabel,
+              showDivider: false,
+            ),
           ],
         ),
-        const SizedBox(height: 20),
-
-        // Total price
-        Card(
-          margin: EdgeInsets.zero,
-          color: colorScheme.primaryContainer,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  l10n.reservationTotalPrice,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: colorScheme.onPrimaryContainer,
-                  ),
-                ),
-                Text(
-                  l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: colorScheme.onPrimaryContainer,
-                  ),
-                ),
               ],
             ),
           ),
         ),
-
-        const Spacer(),
+        const SizedBox(height: 16),
 
         // Proceed to payment button
         FilledButton(
@@ -183,37 +200,56 @@ class _SummarySection extends StatelessWidget {
   }
 }
 
-class _SummaryRow extends StatelessWidget {
-  const _SummaryRow({required this.label, required this.value});
+class _DetailRow extends StatelessWidget {
+  const _DetailRow({
+    required this.icon,
+    required this.label,
+    this.value,
+    this.showDivider = true,
+  });
 
+  final IconData icon;
   final String label;
-  final String value;
+  final String? value;
+  final bool showDivider;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-          if (value.isNotEmpty)
-            Text(
-              value,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w500,
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            children: [
+              Icon(icon, size: 15, color: colorScheme.onSurfaceVariant),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  label,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
               ),
-            ),
-        ],
-      ),
+              if (value != null && value!.isNotEmpty)
+                Text(
+                  value!,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+            ],
+          ),
+        ),
+        if (showDivider)
+          Divider(
+            height: 1,
+            color: colorScheme.outlineVariant.withValues(alpha: 0.4),
+          ),
+      ],
     );
   }
 }
