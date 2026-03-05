@@ -1062,6 +1062,24 @@ abstract class AppLocalizations {
   /// **'Modifier le profil'**
   String get profileEdit;
 
+  /// Label modifier le mot de passe
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le mot de passe'**
+  String get profileChangePassword;
+
+  /// Label mot de passe actuel
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe actuel'**
+  String get profileCurrentPassword;
+
+  /// Label nouveau mot de passe
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau mot de passe'**
+  String get profileNewPassword;
+
   /// Message succès modification profil
   ///
   /// In fr, this message translates to:

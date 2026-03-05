@@ -22,7 +22,15 @@ class ReservationsScreen extends ConsumerWidget {
     final reservationsAsync = ref.watch(reservationsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.reservations)),
+      appBar: AppBar(
+        title: Text(
+          l10n.reservations,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: reservationsAsync.when(
         loading: () => const ReservationSkeleton(),
         error: (error, _) => ErrorView(

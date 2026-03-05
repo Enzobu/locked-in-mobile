@@ -526,6 +526,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileEdit => 'Edit profile';
 
   @override
+  String get profileChangePassword => 'Change password';
+
+  @override
+  String get profileCurrentPassword => 'Current password';
+
+  @override
+  String get profileNewPassword => 'New password';
+
+  @override
   String get profileEditSuccess => 'Profile updated successfully';
 
   @override

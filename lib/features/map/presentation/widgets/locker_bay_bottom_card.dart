@@ -51,13 +51,16 @@ class LockerBayBottomCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(10),
+                      color: colorScheme.primary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: colorScheme.primary.withValues(alpha: 0.3),
+                      ),
                     ),
                     child: Icon(
                       LucideIcons.box,
                       size: 20,
-                      color: colorScheme.onPrimaryContainer,
+                      color: colorScheme.primary,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -162,8 +165,11 @@ class _DistanceBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(10),
+        color: colorScheme.primary.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: colorScheme.primary.withValues(alpha: 0.3),
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -171,13 +177,13 @@ class _DistanceBadge extends StatelessWidget {
           Icon(
             LucideIcons.navigation,
             size: 10,
-            color: colorScheme.onPrimaryContainer,
+            color: colorScheme.primary,
           ),
           const SizedBox(width: 4),
           Text(
             distance,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: colorScheme.onPrimaryContainer,
+              color: colorScheme.primary,
               fontWeight: FontWeight.w700,
             ),
           ),
