@@ -62,6 +62,7 @@
     }
   },
   "rechargeable": "Ricarica",
+  "notRechargeable": "Non ricaricabile",
   "noLockersTitle": "Nessun armadietto disponibile",
   "noLockersSubtitle": "Nessun punto armadietti è disponibile al momento. Riprova più tardi.",
   "lockerBays": "Punti armadietti",

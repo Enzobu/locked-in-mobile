@@ -183,6 +183,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get rechargeable => 'Aufladen';
 
   @override
+  String get notRechargeable => 'Nicht aufladbar';
+
+  @override
   String get noLockersTitle => 'Keine Schließfächer verfügbar';
 
   @override

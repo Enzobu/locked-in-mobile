@@ -181,6 +181,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get rechargeable => 'Ricarica';
 
   @override
+  String get notRechargeable => 'Non ricaricabile';
+
+  @override
   String get noLockersTitle => 'Nessun armadietto disponibile';
 
   @override

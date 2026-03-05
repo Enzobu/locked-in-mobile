@@ -118,6 +118,8 @@
   },
   "rechargeable": "Recharge",
   "@rechargeable": { "description": "Label casier rechargeable" },
+  "notRechargeable": "Non rechargeable",
+  "@notRechargeable": { "description": "Label casier non rechargeable" },
   "noLockersTitle": "Aucun casier disponible",
   "@noLockersTitle": { "description": "Titre état vide casiers" },
   "noLockersSubtitle": "Aucun point de casiers n'est disponible pour le moment. Revenez plus tard.",

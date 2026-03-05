@@ -438,6 +438,12 @@ abstract class AppLocalizations {
   /// **'Recharge'**
   String get rechargeable;
 
+  /// Label casier non rechargeable
+  ///
+  /// In fr, this message translates to:
+  /// **'Non rechargeable'**
+  String get notRechargeable;
+
   /// Titre état vide casiers
   ///
   /// In fr, this message translates to:

@@ -62,6 +62,7 @@
     }
   },
   "rechargeable": "Charging",
+  "notRechargeable": "Not rechargeable",
   "noLockersTitle": "No lockers available",
   "noLockersSubtitle": "No locker points are available at the moment. Please check back later.",
   "lockerBays": "Locker points",

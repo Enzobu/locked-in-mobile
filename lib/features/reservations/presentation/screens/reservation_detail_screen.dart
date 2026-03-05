@@ -25,6 +25,7 @@ class ReservationDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -32,7 +33,12 @@ class ReservationDetailScreen extends ConsumerWidget {
           icon: const Icon(LucideIcons.arrowLeft),
           onPressed: () => context.pop(),
         ),
-        title: Text(l10n.reservationDetailTitle),
+        title: Text(
+          l10n.reservationDetailTitle,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         centerTitle: true,
       ),
       body: ListView(
@@ -60,25 +66,79 @@ class ReservationDetailScreen extends ConsumerWidget {
 
   void _showCancelDialog(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-    showDialog<bool>(
+    showModalBottomSheet<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.reservationCancelTitle),
-        content: Text(l10n.reservationCancelMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFFDC2626),
+      builder: (context) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(2),
+              ),
             ),
-            child: Text(l10n.reservationCancelConfirm),
-          ),
-        ],
+            const SizedBox(height: 24),
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: const Color(0xFFDC2626).withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Icon(
+                LucideIcons.alertTriangle,
+                size: 28,
+                color: Color(0xFFDC2626),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              l10n.reservationCancelTitle,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              l10n.reservationCancelMessage,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFFDC2626),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                child: Text(l10n.reservationCancelConfirm),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                ),
+                child: Text(l10n.cancel),
+              ),
+            ),
+          ],
+        ),
       ),
     ).then((confirmed) {
       if (confirmed == true) {
@@ -112,13 +172,16 @@ class _StatusHeader extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: colorScheme.primaryContainer,
+                color: colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: colorScheme.primary.withValues(alpha: 0.3),
+                ),
               ),
               child: Icon(
                 LucideIcons.box,
                 size: 24,
-                color: colorScheme.onPrimaryContainer,
+                color: colorScheme.primary,
               ),
             ),
             const SizedBox(width: 14),
@@ -337,30 +400,52 @@ class _LocationSection extends StatelessWidget {
           margin: EdgeInsets.zero,
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                Text(
-                  lockerBay.name,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                if (address != null) ...[
-                  const SizedBox(height: 8),
-                  Text(
-                    [
-                      if (address.number != null) '${address.number} ',
-                      address.street,
-                      if (address.complement != null) '\n${address.complement}',
-                      '\n${address.city}, ${address.country}',
-                    ].join(),
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      height: 1.5,
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: colorScheme.primary.withValues(alpha: 0.3),
                     ),
                   ),
-                ],
+                  child: Icon(
+                    LucideIcons.mapPin,
+                    size: 20,
+                    color: colorScheme.primary,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        lockerBay.name,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (address != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          [
+                            if (address.number != null) '${address.number} ',
+                            address.street,
+                            ', ${address.city}',
+                          ].join(),
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -478,6 +563,16 @@ class _SpecificationsSection extends StatelessWidget {
                   icon: LucideIcons.layers,
                   label: '${l10n.reservationDetailMaterial} : ${spec.material}',
                 ),
+                const SizedBox(height: 10),
+                _InfoRow(
+                  icon: spec.isRechargeable ? LucideIcons.zap : LucideIcons.zapOff,
+                  label: spec.isRechargeable
+                      ? l10n.rechargeable
+                      : l10n.notRechargeable,
+                  valueColor: spec.isRechargeable
+                      ? const Color(0xFFD97706)
+                      : null,
+                ),
               ],
             ),
           ),
@@ -498,13 +593,13 @@ class _CancelButton extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      child: OutlinedButton.icon(
+      child: FilledButton.icon(
         onPressed: onPressed,
-        icon: const Icon(LucideIcons.x, size: 18),
+        icon: const Icon(LucideIcons.trash2, size: 18),
         label: Text(l10n.reservationDetailCancelReservation),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: const Color(0xFFDC2626),
-          side: const BorderSide(color: Color(0xFFDC2626)),
+        style: FilledButton.styleFrom(
+          backgroundColor: const Color(0xFFDC2626),
+          foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 14),
         ),
       ),
