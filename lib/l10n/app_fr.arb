@@ -151,6 +151,15 @@
   "@filterSizeMedium": { "description": "Label taille moyen" },
   "filterSizeLarge": "L",
   "@filterSizeLarge": { "description": "Label taille grand" },
+  "filterDistance": "Distance",
+  "@filterDistance": { "description": "Label filtre distance" },
+  "filterDistanceMax": "Max. {distance} km",
+  "@filterDistanceMax": {
+    "description": "Label distance max sélectionnée",
+    "placeholders": { "distance": { "type": "String" } }
+  },
+  "filterDistanceNoLimit": "Illimité",
+  "@filterDistanceNoLimit": { "description": "Label pas de limite distance" },
   "showResults": "Voir {count} résultats",
   "@showResults": {
     "description": "Bouton voir résultats filtrés",

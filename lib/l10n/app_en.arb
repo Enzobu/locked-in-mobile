@@ -81,6 +81,12 @@
   "filterSizeSmall": "S",
   "filterSizeMedium": "M",
   "filterSizeLarge": "L",
+  "filterDistance": "Distance",
+  "filterDistanceMax": "Max. {distance} km",
+  "@filterDistanceMax": {
+    "placeholders": { "distance": { "type": "String" } }
+  },
+  "filterDistanceNoLimit": "Unlimited",
   "showResults": "Show {count} results",
   "@showResults": {
     "placeholders": {

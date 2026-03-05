@@ -226,6 +226,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get filterSizeLarge => 'L';
 
   @override
+  String get filterDistance => 'Distanza';
+
+  @override
+  String filterDistanceMax(String distance) {
+    return 'Max. $distance km';
+  }
+
+  @override
+  String get filterDistanceNoLimit => 'Illimitato';
+
+  @override
   String showResults(int count) {
     return 'Mostra $count risultati';
   }

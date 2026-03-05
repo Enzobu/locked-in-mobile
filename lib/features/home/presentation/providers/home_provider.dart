@@ -92,22 +92,6 @@ final lockerFilterProvider = StateProvider<LockerFilter>(
   (ref) => LockerFilter.empty,
 );
 
-final availableMaterialsProvider = Provider<Set<String>>((ref) {
-  final summariesAsync = ref.watch(lockerBaySummariesProvider);
-  return summariesAsync.whenOrNull(
-        data: (summaries) {
-          final materials = <String>{};
-          for (final summary in summaries) {
-            for (final locker in summary.lockers) {
-              materials.add(locker.specification.material);
-            }
-          }
-          return materials;
-        },
-      ) ??
-      {};
-});
-
 final priceRangeProvider = Provider<(int, int)>((ref) {
   final summariesAsync = ref.watch(lockerBaySummariesProvider);
   return summariesAsync.whenOrNull(
@@ -139,9 +123,6 @@ bool _lockerMatchesFilter(Locker locker, LockerFilter filter) {
   if (filter.sizes.isNotEmpty) {
     final lockerSize = LockerSize.fromHeight(locker.specification.height);
     if (!filter.sizes.contains(lockerSize)) return false;
-  }
-  if (filter.materials.isNotEmpty) {
-    if (!filter.materials.contains(locker.specification.material)) return false;
   }
   if (filter.rechargeableOnly && !locker.specification.isRechargeable) {
     return false;
@@ -236,6 +217,8 @@ final filteredSummariesProvider = Provider<AsyncValue<List<LockerBaySummary>>>((
 
   if (query.isEmpty && !filter.isActive) return summariesAsync;
 
+  final distances = ref.watch(bayDistancesProvider);
+
   return summariesAsync.whenData((summaries) {
     return summaries.where((summary) {
       if (query.isNotEmpty && !_summaryMatchesQuery(summary, query)) {
@@ -243,6 +226,10 @@ final filteredSummariesProvider = Provider<AsyncValue<List<LockerBaySummary>>>((
       }
       if (filter.isActive && !_summaryMatchesFilter(summary, filter)) {
         return false;
+      }
+      if (filter.maxDistanceKm != null) {
+        final dist = distances[summary.lockerBay.id];
+        if (dist == null || dist > filter.maxDistanceKm!) return false;
       }
       return true;
     }).toList();

@@ -522,6 +522,24 @@ abstract class AppLocalizations {
   /// **'L'**
   String get filterSizeLarge;
 
+  /// Label filtre distance
+  ///
+  /// In fr, this message translates to:
+  /// **'Distance'**
+  String get filterDistance;
+
+  /// Label distance max sélectionnée
+  ///
+  /// In fr, this message translates to:
+  /// **'Max. {distance} km'**
+  String filterDistanceMax(String distance);
+
+  /// Label pas de limite distance
+  ///
+  /// In fr, this message translates to:
+  /// **'Illimité'**
+  String get filterDistanceNoLimit;
+
   /// Bouton voir résultats filtrés
   ///
   /// In fr, this message translates to:
