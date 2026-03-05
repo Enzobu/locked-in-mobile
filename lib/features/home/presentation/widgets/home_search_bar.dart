@@ -11,7 +11,7 @@ class HomeSearchBar extends StatelessWidget {
     required this.focusNode,
     required this.isFocused,
     required this.searchQuery,
-    required this.isFilterActive,
+    required this.activeFilterCount,
     required this.onChanged,
     required this.onClear,
   });
@@ -20,7 +20,7 @@ class HomeSearchBar extends StatelessWidget {
   final FocusNode focusNode;
   final bool isFocused;
   final String searchQuery;
-  final bool isFilterActive;
+  final int activeFilterCount;
   final ValueChanged<String> onChanged;
   final VoidCallback onClear;
 
@@ -29,6 +29,7 @@ class HomeSearchBar extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final l10n = AppLocalizations.of(context)!;
+    final hasFilters = activeFilterCount > 0;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -85,22 +86,50 @@ class HomeSearchBar extends StatelessWidget {
                   ),
                 GestureDetector(
                   onTap: () => FilterBottomSheet.show(context),
-                  child: Container(
-                    margin: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: isFilterActive
-                          ? colorScheme.primary
-                          : colorScheme.surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: Icon(
-                      LucideIcons.slidersHorizontal,
-                      size: 18,
-                      color: isFilterActive
-                          ? colorScheme.onPrimary
-                          : colorScheme.onSurfaceVariant,
-                    ),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        child: Icon(
+                          LucideIcons.slidersHorizontal,
+                          size: 18,
+                          color: colorScheme.onPrimary,
+                        ),
+                      ),
+                      if (hasFilters)
+                        Positioned(
+                          top: 2,
+                          right: 2,
+                          child: Container(
+                            width: 18,
+                            height: 18,
+                            decoration: BoxDecoration(
+                              color: colorScheme.error,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: colorScheme.surface,
+                                width: 1.5,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              '$activeFilterCount',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                height: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ],

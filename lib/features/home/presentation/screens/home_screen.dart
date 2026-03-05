@@ -6,8 +6,10 @@ import '../../../../core/widgets/empty_state_view.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../map/presentation/providers/geolocation_provider.dart';
+import '../../domain/models/locker_filter.dart';
 import '../providers/home_provider.dart';
 import '../widgets/all_bays_by_city.dart';
+import '../widgets/filtered_results_view.dart';
 import '../widgets/home_search_bar.dart';
 import '../widgets/home_search_empty_state.dart';
 import '../widgets/locker_bay_skeleton.dart';
@@ -84,9 +86,34 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           data: (summaries) {
             if (summaries.isEmpty &&
                 (searchQuery.isNotEmpty || filter.isActive)) {
-              return HomeSearchEmptyState(
-                query: searchQuery,
-                hasActiveFilters: filter.isActive,
+              return Stack(
+                children: [
+                  HomeSearchEmptyState(
+                    query: searchQuery,
+                    hasActiveFilters: filter.isActive,
+                  ),
+                  if (filter.isActive)
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
+                      child: FilledButton.icon(
+                        onPressed: () =>
+                            ref.read(lockerFilterProvider.notifier).state =
+                                LockerFilter.empty,
+                        icon: const Icon(LucideIcons.trash2, size: 16),
+                        label: Text(l10n.clearFilters),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: theme.colorScheme.error,
+                          foregroundColor: theme.colorScheme.onError,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               );
             }
 
@@ -110,50 +137,82 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               });
             final nearbyTop = nearby.take(5).toList();
 
-            return ListView(
-              padding: const EdgeInsets.only(bottom: 24),
+            return Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
-                  child: Text(
-                    l10n.homeGreeting,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant),
+                ListView(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
+                      child: Text(
+                        l10n.homeGreeting,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                      child: Text(
+                        l10n.homeTitle,
+                        style: theme.textTheme.headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                    HomeSearchBar(
+                      controller: _searchController,
+                      focusNode: _focusNode,
+                      isFocused: _isFocused,
+                      searchQuery: searchQuery,
+                      activeFilterCount: filter.activeFilterCount,
+                      onChanged: _onSearchChanged,
+                      onClear: _clearSearch,
+                    ),
+                    if (filter.isActive)
+                      FilteredResultsView(
+                        summaries: summaries,
+                        gradients: _gradients,
+                      )
+                    else ...[
+                      NearbyCarousel(
+                        summaries: nearbyTop,
+                        gradients: _gradients,
+                      ),
+                      const SizedBox(height: 28),
+                      AllBaysByCity(
+                        gradients: _gradients,
+                        selectedCity: _selectedCity,
+                        showAll: _showAllBaysForCity,
+                        onCitySelected: (city) => setState(() {
+                          _selectedCity = city;
+                          _showAllBaysForCity = false;
+                        }),
+                        onShowAll: () =>
+                            setState(() => _showAllBaysForCity = true),
+                      ),
+                    ],
+                  ],
+                ),
+                if (filter.isActive)
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                    child: FilledButton.icon(
+                      onPressed: () =>
+                          ref.read(lockerFilterProvider.notifier).state =
+                              LockerFilter.empty,
+                      icon: const Icon(LucideIcons.trash2, size: 16),
+                      label: Text(l10n.clearFilters),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: theme.colorScheme.error,
+                        foregroundColor: theme.colorScheme.onError,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-                  child: Text(
-                    l10n.homeTitle,
-                    style: theme.textTheme.headlineSmall
-                        ?.copyWith(fontWeight: FontWeight.w800),
-                  ),
-                ),
-                HomeSearchBar(
-                  controller: _searchController,
-                  focusNode: _focusNode,
-                  isFocused: _isFocused,
-                  searchQuery: searchQuery,
-                  isFilterActive: filter.isActive,
-                  onChanged: _onSearchChanged,
-                  onClear: _clearSearch,
-                ),
-                NearbyCarousel(
-                  summaries: nearbyTop,
-                  gradients: _gradients,
-                ),
-                const SizedBox(height: 28),
-                AllBaysByCity(
-                  gradients: _gradients,
-                  selectedCity: _selectedCity,
-                  showAll: _showAllBaysForCity,
-                  onCitySelected: (city) => setState(() {
-                    _selectedCity = city;
-                    _showAllBaysForCity = false;
-                  }),
-                  onShowAll: () =>
-                      setState(() => _showAllBaysForCity = true),
-                ),
               ],
             );
           },
