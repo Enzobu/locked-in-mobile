@@ -370,13 +370,12 @@ class _LogoutButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
 
     return SizedBox(
       width: double.infinity,
       child: FilledButton.icon(
         onPressed: () => _confirmLogout(context, ref),
-        icon: Icon(LucideIcons.logOut, size: 18),
+        icon: const Icon(LucideIcons.logOut, size: 18),
         label: Text(l10n.logout),
         style: FilledButton.styleFrom(
           shape: RoundedRectangleBorder(
