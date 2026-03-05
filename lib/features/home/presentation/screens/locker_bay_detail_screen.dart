@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+import '../../../../core/models/locker_status.dart';
 import '../../../../core/widgets/animated_list_item.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/models/locker_bay_summary.dart';
@@ -26,7 +27,12 @@ class LockerBayDetailScreen extends ConsumerWidget {
           icon: const Icon(LucideIcons.arrowLeft),
           onPressed: () => context.pop(),
         ),
-        title: Text(l10n.lockerBayDetail),
+        title: Text(
+          l10n.lockerBayDetail,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         centerTitle: true,
       ),
       body: detailAsync.when(
@@ -71,6 +77,15 @@ class _DetailContent extends StatelessWidget {
     final bay = summary.lockerBay;
     final address = bay.company?.address;
 
+    // Sort lockers: available first, then by number
+    final sortedLockers = List.of(summary.lockers)
+      ..sort((a, b) {
+        final aAvail = a.status == LockerStatus.available ? 0 : 1;
+        final bAvail = b.status == LockerStatus.available ? 0 : 1;
+        final cmp = aAvail.compareTo(bAvail);
+        return cmp != 0 ? cmp : a.number.compareTo(b.number);
+      });
+
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
       children: [
@@ -78,32 +93,7 @@ class _DetailContent extends StatelessWidget {
         _HeaderSection(summary: summary),
         const SizedBox(height: 20),
 
-        // Address section
-        if (address != null) ...[
-          _SectionTitle(icon: LucideIcons.mapPin, title: l10n.lockerBayAddress),
-          const SizedBox(height: 8),
-          Card(
-            margin: EdgeInsets.zero,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                [
-                  if (address.number != null) '${address.number} ',
-                  address.street,
-                  if (address.complement != null) '\n${address.complement}',
-                  '\n${address.city}, ${address.country}',
-                ].join(),
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                  height: 1.5,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-        ],
-
-        // Company section
+        // Company section with address
         if (bay.company != null) ...[
           _SectionTitle(
             icon: LucideIcons.building2,
@@ -119,13 +109,16 @@ class _DetailContent extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: colorScheme.secondaryContainer,
+                      color: colorScheme.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: colorScheme.primary.withValues(alpha: 0.3),
+                      ),
                     ),
                     child: Icon(
                       LucideIcons.building2,
                       size: 20,
-                      color: colorScheme.onSecondaryContainer,
+                      color: colorScheme.primary,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -139,13 +132,34 @@ class _DetailContent extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          'SIREN: ${bay.company!.siren}',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
+                        if (address != null) ...[
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                LucideIcons.mapPin,
+                                size: 13,
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                              const SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  [
+                                    if (address.number != null)
+                                      '${address.number} ',
+                                    address.street,
+                                    ', ${address.city}',
+                                  ].join(),
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                        ],
                       ],
                     ),
                   ),
@@ -163,7 +177,7 @@ class _DetailContent extends StatelessWidget {
               '${l10n.lockerBayLockers} (${summary.availableCount}/${summary.totalCount})',
         ),
         const SizedBox(height: 8),
-        ...summary.lockers.asMap().entries.map(
+        ...sortedLockers.asMap().entries.map(
           (entry) => AnimatedListItem(
             index: entry.key,
             child: Padding(
@@ -204,13 +218,16 @@ class _HeaderSection extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer,
+                        color: colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: colorScheme.primary.withValues(alpha: 0.3),
+                        ),
                       ),
                       child: Icon(
                         LucideIcons.box,
                         size: 24,
-                        color: colorScheme.onPrimaryContainer,
+                        color: colorScheme.primary,
                       ),
                     ),
                   ),
@@ -435,13 +452,16 @@ class _DetailSkeletonState extends State<_DetailSkeleton>
                             child: Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: colorScheme.primaryContainer,
+                                color: colorScheme.primary.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: colorScheme.primary.withValues(alpha: 0.3),
+                                ),
                               ),
                               child: Icon(
                                 LucideIcons.box,
                                 size: 24,
-                                color: colorScheme.onPrimaryContainer,
+                                color: colorScheme.primary,
                               ),
                             ),
                           ),
