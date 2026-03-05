@@ -115,14 +115,34 @@ class AllBaysByCity extends ConsumerWidget {
                         Text(
                           s.lockerBay.name,
                           style: theme.textTheme.bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.w600),
+                              ?.copyWith(fontWeight: FontWeight.w600,),
                         ),
-                        Text(
-                          l10n.availableLockers(
-                              s.availableCount, s.totalCount),
-                          style: theme.textTheme.labelSmall?.copyWith(
-                              color: colorScheme.onSurfaceVariant),
-                        ),
+                        Builder(builder: (context) {
+                          final accent = s.availableCount == 0
+                              ? Colors.red
+                              : s.availableCount == 1
+                                  ? Colors.orange
+                                  : Colors.green;
+                          return Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: accent.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: accent.withValues(alpha: 0.3),
+                              ),
+                            ),
+                            child: Text(
+                              '${s.availableCount} ${l10n.lockerAvailable.toLowerCase()}${s.availableCount > 1 ? 's' : ''}',
+                              style: TextStyle(
+                                fontSize: 8,
+                                fontWeight: FontWeight.w600,
+                                color: accent,
+                              ),
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   ),
