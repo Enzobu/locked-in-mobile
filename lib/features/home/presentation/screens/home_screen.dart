@@ -98,7 +98,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               );
             }
 
-            final nearby = summaries.take(5).toList();
+            final distances = ref.watch(bayDistancesProvider);
+            final nearby = List.of(summaries)
+              ..sort((a, b) {
+                final da = distances[a.lockerBay.id];
+                final db = distances[b.lockerBay.id];
+                if (da == null && db == null) return 0;
+                if (da == null) return 1;
+                if (db == null) return -1;
+                return da.compareTo(db);
+              });
+            final nearbyTop = nearby.take(5).toList();
 
             return ListView(
               padding: const EdgeInsets.only(bottom: 24),
@@ -129,7 +139,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   onClear: _clearSearch,
                 ),
                 NearbyCarousel(
-                  summaries: nearby,
+                  summaries: nearbyTop,
                   gradients: _gradients,
                 ),
                 const SizedBox(height: 28),
