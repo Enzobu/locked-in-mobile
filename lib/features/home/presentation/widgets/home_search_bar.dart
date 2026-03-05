@@ -110,18 +110,18 @@ class HomeSearchBar extends StatelessWidget {
                             width: 18,
                             height: 18,
                             decoration: BoxDecoration(
-                              color: colorScheme.error,
+                              color: Colors.white,
                               shape: BoxShape.circle,
                               border: Border.all(
-                                color: colorScheme.surface,
+                                color: colorScheme.primary,
                                 width: 1.5,
                               ),
                             ),
                             alignment: Alignment.center,
                             child: Text(
                               '$activeFilterCount',
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: colorScheme.primary,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
                                 height: 1,

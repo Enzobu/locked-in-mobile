@@ -204,8 +204,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       icon: const Icon(LucideIcons.trash2, size: 16),
                       label: Text(l10n.clearFilters),
                       style: FilledButton.styleFrom(
-                        backgroundColor: theme.colorScheme.error,
-                        foregroundColor: theme.colorScheme.onError,
+                        backgroundColor: const Color(0xFFDC2626),
+                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
