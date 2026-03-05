@@ -50,7 +50,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
   }
 
   void _onCardTapped(LockerBaySummary summary) {
-    context.go('/home/${summary.lockerBay.id}');
+    context.push('/home/${summary.lockerBay.id}');
   }
 
   void _zoomIn() {
@@ -76,7 +76,6 @@ class _MapScreenState extends ConsumerState<MapScreen>
     final geoState = ref.read(geolocationProvider);
 
     if (geoState.hasPosition) {
-      ref.read(sortModeProvider.notifier).state = SortMode.proximity;
       _animatedMove(geoState.position!, 13.0);
     } else {
       _showLocationError(geoState.status);
@@ -129,19 +128,27 @@ class _MapScreenState extends ConsumerState<MapScreen>
     );
   }
 
-  void _toggleSortMode() {
-    final current = ref.read(sortModeProvider);
+  void _selectNearest() {
     final geoState = ref.read(geolocationProvider);
+    if (!geoState.hasPosition) return;
 
-    if (current == SortMode.defaultSort) {
-      if (geoState.hasPosition) {
-        ref.read(sortModeProvider.notifier).state = SortMode.proximity;
-      } else {
-        _locateMe();
-      }
-    } else {
-      ref.read(sortModeProvider.notifier).state = SortMode.defaultSort;
-    }
+    final summaries = ref.read(mapLockerBaySummariesProvider).valueOrNull;
+    if (summaries == null || summaries.isEmpty) return;
+
+    final userPos = geoState.position!;
+    final nearest = summaries.reduce((a, b) {
+      final distA = distanceKm(
+        userPos,
+        LatLng(a.lockerBay.latitude, a.lockerBay.longitude),
+      );
+      final distB = distanceKm(
+        userPos,
+        LatLng(b.lockerBay.latitude, b.lockerBay.longitude),
+      );
+      return distA < distB ? a : b;
+    });
+
+    _onMarkerTapped(nearest);
   }
 
   void _animatedMove(LatLng destLocation, double destZoom) {
@@ -184,12 +191,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final summariesAsync = ref.watch(sortedMapLockerBaySummariesProvider);
+    final summariesAsync = ref.watch(mapLockerBaySummariesProvider);
     final selectedBay = ref.watch(selectedLockerBayProvider);
     final initialCenter = ref.watch(mapCenterProvider);
     final geoState = ref.watch(geolocationProvider);
-    final sortMode = ref.watch(sortModeProvider);
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: summariesAsync.when(
@@ -258,15 +263,12 @@ class _MapScreenState extends ConsumerState<MapScreen>
                 isLoading: geoState.status == GeolocationStatus.loading,
               ),
             ),
-            // Top-right: Sort toggle (only visible when geolocation active)
+            // Top-right: Nearest bay button (only visible when geolocation active)
             if (geoState.hasPosition)
               Positioned(
                 right: 16,
                 top: MediaQuery.of(context).padding.top + 12,
-                child: _SortToggleButton(
-                  sortMode: sortMode,
-                  onPressed: _toggleSortMode,
-                ),
+                child: _NearestButton(onPressed: _selectNearest),
               ),
             // Right side: Map controls
             Positioned(
@@ -405,22 +407,20 @@ class _AroundMeButton extends StatelessWidget {
   }
 }
 
-class _SortToggleButton extends StatelessWidget {
-  const _SortToggleButton({required this.sortMode, required this.onPressed});
+class _NearestButton extends StatelessWidget {
+  const _NearestButton({required this.onPressed});
 
-  final SortMode sortMode;
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final isProximity = sortMode == SortMode.proximity;
     final l10n = AppLocalizations.of(context)!;
 
     return Material(
       elevation: 3,
       borderRadius: BorderRadius.circular(24),
-      color: isProximity ? colorScheme.primary : colorScheme.surface,
+      color: colorScheme.surface,
       child: InkWell(
         onTap: onPressed,
         borderRadius: BorderRadius.circular(24),
@@ -430,19 +430,15 @@ class _SortToggleButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                LucideIcons.arrowUpDown,
+                LucideIcons.mapPin,
                 size: 14,
-                color: isProximity
-                    ? colorScheme.onPrimary
-                    : colorScheme.onSurface,
+                color: colorScheme.primary,
               ),
               const SizedBox(width: 6),
               Text(
-                isProximity ? l10n.mapSortByProximity : l10n.mapSortDefault,
+                l10n.mapNearest,
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: isProximity
-                      ? colorScheme.onPrimary
-                      : colorScheme.onSurface,
+                  color: colorScheme.onSurface,
                   fontWeight: FontWeight.w600,
                 ),
               ),

@@ -302,10 +302,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapAroundMe => 'Around me';
 
   @override
-  String get mapSortByProximity => 'Sort by proximity';
-
-  @override
-  String get mapSortDefault => 'Default sort';
+  String get mapNearest => 'Nearest';
 
   @override
   String mapDistance(String distance) {
@@ -591,4 +588,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String fromPrice(String price) {
     return 'from $price €';
   }
+
+  @override
+  String filteredResults(int count) {
+    return '$count lockers found';
+  }
+
+  @override
+  String get clearFilters => 'Clear filters';
 }

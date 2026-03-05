@@ -225,10 +225,8 @@
   "@mapSeeDetails": { "description": "Bouton voir détails sur la carte" },
   "mapAroundMe": "Autour de moi",
   "@mapAroundMe": { "description": "Bouton géolocalisation autour de moi" },
-  "mapSortByProximity": "Tri par proximité",
-  "@mapSortByProximity": { "description": "Label tri par proximité" },
-  "mapSortDefault": "Tri par défaut",
-  "@mapSortDefault": { "description": "Label tri par défaut" },
+  "mapNearest": "Le plus proche",
+  "@mapNearest": { "description": "Bouton sélectionner la baie la plus proche" },
   "mapDistance": "{distance}",
   "@mapDistance": {
     "description": "Distance affichée sur les cards",
@@ -468,5 +466,14 @@
     "placeholders": {
       "price": { "type": "String" }
     }
-  }
+  },
+  "filteredResults": "{count} casiers trouvés",
+  "@filteredResults": {
+    "description": "Titre section résultats filtrés",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "clearFilters": "Supprimer les filtres",
+  "@clearFilters": { "description": "Bouton supprimer les filtres" }
 }

@@ -109,7 +109,3 @@ String formatDistance(double km) {
   }
   return '${km.round()} km';
 }
-
-enum SortMode { defaultSort, proximity }
-
-final sortModeProvider = StateProvider<SortMode>((ref) => SortMode.defaultSort);

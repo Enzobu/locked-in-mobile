@@ -133,8 +133,7 @@
   },
   "mapSeeDetails": "Vedi dettagli",
   "mapAroundMe": "Intorno a me",
-  "mapSortByProximity": "Ordina per vicinanza",
-  "mapSortDefault": "Ordinamento predefinito",
+  "mapNearest": "Più vicino",
   "mapDistance": "{distance}",
   "@mapDistance": {
     "placeholders": {
@@ -266,5 +265,12 @@
 
   "errorNetwork": "Impossibile connettersi. Controlla la tua connessione internet e riprova.",
   "errorServer": "Si è verificato un errore del server. Riprova più tardi.",
-  "errorUnknown": "Si è verificato un errore imprevisto. Riprova."
+  "errorUnknown": "Si è verificato un errore imprevisto. Riprova.",
+  "filteredResults": "{count} armadietti trovati",
+  "@filteredResults": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "clearFilters": "Cancella filtri"
 }

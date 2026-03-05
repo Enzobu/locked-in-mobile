@@ -133,11 +133,4 @@ void main() {
     });
   });
 
-  group('SortMode', () {
-    test('has defaultSort and proximity values', () {
-      expect(SortMode.values, contains(SortMode.defaultSort));
-      expect(SortMode.values, contains(SortMode.proximity));
-      expect(SortMode.values.length, 2);
-    });
-  });
 }

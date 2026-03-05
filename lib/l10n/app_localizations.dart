@@ -654,17 +654,11 @@ abstract class AppLocalizations {
   /// **'Autour de moi'**
   String get mapAroundMe;
 
-  /// Label tri par proximité
+  /// Bouton sélectionner la baie la plus proche
   ///
   /// In fr, this message translates to:
-  /// **'Tri par proximité'**
-  String get mapSortByProximity;
-
-  /// Label tri par défaut
-  ///
-  /// In fr, this message translates to:
-  /// **'Tri par défaut'**
-  String get mapSortDefault;
+  /// **'Le plus proche'**
+  String get mapNearest;
 
   /// Distance affichée sur les cards
   ///
@@ -1175,6 +1169,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'dès {price} €'**
   String fromPrice(String price);
+
+  /// Titre section résultats filtrés
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} casiers trouvés'**
+  String filteredResults(int count);
+
+  /// Bouton supprimer les filtres
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer les filtres'**
+  String get clearFilters;
 }
 
 class _AppLocalizationsDelegate

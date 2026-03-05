@@ -133,8 +133,7 @@
   },
   "mapSeeDetails": "Details anzeigen",
   "mapAroundMe": "In meiner Nähe",
-  "mapSortByProximity": "Nach Entfernung sortieren",
-  "mapSortDefault": "Standardsortierung",
+  "mapNearest": "Nächstgelegene",
   "mapDistance": "{distance}",
   "@mapDistance": {
     "placeholders": {
@@ -266,5 +265,12 @@
 
   "errorNetwork": "Verbindung nicht möglich. Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
   "errorServer": "Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
-  "errorUnknown": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  "errorUnknown": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+  "filteredResults": "{count} Schließfächer gefunden",
+  "@filteredResults": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "clearFilters": "Filter löschen"
 }

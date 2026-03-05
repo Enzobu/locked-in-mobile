@@ -133,8 +133,7 @@
   },
   "mapSeeDetails": "See details",
   "mapAroundMe": "Around me",
-  "mapSortByProximity": "Sort by proximity",
-  "mapSortDefault": "Default sort",
+  "mapNearest": "Nearest",
   "mapDistance": "{distance}",
   "@mapDistance": {
     "placeholders": {
@@ -289,5 +288,12 @@
     "placeholders": {
       "price": { "type": "String" }
     }
-  }
+  },
+  "filteredResults": "{count} lockers found",
+  "@filteredResults": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "clearFilters": "Clear filters"
 }
