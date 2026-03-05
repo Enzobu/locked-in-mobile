@@ -104,6 +104,8 @@
       "number": { "type": "int" }
     }
   },
+  "dimensions": "Maße",
+  "lockerType": "Typ",
   "lockerSize": "{width} × {height} × {depth} cm",
   "@lockerSize": {
     "placeholders": {

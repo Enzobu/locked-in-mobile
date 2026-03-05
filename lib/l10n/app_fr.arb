@@ -184,6 +184,8 @@
       "number": { "type": "int" }
     }
   },
+  "dimensions": "Dimensions",
+  "lockerType": "Type",
   "lockerSize": "{width} × {height} × {depth} cm",
   "@lockerSize": {
     "description": "Dimensions du casier",

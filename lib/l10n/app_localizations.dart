@@ -582,6 +582,18 @@ abstract class AppLocalizations {
   /// **'Casier n°{number}'**
   String lockerNumber(int number);
 
+  /// No description provided for @dimensions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dimensions'**
+  String get dimensions;
+
+  /// No description provided for @lockerType.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type'**
+  String get lockerType;
+
   /// Dimensions du casier
   ///
   /// In fr, this message translates to:

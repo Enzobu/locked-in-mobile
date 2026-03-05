@@ -84,16 +84,11 @@ class AllBaysByCity extends ConsumerWidget {
               : '?';
           return AnimatedPressable(
             onTap: () => context.push('/bay/${s.lockerBay.id}'),
-            child: Container(
+            child: Card(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerLow,
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.3),
-                ),
-              ),
+              clipBehavior: Clip.antiAlias,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -169,6 +164,7 @@ class AllBaysByCity extends ConsumerWidget {
                   Icon(LucideIcons.chevronRight,
                       size: 16, color: colorScheme.onSurfaceVariant),
                 ],
+              ),
               ),
             ),
           );

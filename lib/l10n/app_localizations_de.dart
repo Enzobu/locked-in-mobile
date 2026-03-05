@@ -264,6 +264,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get dimensions => 'Maße';
+
+  @override
+  String get lockerType => 'Typ';
+
+  @override
   String lockerSize(int width, int height, int depth) {
     return '$width × $height × $depth cm';
   }
