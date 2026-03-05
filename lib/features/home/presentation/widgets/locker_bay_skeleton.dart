@@ -48,20 +48,12 @@ class _LockerBaySkeletonState extends State<LockerBaySkeleton>
             // Greeting skeleton
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
-              child: _ShimmerBox(
-                width: 140,
-                height: 14,
-                color: shimmerColor,
-              ),
+              child: _ShimmerBox(width: 140, height: 14, color: shimmerColor),
             ),
             // Title skeleton
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-              child: _ShimmerBox(
-                width: 220,
-                height: 22,
-                color: shimmerColor,
-              ),
+              child: _ShimmerBox(width: 220, height: 22, color: shimmerColor),
             ),
             // Search bar skeleton
             Padding(
@@ -77,11 +69,7 @@ class _LockerBaySkeletonState extends State<LockerBaySkeleton>
             // Nearby section title skeleton
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
-              child: _ShimmerBox(
-                width: 160,
-                height: 16,
-                color: shimmerColor,
-              ),
+              child: _ShimmerBox(width: 160, height: 16, color: shimmerColor),
             ),
             // Nearby carousel skeleton
             SizedBox(
@@ -105,11 +93,7 @@ class _LockerBaySkeletonState extends State<LockerBaySkeleton>
             // City chips skeleton
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
-              child: _ShimmerBox(
-                width: 120,
-                height: 16,
-                color: shimmerColor,
-              ),
+              child: _ShimmerBox(width: 120, height: 16, color: shimmerColor),
             ),
             SizedBox(
               height: 60,
@@ -121,16 +105,9 @@ class _LockerBaySkeletonState extends State<LockerBaySkeleton>
                 separatorBuilder: (_, _) => const SizedBox(width: 10),
                 itemBuilder: (_, _) => Column(
                   children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundColor: shimmerColor,
-                    ),
+                    CircleAvatar(radius: 20, backgroundColor: shimmerColor),
                     const SizedBox(height: 4),
-                    _ShimmerBox(
-                      width: 40,
-                      height: 10,
-                      color: shimmerColor,
-                    ),
+                    _ShimmerBox(width: 40, height: 10, color: shimmerColor),
                   ],
                 ),
               ),
@@ -150,10 +127,7 @@ class _LockerBaySkeletonState extends State<LockerBaySkeleton>
                     padding: const EdgeInsets.all(12),
                     child: Row(
                       children: [
-                        CircleAvatar(
-                          radius: 20,
-                          backgroundColor: shimmerColor,
-                        ),
+                        CircleAvatar(radius: 20, backgroundColor: shimmerColor),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(

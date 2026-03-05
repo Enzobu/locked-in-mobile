@@ -44,10 +44,14 @@ class LockerBaySummariesNotifier extends AsyncNotifier<List<LockerBaySummary>> {
       lockersByBay.putIfAbsent(locker.lockerBay.id, () => []).add(locker);
     }
 
-    return bays.map((bay) => LockerBaySummary(
-      lockerBay: bay,
-      lockers: lockersByBay[bay.id] ?? [],
-    )).toList();
+    return bays
+        .map(
+          (bay) => LockerBaySummary(
+            lockerBay: bay,
+            lockers: lockersByBay[bay.id] ?? [],
+          ),
+        )
+        .toList();
   }
 
   Future<void> refresh() async {
@@ -190,8 +194,9 @@ final formattedDistanceProvider = Provider.family<String?, int>((ref, bayId) {
 });
 
 /// Groups all summaries by city, sorted alphabetically.
-final citySummariesProvider =
-    Provider<Map<String, List<LockerBaySummary>>>((ref) {
+final citySummariesProvider = Provider<Map<String, List<LockerBaySummary>>>((
+  ref,
+) {
   final filtered = ref.watch(filteredSummariesProvider);
   return filtered.whenOrNull(
         data: (summaries) {

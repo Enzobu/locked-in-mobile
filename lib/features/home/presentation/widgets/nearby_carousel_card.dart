@@ -47,8 +47,11 @@ class NearbyCarouselCard extends StatelessWidget {
                     color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Icon(LucideIcons.box,
-                      size: 20, color: Colors.white),
+                  child: const Icon(
+                    LucideIcons.box,
+                    size: 20,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -68,18 +71,15 @@ class NearbyCarouselCard extends StatelessWidget {
                         children: [
                           Text(
                             summary.city,
-                            style: theme.textTheme.bodySmall
-                                ?.copyWith(color: Colors.white70),
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: Colors.white70,
+                            ),
                           ),
                           if (summary.availableSizes.isNotEmpty ||
                               summary.hasRechargeableLockers) ...[
                             const SizedBox(width: 6),
                             Text(
-                              '\u00b7 ${[
-                                ...summary.availableSizes,
-                                if (summary.hasRechargeableLockers)
-                                  l10n.rechargeable,
-                              ].join(' \u00b7 ')}',
+                              '\u00b7 ${[...summary.availableSizes, if (summary.hasRechargeableLockers) l10n.rechargeable].join(' \u00b7 ')}',
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: Colors.white70,
                               ),
@@ -108,11 +108,12 @@ class NearbyCarouselCard extends StatelessWidget {
               children: [
                 _badge(
                   l10n.availableLockers(
-                      summary.availableCount, summary.totalCount),
+                    summary.availableCount,
+                    summary.totalCount,
+                  ),
                 ),
                 const SizedBox(width: 8),
-                if (summary.priceRange.isNotEmpty)
-                  _badge(summary.priceRange),
+                if (summary.priceRange.isNotEmpty) _badge(summary.priceRange),
               ],
             ),
           ],

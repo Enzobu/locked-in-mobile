@@ -167,18 +167,12 @@ class _DistanceBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: colorScheme.primary.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: colorScheme.primary.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            LucideIcons.navigation,
-            size: 10,
-            color: colorScheme.primary,
-          ),
+          Icon(LucideIcons.navigation, size: 10, color: colorScheme.primary),
           const SizedBox(width: 4),
           Text(
             distance,

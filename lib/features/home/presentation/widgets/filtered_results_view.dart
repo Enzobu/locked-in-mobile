@@ -33,8 +33,9 @@ class FilteredResultsView extends StatelessWidget {
               const SizedBox(width: 6),
               Text(
                 l10n.filteredResults(summaries.length),
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ],
           ),
@@ -79,42 +80,49 @@ class FilteredResultsView extends StatelessWidget {
                       children: [
                         Text(
                           s.lockerBay.name,
-                          style: theme.textTheme.bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.w600),
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                        Builder(builder: (context) {
-                          final accent = s.availableCount == 0
-                              ? Colors.red
-                              : s.availableCount == 1
-                                  ? Colors.orange
-                                  : Colors.green;
-                          return Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: accent.withValues(alpha: 0.12),
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: accent.withValues(alpha: 0.3),
+                        Builder(
+                          builder: (context) {
+                            final accent = s.availableCount == 0
+                                ? Colors.red
+                                : s.availableCount == 1
+                                ? Colors.orange
+                                : Colors.green;
+                            return Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
                               ),
-                            ),
-                            child: Text(
-                              '${s.availableCount} ${l10n.lockerAvailable.toLowerCase()}${s.availableCount > 1 ? 's' : ''}',
-                              style: TextStyle(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w700,
-                                color: accent,
+                              decoration: BoxDecoration(
+                                color: accent.withValues(alpha: 0.12),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: accent.withValues(alpha: 0.3),
+                                ),
                               ),
-                            ),
-                          );
-                        }),
+                              child: Text(
+                                '${s.availableCount} ${l10n.lockerAvailable.toLowerCase()}${s.availableCount > 1 ? 's' : ''}',
+                                style: TextStyle(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w700,
+                                  color: accent,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
                   if (s.priceRange.isNotEmpty)
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
@@ -131,8 +139,11 @@ class FilteredResultsView extends StatelessWidget {
                       ),
                     ),
                   const SizedBox(width: 4),
-                  Icon(LucideIcons.chevronRight,
-                      size: 16, color: colorScheme.onSurfaceVariant),
+                  Icon(
+                    LucideIcons.chevronRight,
+                    size: 16,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ],
               ),
             ),

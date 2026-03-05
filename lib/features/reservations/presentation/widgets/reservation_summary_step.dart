@@ -51,9 +51,7 @@ class ReservationSummaryStep extends ConsumerWidget {
                 ),
               ),
               Text(
-                l10n.reservationPrice(
-                  locker.priceEuros.toStringAsFixed(2),
-                ),
+                l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w800,
                   color: colorScheme.primary,
@@ -69,67 +67,68 @@ class ReservationSummaryStep extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // Locker section
+                _SummarySection(
+                  icon: LucideIcons.box,
+                  title: l10n.reservationLocker,
+                  children: [
+                    _DetailRow(
+                      icon: LucideIcons.hash,
+                      label: l10n.lockerNumber(locker.number),
+                      value: locker.specification.name,
+                    ),
+                    _DetailRow(
+                      icon: LucideIcons.ruler,
+                      label: l10n.lockerSize(
+                        locker.specification.width,
+                        locker.specification.height,
+                        locker.specification.depth,
+                      ),
+                      value: locker.specification.material,
+                      showDivider: false,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
 
-        // Locker section
-        _SummarySection(
-          icon: LucideIcons.box,
-          title: l10n.reservationLocker,
-          children: [
-            _DetailRow(
-              icon: LucideIcons.hash,
-              label: l10n.lockerNumber(locker.number),
-              value: locker.specification.name,
-            ),
-            _DetailRow(
-              icon: LucideIcons.ruler,
-              label: l10n.lockerSize(
-                locker.specification.width,
-                locker.specification.height,
-                locker.specification.depth,
-              ),
-              value: locker.specification.material,
-              showDivider: false,
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
+                // Location section
+                _SummarySection(
+                  icon: LucideIcons.mapPin,
+                  title: l10n.reservationLocation,
+                  children: [
+                    _DetailRow(
+                      icon: LucideIcons.building2,
+                      label: locker.lockerBay.name,
+                      value: locker.lockerBay.company?.name ?? '',
+                      showDivider: false,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
 
-        // Location section
-        _SummarySection(
-          icon: LucideIcons.mapPin,
-          title: l10n.reservationLocation,
-          children: [
-            _DetailRow(
-              icon: LucideIcons.building2,
-              label: locker.lockerBay.name,
-              value: locker.lockerBay.company?.name ?? '',
-              showDivider: false,
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-
-        // Period section
-        _SummarySection(
-          icon: LucideIcons.calendar,
-          title: l10n.reservationPeriod,
-          children: [
-            _DetailRow(
-              icon: LucideIcons.calendarDays,
-              label: dateFormat.format(state.startsAt!),
-            ),
-            _DetailRow(
-              icon: LucideIcons.clock,
-              label: '${l10n.reservationDateFrom} ${timeFormat.format(state.startsAt!)}',
-              value: '${l10n.reservationDateTo} ${timeFormat.format(state.endsAt!)}',
-            ),
-            _DetailRow(
-              icon: LucideIcons.timer,
-              label: durationLabel,
-              showDivider: false,
-            ),
-          ],
-        ),
+                // Period section
+                _SummarySection(
+                  icon: LucideIcons.calendar,
+                  title: l10n.reservationPeriod,
+                  children: [
+                    _DetailRow(
+                      icon: LucideIcons.calendarDays,
+                      label: dateFormat.format(state.startsAt!),
+                    ),
+                    _DetailRow(
+                      icon: LucideIcons.clock,
+                      label:
+                          '${l10n.reservationDateFrom} ${timeFormat.format(state.startsAt!)}',
+                      value:
+                          '${l10n.reservationDateTo} ${timeFormat.format(state.endsAt!)}',
+                    ),
+                    _DetailRow(
+                      icon: LucideIcons.timer,
+                      label: durationLabel,
+                      showDivider: false,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

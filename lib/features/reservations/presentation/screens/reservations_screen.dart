@@ -25,9 +25,9 @@ class ReservationsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           l10n.reservations,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
         ),
         centerTitle: true,
       ),

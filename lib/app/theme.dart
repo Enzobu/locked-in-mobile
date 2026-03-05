@@ -7,37 +7,39 @@ const _primaryColor = Color(0xFFC10000);
 class AppTheme {
   AppTheme._();
 
-  static final _lightColorScheme = ColorScheme.fromSeed(
-    seedColor: _primaryColor,
-    brightness: Brightness.light,
-  ).copyWith(
-    primary: _primaryColor,
-    onPrimary: Colors.white,
-    surface: const Color(0xFFF8F9FA),
-    onSurface: const Color(0xFF1A1A1A),
-    surfaceContainerLowest: Colors.white,
-    surfaceContainerLow: const Color(0xFFF3F4F6),
-    surfaceContainer: const Color(0xFFEEEFF1),
-    surfaceContainerHigh: const Color(0xFFE5E7EB),
-    surfaceContainerHighest: const Color(0xFFD1D5DB),
-    outlineVariant: const Color(0xFFD1D5DB),
-  );
+  static final _lightColorScheme =
+      ColorScheme.fromSeed(
+        seedColor: _primaryColor,
+        brightness: Brightness.light,
+      ).copyWith(
+        primary: _primaryColor,
+        onPrimary: Colors.white,
+        surface: const Color(0xFFF8F9FA),
+        onSurface: const Color(0xFF1A1A1A),
+        surfaceContainerLowest: Colors.white,
+        surfaceContainerLow: const Color(0xFFF3F4F6),
+        surfaceContainer: const Color(0xFFEEEFF1),
+        surfaceContainerHigh: const Color(0xFFE5E7EB),
+        surfaceContainerHighest: const Color(0xFFD1D5DB),
+        outlineVariant: const Color(0xFFD1D5DB),
+      );
 
-  static final _darkColorScheme = ColorScheme.fromSeed(
-    seedColor: _primaryColor,
-    brightness: Brightness.dark,
-  ).copyWith(
-    primary: const Color(0xFFFF4444),
-    onPrimary: Colors.white,
-    surface: const Color(0xFF121214),
-    onSurface: const Color(0xFFF0F0F0),
-    surfaceContainerLowest: const Color(0xFF0E0E10),
-    surfaceContainerLow: const Color(0xFF1A1A1E),
-    surfaceContainer: const Color(0xFF1E1E22),
-    surfaceContainerHigh: const Color(0xFF252528),
-    surfaceContainerHighest: const Color(0xFF2E2E32),
-    outlineVariant: const Color(0xFF3A3A3E),
-  );
+  static final _darkColorScheme =
+      ColorScheme.fromSeed(
+        seedColor: _primaryColor,
+        brightness: Brightness.dark,
+      ).copyWith(
+        primary: const Color(0xFFFF4444),
+        onPrimary: Colors.white,
+        surface: const Color(0xFF121214),
+        onSurface: const Color(0xFFF0F0F0),
+        surfaceContainerLowest: const Color(0xFF0E0E10),
+        surfaceContainerLow: const Color(0xFF1A1A1E),
+        surfaceContainer: const Color(0xFF1E1E22),
+        surfaceContainerHigh: const Color(0xFF252528),
+        surfaceContainerHighest: const Color(0xFF2E2E32),
+        outlineVariant: const Color(0xFF3A3A3E),
+      );
 
   static final light = ThemeData(
     useMaterial3: true,
@@ -119,9 +121,7 @@ class AppTheme {
       color: const Color(0xFF1A1A1E),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(
-          color: Colors.white.withValues(alpha: 0.07),
-        ),
+        side: BorderSide(color: Colors.white.withValues(alpha: 0.07)),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(

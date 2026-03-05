@@ -157,89 +157,85 @@ class _DurationSlider extends ConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: colorScheme.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: colorScheme.primary.withValues(alpha: 0.3),
-                  ),
-                ),
-                child: Icon(
-                  LucideIcons.timer,
-                  size: 18,
-                  color: colorScheme.primary,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                l10n.reservationDurationLabel,
-                style: theme.textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Spacer(),
-              Text(
-                durationLabel,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: colorScheme.primary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          SliderTheme(
-            data: SliderThemeData(
-              trackHeight: 4,
-              thumbShape: const RoundSliderThumbShape(
-                enabledThumbRadius: 8,
-              ),
-              overlayShape: const RoundSliderOverlayShape(
-                overlayRadius: 16,
-              ),
-              activeTrackColor: colorScheme.primary,
-              inactiveTrackColor: colorScheme.outlineVariant,
-              thumbColor: colorScheme.primary,
-              overlayColor: colorScheme.primary.withValues(alpha: 0.12),
-            ),
-            child: Slider(
-              value: (state.durationMinutes ?? state.minDuration).toDouble(),
-              min: state.minDuration.toDouble(),
-              max: state.maxDuration.toDouble(),
-              divisions: (state.maxDuration - state.minDuration) ~/ 15,
-              onChanged: (value) {
-                ref
-                    .read(reservationFlowProvider(locker).notifier)
-                    .setDuration(value.round());
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Text(
-                  l10n.reservationDurationMinutes(state.minDuration),
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: colorScheme.primary.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Icon(
+                    LucideIcons.timer,
+                    size: 18,
+                    color: colorScheme.primary,
                   ),
                 ),
+                const SizedBox(width: 12),
                 Text(
-                  l10n.reservationDurationMinutes(state.maxDuration),
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
+                  l10n.reservationDurationLabel,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  durationLabel,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: colorScheme.primary,
                   ),
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: 16),
+            SliderTheme(
+              data: SliderThemeData(
+                trackHeight: 4,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
+                overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
+                activeTrackColor: colorScheme.primary,
+                inactiveTrackColor: colorScheme.outlineVariant,
+                thumbColor: colorScheme.primary,
+                overlayColor: colorScheme.primary.withValues(alpha: 0.12),
+              ),
+              child: Slider(
+                value: (state.durationMinutes ?? state.minDuration).toDouble(),
+                min: state.minDuration.toDouble(),
+                max: state.maxDuration.toDouble(),
+                divisions: (state.maxDuration - state.minDuration) ~/ 15,
+                onChanged: (value) {
+                  ref
+                      .read(reservationFlowProvider(locker).notifier)
+                      .setDuration(value.round());
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    l10n.reservationDurationMinutes(state.minDuration),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  Text(
+                    l10n.reservationDurationMinutes(state.maxDuration),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -343,47 +339,47 @@ class _SelectionCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(14),
           child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: colorScheme.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: colorScheme.primary.withValues(alpha: 0.3),
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: colorScheme.primary.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Icon(icon, size: 18, color: colorScheme.primary),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      value,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: isSet ? FontWeight.w600 : FontWeight.w400,
+                        color: isSet
+                            ? colorScheme.primary
+                            : colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Icon(icon, size: 18, color: colorScheme.primary),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: theme.textTheme.labelLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    value,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      fontWeight: isSet ? FontWeight.w600 : FontWeight.w400,
-                      color: isSet
-                          ? colorScheme.primary
-                          : colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
+              Icon(
+                LucideIcons.chevronRight,
+                size: 18,
+                color: colorScheme.onSurfaceVariant,
               ),
-            ),
-            Icon(
-              LucideIcons.chevronRight,
-              size: 18,
-              color: colorScheme.onSurfaceVariant,
-            ),
             ],
           ),
         ),
@@ -549,10 +545,7 @@ class _DatePickerSheetState extends State<_DatePickerSheet> {
 }
 
 class _TimePickerSheet extends StatefulWidget {
-  const _TimePickerSheet({
-    required this.initialTime,
-    required this.l10n,
-  });
+  const _TimePickerSheet({required this.initialTime, required this.l10n});
 
   final TimeOfDay initialTime;
   final AppLocalizations l10n;
@@ -576,8 +569,9 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
     _selectedHour = widget.initialTime.hour;
     // Snap to nearest 15 min
     final rawMinute = widget.initialTime.minute;
-    final minuteIndex =
-        _minutes.indexWhere((m) => m >= rawMinute).clamp(0, _minutes.length - 1);
+    final minuteIndex = _minutes
+        .indexWhere((m) => m >= rawMinute)
+        .clamp(0, _minutes.length - 1);
     _selectedMinute = _minutes[minuteIndex];
     _hourController = FixedExtentScrollController(initialItem: _selectedHour);
     _minuteController = FixedExtentScrollController(initialItem: minuteIndex);
@@ -709,7 +703,8 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
                         childDelegate: ListWheelChildBuilderDelegate(
                           childCount: _minutes.length,
                           builder: (context, index) {
-                            final isSelected = _minutes[index] == _selectedMinute;
+                            final isSelected =
+                                _minutes[index] == _selectedMinute;
                             return Center(
                               child: Text(
                                 _minutes[index].toString().padLeft(2, '0'),
@@ -749,11 +744,7 @@ class _TimePickerSheetState extends State<_TimePickerSheet> {
               ),
               child: Row(
                 children: [
-                  Icon(
-                    LucideIcons.clock,
-                    size: 18,
-                    color: colorScheme.primary,
-                  ),
+                  Icon(LucideIcons.clock, size: 18, color: colorScheme.primary),
                   const SizedBox(width: 12),
                   Text(
                     '${_selectedHour.toString().padLeft(2, '0')}:${_selectedMinute.toString().padLeft(2, '0')}',

@@ -3,10 +3,7 @@ import '../../../../core/models/locker_bay.dart';
 import '../../../../core/models/locker_status.dart';
 
 class LockerBaySummary {
-  const LockerBaySummary({
-    required this.lockerBay,
-    required this.lockers,
-  });
+  const LockerBaySummary({required this.lockerBay, required this.lockers});
 
   final LockerBay lockerBay;
   final List<Locker> lockers;
@@ -61,6 +58,7 @@ class LockerBaySummary {
       final m = minutes % 60;
       return m == 0 ? '${h}h' : '${h}h${m.toString().padLeft(2, '0')}';
     }
+
     if (min != null && max != null && min != max) {
       return '${fmt(min)} - ${fmt(max)}';
     }

@@ -218,20 +218,38 @@ class _MapScreenState extends ConsumerState<MapScreen>
                 if (Theme.of(context).brightness == Brightness.dark)
                   ColorFiltered(
                     colorFilter: const ColorFilter.matrix(<double>[
-                      1.3, 0, 0, 0, 15,
-                      0, 1.3, 0, 0, 15,
-                      0, 0, 1.3, 0, 15,
-                      0, 0, 0, 1, 0,
+                      1.3,
+                      0,
+                      0,
+                      0,
+                      15,
+                      0,
+                      1.3,
+                      0,
+                      0,
+                      15,
+                      0,
+                      0,
+                      1.3,
+                      0,
+                      15,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
                     ]),
                     child: TileLayer(
-                      urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
+                      urlTemplate:
+                          'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
                       subdomains: const ['a', 'b', 'c', 'd'],
                       userAgentPackageName: 'com.lockedin.mobile',
                     ),
                   )
                 else
                   TileLayer(
-                    urlTemplate: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
+                    urlTemplate:
+                        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
                     subdomains: const ['a', 'b', 'c', 'd'],
                     userAgentPackageName: 'com.lockedin.mobile',
                   ),
@@ -445,11 +463,7 @@ class _NearestButton extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                LucideIcons.mapPin,
-                size: 14,
-                color: colorScheme.primary,
-              ),
+              Icon(LucideIcons.mapPin, size: 14, color: colorScheme.primary),
               const SizedBox(width: 6),
               Text(
                 l10n.mapNearest,

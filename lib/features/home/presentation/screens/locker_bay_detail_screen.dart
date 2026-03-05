@@ -452,10 +452,14 @@ class _DetailSkeletonState extends State<_DetailSkeleton>
                             child: Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: colorScheme.primary.withValues(alpha: 0.1),
+                                color: colorScheme.primary.withValues(
+                                  alpha: 0.1,
+                                ),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: colorScheme.primary.withValues(alpha: 0.3),
+                                  color: colorScheme.primary.withValues(
+                                    alpha: 0.3,
+                                  ),
                                 ),
                               ),
                               child: Icon(

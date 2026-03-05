@@ -52,9 +52,7 @@ class LockerCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    l10n.pricePerDay(
-                      locker.priceEuros.toStringAsFixed(2),
-                    ),
+                    l10n.pricePerDay(locker.priceEuros.toStringAsFixed(2)),
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w800,
                       color: colorScheme.primary,
@@ -101,8 +99,7 @@ class LockerCard extends StatelessWidget {
             // Reserve button
             if (isAvailable)
               FilledButton.icon(
-                onPressed: () =>
-                    context.push('/reservation', extra: locker),
+                onPressed: () => context.push('/reservation', extra: locker),
                 icon: const Icon(LucideIcons.calendarPlus, size: 16),
                 label: Text(l10n.reserveLocker),
                 style: FilledButton.styleFrom(

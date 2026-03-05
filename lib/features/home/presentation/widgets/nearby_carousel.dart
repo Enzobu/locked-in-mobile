@@ -39,13 +39,17 @@ class _NearbyCarouselState extends ConsumerState<NearbyCarousel> {
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
           child: Row(
             children: [
-              Icon(LucideIcons.navigation,
-                  size: 16, color: colorScheme.primary),
+              Icon(
+                LucideIcons.navigation,
+                size: 16,
+                color: colorScheme.primary,
+              ),
               const SizedBox(width: 6),
               Text(
                 l10n.nearbyBays,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ],
           ),

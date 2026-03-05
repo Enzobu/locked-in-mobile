@@ -72,8 +72,9 @@ class HomeSearchBar extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: colorScheme.onSurfaceVariant
-                              .withValues(alpha: 0.15),
+                          color: colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.15,
+                          ),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(

@@ -160,11 +160,16 @@ void main() {
       expect(find.byIcon(LucideIcons.chevronRight), findsNothing);
     });
 
-    testWidgets('availability badge shows green for multiple available',
-        (tester) async {
+    testWidgets('availability badge shows green for multiple available', (
+      tester,
+    ) async {
       final summaries = [
         makeSummary(
-            id: 1, name: 'Test', lockerCount: 3, status: LockerStatus.available),
+          id: 1,
+          name: 'Test',
+          lockerCount: 3,
+          status: LockerStatus.available,
+        ),
       ];
       await tester.pumpWidget(buildWidget(summaries: summaries));
       await tester.pumpAndSettle();
@@ -174,11 +179,16 @@ void main() {
       expect(badgeText, findsWidgets);
     });
 
-    testWidgets('availability badge shows red for zero available',
-        (tester) async {
+    testWidgets('availability badge shows red for zero available', (
+      tester,
+    ) async {
       final summaries = [
         makeSummary(
-            id: 1, name: 'Test', lockerCount: 2, status: LockerStatus.reserved),
+          id: 1,
+          name: 'Test',
+          lockerCount: 2,
+          status: LockerStatus.reserved,
+        ),
       ];
       await tester.pumpWidget(buildWidget(summaries: summaries));
       await tester.pumpAndSettle();

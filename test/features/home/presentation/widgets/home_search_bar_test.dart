@@ -47,8 +47,7 @@ void main() {
       expect(find.text('0'), findsNothing);
     });
 
-    testWidgets('badge shows count when activeFilterCount > 0',
-        (tester) async {
+    testWidgets('badge shows count when activeFilterCount > 0', (tester) async {
       await tester.pumpWidget(buildWidget(activeFilterCount: 3));
       await tester.pumpAndSettle();
 
@@ -62,16 +61,18 @@ void main() {
       expect(find.text('1'), findsOneWidget);
     });
 
-    testWidgets('clear button shown when searchQuery is not empty',
-        (tester) async {
+    testWidgets('clear button shown when searchQuery is not empty', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildWidget(searchQuery: 'test'));
       await tester.pumpAndSettle();
 
       expect(find.byIcon(LucideIcons.x), findsOneWidget);
     });
 
-    testWidgets('clear button hidden when searchQuery is empty',
-        (tester) async {
+    testWidgets('clear button hidden when searchQuery is empty', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildWidget(searchQuery: ''));
       await tester.pumpAndSettle();
 

@@ -169,9 +169,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: Divider(
-                              color: colorScheme.outlineVariant,
-                            ),
+                            child: Divider(color: colorScheme.outlineVariant),
                           ),
                         ),
                         _PriceBadge(
@@ -296,9 +294,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
         final selected = _localFilter.sizes.contains(size);
         return Expanded(
           child: Padding(
-            padding: EdgeInsets.only(
-              right: entry != sizeEntries.last ? 8 : 0,
-            ),
+            padding: EdgeInsets.only(right: entry != sizeEntries.last ? 8 : 0),
             child: _SizeTile(
               label: label,
               icon: icon,
@@ -565,9 +561,7 @@ class _RechargeableRow extends StatelessWidget {
               : colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: value
-                ? colorScheme.primary
-                : colorScheme.outlineVariant,
+            color: value ? colorScheme.primary : colorScheme.outlineVariant,
             width: value ? 1.5 : 1,
           ),
         ),
@@ -592,10 +586,7 @@ class _RechargeableRow extends StatelessWidget {
                 ),
               ),
             ),
-            Switch(
-              value: value,
-              onChanged: onChanged,
-            ),
+            Switch(value: value, onChanged: onChanged),
           ],
         ),
       ),

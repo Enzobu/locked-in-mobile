@@ -179,8 +179,7 @@ void main() {
     });
 
     test('copyWith can set maxDistanceKm', () {
-      final updated =
-          LockerFilter.empty.copyWith(maxDistanceKm: () => 5.0);
+      final updated = LockerFilter.empty.copyWith(maxDistanceKm: () => 5.0);
       expect(updated.maxDistanceKm, 5.0);
       expect(updated.isActive, true);
     });
@@ -329,8 +328,7 @@ void main() {
     });
 
     test('multi-select sizes are OR-ed within the filter', () {
-      const filter =
-          LockerFilter(sizes: {LockerSize.small, LockerSize.large});
+      const filter = LockerFilter(sizes: {LockerSize.small, LockerSize.large});
       expect(summaryMatchesFilter(summary, filter), true);
     });
 
@@ -352,10 +350,7 @@ void main() {
 
     test('price + rechargeable combined', () {
       // Rechargeable locker costs 1200, so max 1000 excludes it
-      const filter = LockerFilter(
-        maxPriceCents: 1000,
-        rechargeableOnly: true,
-      );
+      const filter = LockerFilter(maxPriceCents: 1000, rechargeableOnly: true);
       expect(summaryMatchesFilter(summary, filter), false);
 
       // Max 1500 includes the rechargeable locker
@@ -406,10 +401,7 @@ void main() {
     });
 
     test('empty summary never matches active filter', () {
-      final emptySummary = LockerBaySummary(
-        lockerBay: bay,
-        lockers: [],
-      );
+      final emptySummary = LockerBaySummary(lockerBay: bay, lockers: []);
       const filter = LockerFilter(maxPriceCents: 5000);
       expect(summaryMatchesFilter(emptySummary, filter), false);
     });

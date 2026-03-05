@@ -565,7 +565,9 @@ class _SpecificationsSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 _InfoRow(
-                  icon: spec.isRechargeable ? LucideIcons.zap : LucideIcons.zapOff,
+                  icon: spec.isRechargeable
+                      ? LucideIcons.zap
+                      : LucideIcons.zapOff,
                   label: spec.isRechargeable
                       ? l10n.rechargeable
                       : l10n.notRechargeable,

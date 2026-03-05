@@ -132,5 +132,4 @@ void main() {
       expect(formatDistance(0.0), '0 m');
     });
   });
-
 }

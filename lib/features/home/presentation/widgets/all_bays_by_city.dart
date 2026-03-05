@@ -46,13 +46,13 @@ class AllBaysByCity extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
           child: Row(
             children: [
-              Icon(LucideIcons.mapPin,
-                  size: 16, color: colorScheme.primary),
+              Icon(LucideIcons.mapPin, size: 16, color: colorScheme.primary),
               const SizedBox(width: 6),
               Text(
                 l10n.allBays,
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w700),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ],
           ),
@@ -89,82 +89,92 @@ class AllBaysByCity extends ConsumerWidget {
               clipBehavior: Clip.antiAlias,
               child: Padding(
                 padding: const EdgeInsets.all(12),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundColor: cityColor.withValues(alpha: 0.15),
-                    child: Text(
-                      initial,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: cityColor,
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: cityColor.withValues(alpha: 0.15),
+                      child: Text(
+                        initial,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w700,
+                          color: cityColor,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          s.lockerBay.name,
-                          style: theme.textTheme.bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.w600,),
-                        ),
-                        Builder(builder: (context) {
-                          final accent = s.availableCount == 0
-                              ? Colors.red
-                              : s.availableCount == 1
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            s.lockerBay.name,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Builder(
+                            builder: (context) {
+                              final accent = s.availableCount == 0
+                                  ? Colors.red
+                                  : s.availableCount == 1
                                   ? Colors.orange
                                   : Colors.green;
-                          return Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: accent.withValues(alpha: 0.12),
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: accent.withValues(alpha: 0.3),
-                              ),
-                            ),
-                            child: Text(
-                              '${s.availableCount} ${l10n.lockerAvailable.toLowerCase()}${s.availableCount > 1 ? 's' : ''}',
-                              style: TextStyle(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w700,
-                                color: accent,
-                              ),
-                            ),
-                          );
-                        }),
-                      ],
-                    ),
-                  ),
-                  if (s.priceRange.isNotEmpty)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: colorScheme.primary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: colorScheme.primary.withValues(alpha: 0.3),
-                        ),
-                      ),
-                      child: Text(
-                        s.priceRange,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: colorScheme.primary,
-                          fontWeight: FontWeight.w600,
-                        ),
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: accent.withValues(alpha: 0.12),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: accent.withValues(alpha: 0.3),
+                                  ),
+                                ),
+                                child: Text(
+                                  '${s.availableCount} ${l10n.lockerAvailable.toLowerCase()}${s.availableCount > 1 ? 's' : ''}',
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w700,
+                                    color: accent,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ),
-                  const SizedBox(width: 4),
-                  Icon(LucideIcons.chevronRight,
-                      size: 16, color: colorScheme.onSurfaceVariant),
-                ],
-              ),
+                    if (s.priceRange.isNotEmpty)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: colorScheme.primary.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Text(
+                          s.priceRange,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    const SizedBox(width: 4),
+                    Icon(
+                      LucideIcons.chevronRight,
+                      size: 16,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -172,10 +182,7 @@ class AllBaysByCity extends ConsumerWidget {
         if (!showAll && bays.length > maxVisible)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-            child: TextButton(
-              onPressed: onShowAll,
-              child: Text(l10n.seeAll),
-            ),
+            child: TextButton(onPressed: onShowAll, child: Text(l10n.seeAll)),
           ),
       ],
     );
