@@ -192,12 +192,6 @@ class _MapScreenState extends ConsumerState<MapScreen>
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text(l10n.map),
-        backgroundColor: colorScheme.surface.withValues(alpha: 0.85),
-        elevation: 0,
-      ),
       body: summariesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => ErrorView(
@@ -257,7 +251,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
             // Top-left: "Around me" pill button
             Positioned(
               left: 16,
-              top: MediaQuery.of(context).padding.top + kToolbarHeight + 12,
+              top: MediaQuery.of(context).padding.top + 12,
               child: _AroundMeButton(
                 onPressed: _locateMe,
                 isActive: geoState.hasPosition,
@@ -268,7 +262,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
             if (geoState.hasPosition)
               Positioned(
                 right: 16,
-                top: MediaQuery.of(context).padding.top + kToolbarHeight + 12,
+                top: MediaQuery.of(context).padding.top + 12,
                 child: _SortToggleButton(
                   sortMode: sortMode,
                   onPressed: _toggleSortMode,
