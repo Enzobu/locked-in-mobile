@@ -118,6 +118,8 @@
   },
   "rechargeable": "Recharge",
   "@rechargeable": { "description": "Label casier rechargeable" },
+  "notRechargeable": "Non rechargeable",
+  "@notRechargeable": { "description": "Label casier non rechargeable" },
   "noLockersTitle": "Aucun casier disponible",
   "@noLockersTitle": { "description": "Titre état vide casiers" },
   "noLockersSubtitle": "Aucun point de casiers n'est disponible pour le moment. Revenez plus tard.",
@@ -151,6 +153,15 @@
   "@filterSizeMedium": { "description": "Label taille moyen" },
   "filterSizeLarge": "L",
   "@filterSizeLarge": { "description": "Label taille grand" },
+  "filterDistance": "Distance",
+  "@filterDistance": { "description": "Label filtre distance" },
+  "filterDistanceMax": "Max. {distance} km",
+  "@filterDistanceMax": {
+    "description": "Label distance max sélectionnée",
+    "placeholders": { "distance": { "type": "String" } }
+  },
+  "filterDistanceNoLimit": "Illimité",
+  "@filterDistanceNoLimit": { "description": "Label pas de limite distance" },
   "showResults": "Voir {count} résultats",
   "@showResults": {
     "description": "Bouton voir résultats filtrés",
@@ -175,6 +186,8 @@
       "number": { "type": "int" }
     }
   },
+  "dimensions": "Dimensions",
+  "lockerType": "Type",
   "lockerSize": "{width} × {height} × {depth} cm",
   "@lockerSize": {
     "description": "Dimensions du casier",
@@ -216,10 +229,8 @@
   "@mapSeeDetails": { "description": "Bouton voir détails sur la carte" },
   "mapAroundMe": "Autour de moi",
   "@mapAroundMe": { "description": "Bouton géolocalisation autour de moi" },
-  "mapSortByProximity": "Tri par proximité",
-  "@mapSortByProximity": { "description": "Label tri par proximité" },
-  "mapSortDefault": "Tri par défaut",
-  "@mapSortDefault": { "description": "Label tri par défaut" },
+  "mapNearest": "Le plus proche",
+  "@mapNearest": { "description": "Bouton sélectionner la baie la plus proche" },
   "mapDistance": "{distance}",
   "@mapDistance": {
     "description": "Distance affichée sur les cards",
@@ -395,6 +406,12 @@
   "@profileLogoutConfirm": { "description": "Message confirmation déconnexion" },
   "profileEdit": "Modifier le profil",
   "@profileEdit": { "description": "Titre écran modification profil" },
+  "profileChangePassword": "Modifier le mot de passe",
+  "@profileChangePassword": { "description": "Label modifier le mot de passe" },
+  "profileCurrentPassword": "Mot de passe actuel",
+  "@profileCurrentPassword": { "description": "Label mot de passe actuel" },
+  "profileNewPassword": "Nouveau mot de passe",
+  "@profileNewPassword": { "description": "Label nouveau mot de passe" },
   "profileEditSuccess": "Profil mis à jour avec succès",
   "@profileEditSuccess": { "description": "Message succès modification profil" },
   "profileEditError": "Erreur lors de la mise à jour du profil",
@@ -429,5 +446,44 @@
   "errorServer": "Une erreur serveur est survenue. Veuillez réessayer plus tard.",
   "@errorServer": { "description": "Message erreur serveur" },
   "errorUnknown": "Une erreur inattendue est survenue. Veuillez réessayer.",
-  "@errorUnknown": { "description": "Message erreur inconnue" }
+  "@errorUnknown": { "description": "Message erreur inconnue" },
+
+  "nearbyBays": "Autour de vous",
+  "@nearbyBays": { "description": "Section baies proches" },
+  "allBays": "Tous les points",
+  "@allBays": { "description": "Section toutes les baies" },
+  "seeAll": "Voir tout",
+  "@seeAll": { "description": "Bouton voir tout" },
+  "nearbyDescription": "Les points de casiers les plus proches de vous",
+  "@nearbyDescription": { "description": "Description section proximité" },
+  "totalLockers": "{count} casiers au total",
+  "@totalLockers": {
+    "description": "Nombre total de casiers",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "cities": "{count} villes",
+  "@cities": {
+    "description": "Nombre de villes",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "fromPrice": "dès {price} €",
+  "@fromPrice": {
+    "description": "Prix à partir de",
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "filteredResults": "{count} casiers trouvés",
+  "@filteredResults": {
+    "description": "Titre section résultats filtrés",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "clearFilters": "Supprimer les filtres",
+  "@clearFilters": { "description": "Bouton supprimer les filtres" }
 }

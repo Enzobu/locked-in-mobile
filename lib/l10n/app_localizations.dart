@@ -438,6 +438,12 @@ abstract class AppLocalizations {
   /// **'Recharge'**
   String get rechargeable;
 
+  /// Label casier non rechargeable
+  ///
+  /// In fr, this message translates to:
+  /// **'Non rechargeable'**
+  String get notRechargeable;
+
   /// Titre état vide casiers
   ///
   /// In fr, this message translates to:
@@ -522,6 +528,24 @@ abstract class AppLocalizations {
   /// **'L'**
   String get filterSizeLarge;
 
+  /// Label filtre distance
+  ///
+  /// In fr, this message translates to:
+  /// **'Distance'**
+  String get filterDistance;
+
+  /// Label distance max sélectionnée
+  ///
+  /// In fr, this message translates to:
+  /// **'Max. {distance} km'**
+  String filterDistanceMax(String distance);
+
+  /// Label pas de limite distance
+  ///
+  /// In fr, this message translates to:
+  /// **'Illimité'**
+  String get filterDistanceNoLimit;
+
   /// Bouton voir résultats filtrés
   ///
   /// In fr, this message translates to:
@@ -563,6 +587,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Casier n°{number}'**
   String lockerNumber(int number);
+
+  /// No description provided for @dimensions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dimensions'**
+  String get dimensions;
+
+  /// No description provided for @lockerType.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type'**
+  String get lockerType;
 
   /// Dimensions du casier
   ///
@@ -636,17 +672,11 @@ abstract class AppLocalizations {
   /// **'Autour de moi'**
   String get mapAroundMe;
 
-  /// Label tri par proximité
+  /// Bouton sélectionner la baie la plus proche
   ///
   /// In fr, this message translates to:
-  /// **'Tri par proximité'**
-  String get mapSortByProximity;
-
-  /// Label tri par défaut
-  ///
-  /// In fr, this message translates to:
-  /// **'Tri par défaut'**
-  String get mapSortDefault;
+  /// **'Le plus proche'**
+  String get mapNearest;
 
   /// Distance affichée sur les cards
   ///
@@ -1032,6 +1062,24 @@ abstract class AppLocalizations {
   /// **'Modifier le profil'**
   String get profileEdit;
 
+  /// Label modifier le mot de passe
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier le mot de passe'**
+  String get profileChangePassword;
+
+  /// Label mot de passe actuel
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe actuel'**
+  String get profileCurrentPassword;
+
+  /// Label nouveau mot de passe
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau mot de passe'**
+  String get profileNewPassword;
+
   /// Message succès modification profil
   ///
   /// In fr, this message translates to:
@@ -1115,6 +1163,60 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Une erreur inattendue est survenue. Veuillez réessayer.'**
   String get errorUnknown;
+
+  /// Section baies proches
+  ///
+  /// In fr, this message translates to:
+  /// **'Autour de vous'**
+  String get nearbyBays;
+
+  /// Section toutes les baies
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les points'**
+  String get allBays;
+
+  /// Bouton voir tout
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir tout'**
+  String get seeAll;
+
+  /// Description section proximité
+  ///
+  /// In fr, this message translates to:
+  /// **'Les points de casiers les plus proches de vous'**
+  String get nearbyDescription;
+
+  /// Nombre total de casiers
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} casiers au total'**
+  String totalLockers(int count);
+
+  /// Nombre de villes
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} villes'**
+  String cities(int count);
+
+  /// Prix à partir de
+  ///
+  /// In fr, this message translates to:
+  /// **'dès {price} €'**
+  String fromPrice(String price);
+
+  /// Titre section résultats filtrés
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} casiers trouvés'**
+  String filteredResults(int count);
+
+  /// Bouton supprimer les filtres
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer les filtres'**
+  String get clearFilters;
 }
 
 class _AppLocalizationsDelegate

@@ -181,6 +181,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get rechargeable => 'Recharge';
 
   @override
+  String get notRechargeable => 'Non rechargeable';
+
+  @override
   String get noLockersTitle => 'Aucun casier disponible';
 
   @override
@@ -226,6 +229,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get filterSizeLarge => 'L';
 
   @override
+  String get filterDistance => 'Distance';
+
+  @override
+  String filterDistanceMax(String distance) {
+    return 'Max. $distance km';
+  }
+
+  @override
+  String get filterDistanceNoLimit => 'Illimité';
+
+  @override
   String showResults(int count) {
     return 'Voir $count résultats';
   }
@@ -249,6 +263,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String lockerNumber(int number) {
     return 'Casier n°$number';
   }
+
+  @override
+  String get dimensions => 'Dimensions';
+
+  @override
+  String get lockerType => 'Type';
 
   @override
   String lockerSize(int width, int height, int depth) {
@@ -293,10 +313,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mapAroundMe => 'Autour de moi';
 
   @override
-  String get mapSortByProximity => 'Tri par proximité';
-
-  @override
-  String get mapSortDefault => 'Tri par défaut';
+  String get mapNearest => 'Le plus proche';
 
   @override
   String mapDistance(String distance) {
@@ -514,6 +531,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get profileEdit => 'Modifier le profil';
 
   @override
+  String get profileChangePassword => 'Modifier le mot de passe';
+
+  @override
+  String get profileCurrentPassword => 'Mot de passe actuel';
+
+  @override
+  String get profileNewPassword => 'Nouveau mot de passe';
+
+  @override
   String get profileEditSuccess => 'Profil mis à jour avec succès';
 
   @override
@@ -560,4 +586,40 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get errorUnknown =>
       'Une erreur inattendue est survenue. Veuillez réessayer.';
+
+  @override
+  String get nearbyBays => 'Autour de vous';
+
+  @override
+  String get allBays => 'Tous les points';
+
+  @override
+  String get seeAll => 'Voir tout';
+
+  @override
+  String get nearbyDescription =>
+      'Les points de casiers les plus proches de vous';
+
+  @override
+  String totalLockers(int count) {
+    return '$count casiers au total';
+  }
+
+  @override
+  String cities(int count) {
+    return '$count villes';
+  }
+
+  @override
+  String fromPrice(String price) {
+    return 'dès $price €';
+  }
+
+  @override
+  String filteredResults(int count) {
+    return '$count casiers trouvés';
+  }
+
+  @override
+  String get clearFilters => 'Supprimer les filtres';
 }

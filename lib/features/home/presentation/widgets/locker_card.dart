@@ -23,71 +23,106 @@ class LockerCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    l10n.lockerNumber(locker.number),
+            // Number badge
+            Container(
+              width: 46,
+              height: 46,
+              decoration: BoxDecoration(
+                color: colorScheme.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: colorScheme.primary.withValues(alpha: 0.3),
+                ),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                '${locker.number}',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: colorScheme.primary,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Price + status
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.pricePerDay(locker.priceEuros.toStringAsFixed(2)),
                     style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w800,
+                      color: colorScheme.primary,
                     ),
                   ),
-                ),
-                _StatusBadge(status: locker.status),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Wrap(
-              spacing: 8,
-              runSpacing: 6,
-              children: [
-                _SpecChip(
-                  icon: LucideIcons.ruler,
-                  label: l10n.lockerSize(spec.width, spec.height, spec.depth),
-                ),
-                _SpecChip(icon: LucideIcons.layers, label: spec.material),
-                if (spec.isRechargeable)
-                  _SpecChip(
-                    icon: LucideIcons.zap,
-                    label: l10n.rechargeable,
-                    color: const Color(0xFFD97706),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      _StatusBadge(status: locker.status),
+                      if (spec.isRechargeable) ...[
+                        const SizedBox(width: 8),
+                        const Icon(
+                          LucideIcons.zap,
+                          size: 13,
+                          color: Color(0xFFD97706),
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          l10n.rechargeable,
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: const Color(0xFFD97706),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
-              ],
+                ],
+              ),
             ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Text(
-                  l10n.pricePerDay(locker.priceEuros.toStringAsFixed(2)),
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: colorScheme.primary,
+            // Info button
+            IconButton(
+              onPressed: () => _showLockerDetail(context),
+              icon: Icon(
+                LucideIcons.info,
+                size: 18,
+                color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+              ),
+              style: IconButton.styleFrom(
+                minimumSize: const Size(36, 36),
+                padding: EdgeInsets.zero,
+              ),
+            ),
+            // Reserve button
+            if (isAvailable)
+              FilledButton.icon(
+                onPressed: () => context.push('/reservation', extra: locker),
+                icon: const Icon(LucideIcons.calendarPlus, size: 16),
+                label: Text(l10n.reserveLocker),
+                style: FilledButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 0,
                   ),
+                  minimumSize: const Size(0, 36),
                 ),
-                const Spacer(),
-                if (isAvailable)
-                  FilledButton.icon(
-                    onPressed: () {
-                      context.push('/reservation', extra: locker);
-                    },
-                    icon: const Icon(LucideIcons.calendarPlus, size: 16),
-                    label: Text(l10n.reserveLocker),
-                    style: FilledButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 0,
-                      ),
-                      minimumSize: const Size(0, 36),
-                    ),
-                  ),
-              ],
-            ),
+              ),
           ],
         ),
       ),
+    );
+  }
+
+  void _showLockerDetail(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _LockerDetailSheet(locker: locker),
     );
   }
 }
@@ -132,27 +167,207 @@ class _StatusBadge extends StatelessWidget {
   }
 }
 
-class _SpecChip extends StatelessWidget {
-  const _SpecChip({required this.icon, required this.label, this.color});
+class _LockerDetailSheet extends StatelessWidget {
+  const _LockerDetailSheet({required this.locker});
 
-  final IconData icon;
-  final String label;
-  final Color? color;
+  final Locker locker;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final chipColor = color ?? theme.colorScheme.onSurfaceVariant;
+    final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+    final spec = locker.specification;
+    final isAvailable = locker.status == LockerStatus.available;
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 12),
+          Container(
+            width: 36,
+            height: 4,
+            decoration: BoxDecoration(
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Header
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              children: [
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: colorScheme.primary.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '${locker.number}',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.lockerNumber(locker.number),
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      _StatusBadge(status: locker.status),
+                    ],
+                  ),
+                ),
+                Text(
+                  l10n.pricePerDay(locker.priceEuros.toStringAsFixed(2)),
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: colorScheme.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 20),
+          Divider(
+            height: 1,
+            indent: 24,
+            endIndent: 24,
+            color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+          ),
+          const SizedBox(height: 20),
+
+          // Specs list
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                _SpecRow(
+                  icon: LucideIcons.ruler,
+                  label: l10n.dimensions,
+                  value: l10n.lockerSize(spec.width, spec.height, spec.depth),
+                ),
+                _SpecRow(
+                  icon: LucideIcons.layers,
+                  label: l10n.filterMaterial,
+                  value: spec.material,
+                ),
+                _SpecRow(
+                  icon: LucideIcons.tag,
+                  label: l10n.lockerType,
+                  value: spec.name,
+                ),
+                _SpecRow(
+                  icon: LucideIcons.zap,
+                  label: l10n.rechargeable,
+                  value: spec.isRechargeable ? l10n.lockerAvailable : '—',
+                  valueColor: spec.isRechargeable
+                      ? const Color(0xFF16A34A)
+                      : null,
+                  showDivider: false,
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          if (isAvailable)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: FilledButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/reservation', extra: locker);
+                  },
+                  icon: const Icon(LucideIcons.calendarPlus, size: 18),
+                  label: Text(l10n.reserveLocker),
+                ),
+              ),
+            ),
+
+          SizedBox(height: isAvailable ? 24 : 8),
+        ],
+      ),
+    );
+  }
+}
+
+class _SpecRow extends StatelessWidget {
+  const _SpecRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.valueColor,
+    this.showDivider = true,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color? valueColor;
+  final bool showDivider;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Column(
       children: [
-        Icon(icon, size: 13, color: chipColor),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: theme.textTheme.bodySmall?.copyWith(color: chipColor),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            children: [
+              Icon(icon, size: 16, color: colorScheme.onSurfaceVariant),
+              const SizedBox(width: 10),
+              Text(
+                label,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                value,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: valueColor,
+                ),
+              ),
+            ],
+          ),
         ),
+        if (showDivider)
+          Divider(
+            height: 1,
+            color: colorScheme.outlineVariant.withValues(alpha: 0.4),
+          ),
       ],
     );
   }

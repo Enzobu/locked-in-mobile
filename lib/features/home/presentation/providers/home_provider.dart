@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../../core/models/locker.dart';
 import '../../../../core/network/dio_client.dart';
+import '../../../map/presentation/providers/geolocation_provider.dart';
 import '../../data/datasources/api_locker_bay_datasource.dart';
 import '../../data/datasources/locker_bay_datasource.dart';
-import '../../data/repositories/mock_locker_bay_repository.dart';
+import '../../data/repositories/locker_bay_repository_impl.dart';
 import '../../domain/models/locker_bay_summary.dart';
 import '../../domain/models/locker_filter.dart';
 import '../../domain/repositories/locker_bay_repository.dart';
@@ -18,7 +20,7 @@ final lockerBayDatasourceProvider = Provider<LockerBayDatasource>((ref) {
 
 final lockerBayRepositoryProvider = Provider<LockerBayRepository>((ref) {
   final datasource = ref.watch(lockerBayDatasourceProvider);
-  return MockLockerBayRepository(datasource: datasource);
+  return LockerBayRepositoryImpl(datasource: datasource);
 });
 
 final lockerBaySummariesProvider =
@@ -34,14 +36,22 @@ class LockerBaySummariesNotifier extends AsyncNotifier<List<LockerBaySummary>> {
 
   Future<List<LockerBaySummary>> _fetchSummaries() async {
     final bays = await _repository.getLockerBays();
-    final summaries = <LockerBaySummary>[];
+    final allLockers = await _repository.getAllLockers();
 
-    for (final bay in bays) {
-      final lockers = await _repository.getLockersByBayId(bay.id);
-      summaries.add(LockerBaySummary(lockerBay: bay, lockers: lockers));
+    // Group lockers by bay id
+    final lockersByBay = <int, List<Locker>>{};
+    for (final locker in allLockers) {
+      lockersByBay.putIfAbsent(locker.lockerBay.id, () => []).add(locker);
     }
 
-    return summaries;
+    return bays
+        .map(
+          (bay) => LockerBaySummary(
+            lockerBay: bay,
+            lockers: lockersByBay[bay.id] ?? [],
+          ),
+        )
+        .toList();
   }
 
   Future<void> refresh() async {
@@ -86,22 +96,6 @@ final lockerFilterProvider = StateProvider<LockerFilter>(
   (ref) => LockerFilter.empty,
 );
 
-final availableMaterialsProvider = Provider<Set<String>>((ref) {
-  final summariesAsync = ref.watch(lockerBaySummariesProvider);
-  return summariesAsync.whenOrNull(
-        data: (summaries) {
-          final materials = <String>{};
-          for (final summary in summaries) {
-            for (final locker in summary.lockers) {
-              materials.add(locker.specification.material);
-            }
-          }
-          return materials;
-        },
-      ) ??
-      {};
-});
-
 final priceRangeProvider = Provider<(int, int)>((ref) {
   final summariesAsync = ref.watch(lockerBaySummariesProvider);
   return summariesAsync.whenOrNull(
@@ -133,9 +127,6 @@ bool _lockerMatchesFilter(Locker locker, LockerFilter filter) {
   if (filter.sizes.isNotEmpty) {
     final lockerSize = LockerSize.fromHeight(locker.specification.height);
     if (!filter.sizes.contains(lockerSize)) return false;
-  }
-  if (filter.materials.isNotEmpty) {
-    if (!filter.materials.contains(locker.specification.material)) return false;
   }
   if (filter.rechargeableOnly && !locker.specification.isRechargeable) {
     return false;
@@ -169,6 +160,59 @@ final lockerBayDetailProvider = FutureProvider.family<LockerBaySummary, int>((
   return LockerBaySummary(lockerBay: bay, lockers: lockers);
 });
 
+/// Computes distances (in km) from the user to each locker bay.
+/// Returns a `Map<int, double>` (bayId → distance in km).
+final bayDistancesProvider = Provider<Map<int, double>>((ref) {
+  final geoState = ref.watch(geolocationProvider);
+  final summariesAsync = ref.watch(lockerBaySummariesProvider);
+
+  if (!geoState.hasPosition) return {};
+
+  final userPos = geoState.position!;
+  return summariesAsync.whenOrNull(
+        data: (summaries) {
+          final distances = <int, double>{};
+          for (final summary in summaries) {
+            final bayPos = LatLng(
+              summary.lockerBay.latitude,
+              summary.lockerBay.longitude,
+            );
+            distances[summary.lockerBay.id] = distanceKm(userPos, bayPos);
+          }
+          return distances;
+        },
+      ) ??
+      {};
+});
+
+/// Returns a formatted distance string for a specific bay.
+final formattedDistanceProvider = Provider.family<String?, int>((ref, bayId) {
+  final distances = ref.watch(bayDistancesProvider);
+  final km = distances[bayId];
+  if (km == null) return null;
+  return formatDistance(km);
+});
+
+/// Groups all summaries by city, sorted alphabetically.
+final citySummariesProvider = Provider<Map<String, List<LockerBaySummary>>>((
+  ref,
+) {
+  final filtered = ref.watch(filteredSummariesProvider);
+  return filtered.whenOrNull(
+        data: (summaries) {
+          final grouped = <String, List<LockerBaySummary>>{};
+          for (final s in summaries) {
+            final city = s.city.isNotEmpty ? s.city : '?';
+            grouped.putIfAbsent(city, () => []).add(s);
+          }
+          return Map.fromEntries(
+            grouped.entries.toList()..sort((a, b) => a.key.compareTo(b.key)),
+          );
+        },
+      ) ??
+      {};
+});
+
 final filteredSummariesProvider = Provider<AsyncValue<List<LockerBaySummary>>>((
   ref,
 ) {
@@ -178,6 +222,8 @@ final filteredSummariesProvider = Provider<AsyncValue<List<LockerBaySummary>>>((
 
   if (query.isEmpty && !filter.isActive) return summariesAsync;
 
+  final distances = ref.watch(bayDistancesProvider);
+
   return summariesAsync.whenData((summaries) {
     return summaries.where((summary) {
       if (query.isNotEmpty && !_summaryMatchesQuery(summary, query)) {
@@ -185,6 +231,10 @@ final filteredSummariesProvider = Provider<AsyncValue<List<LockerBaySummary>>>((
       }
       if (filter.isActive && !_summaryMatchesFilter(summary, filter)) {
         return false;
+      }
+      if (filter.maxDistanceKm != null) {
+        final dist = distances[summary.lockerBay.id];
+        if (dist == null || dist > filter.maxDistanceKm!) return false;
       }
       return true;
     }).toList();

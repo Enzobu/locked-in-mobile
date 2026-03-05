@@ -4,7 +4,7 @@ import '../../../../core/models/reservation.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../data/datasources/api_reservation_datasource.dart';
 import '../../data/datasources/reservation_datasource.dart';
-import '../../data/repositories/mock_reservation_repository.dart';
+import '../../data/repositories/reservation_repository_impl.dart';
 import '../../domain/repositories/reservation_repository.dart';
 
 final reservationDatasourceProvider = Provider<ReservationDatasource>((ref) {
@@ -14,7 +14,7 @@ final reservationDatasourceProvider = Provider<ReservationDatasource>((ref) {
 
 final reservationRepositoryProvider = Provider<ReservationRepository>((ref) {
   final datasource = ref.watch(reservationDatasourceProvider);
-  return MockReservationRepository(datasource: datasource);
+  return ReservationRepositoryImpl(datasource: datasource);
 });
 
 final reservationsProvider =

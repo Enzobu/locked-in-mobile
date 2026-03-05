@@ -5,8 +5,8 @@ import '../../../../core/models/locker_bay.dart';
 import '../../domain/repositories/locker_bay_repository.dart';
 import '../datasources/locker_bay_datasource.dart';
 
-class MockLockerBayRepository implements LockerBayRepository {
-  const MockLockerBayRepository({required this.datasource});
+class LockerBayRepositoryImpl implements LockerBayRepository {
+  const LockerBayRepositoryImpl({required this.datasource});
 
   final LockerBayDatasource datasource;
 
@@ -25,6 +25,12 @@ class MockLockerBayRepository implements LockerBayRepository {
   @override
   Future<List<Locker>> getLockersByBayId(int lockerBayId) async {
     final data = await datasource.getLockersByBayId(lockerBayId);
+    return data.map((json) => LockerDto.fromJson(json).toDomain()).toList();
+  }
+
+  @override
+  Future<List<Locker>> getAllLockers() async {
+    final data = await datasource.getAllLockers();
     return data.map((json) => LockerDto.fromJson(json).toDomain()).toList();
   }
 

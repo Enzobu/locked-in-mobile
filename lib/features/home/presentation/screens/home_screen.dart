@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-import '../../../../core/widgets/animated_list_item.dart';
 import '../../../../core/widgets/empty_state_view.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../map/presentation/providers/geolocation_provider.dart';
+import '../../domain/models/locker_filter.dart';
 import '../providers/home_provider.dart';
-import '../widgets/filter_bottom_sheet.dart';
+import '../widgets/all_bays_by_city.dart';
+import '../widgets/filtered_results_view.dart';
+import '../widgets/home_search_bar.dart';
 import '../widgets/home_search_empty_state.dart';
-import '../widgets/locker_bay_card.dart';
 import '../widgets/locker_bay_skeleton.dart';
+import '../widgets/nearby_carousel.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -21,15 +23,28 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  static const _gradients = [
+    [Color(0xFFE60024), Color(0xFFFF6B6B)],
+    [Color(0xFF1E3A5F), Color(0xFF4A90D9)],
+    [Color(0xFF0F766E), Color(0xFF2DD4BF)],
+    [Color(0xFF7C3AED), Color(0xFFA78BFA)],
+    [Color(0xFFEA580C), Color(0xFFFB923C)],
+  ];
+
   final _searchController = TextEditingController();
   final _focusNode = FocusNode();
   bool _isFocused = false;
+  String? _selectedCity;
+  bool _showAllBaysForCity = false;
 
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(() {
       setState(() => _isFocused = _focusNode.hasFocus);
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(geolocationProvider.notifier).requestLocation();
     });
   }
 
@@ -58,261 +73,151 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final filter = ref.watch(lockerFilterProvider);
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
-              child: Text(
-                l10n.homeGreeting,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
-              child: Text(
-                l10n.homeTitle,
-                style: theme.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              child: Row(
+        child: filteredAsync.when(
+          loading: () => const LockerBaySkeleton(),
+          error: (error, _) => ErrorView(
+            message: l10n.errorNetwork,
+            onRetry: () =>
+                ref.read(lockerBaySummariesProvider.notifier).refresh(),
+          ),
+          data: (summaries) {
+            if (summaries.isEmpty &&
+                (searchQuery.isNotEmpty || filter.isActive)) {
+              return Stack(
                 children: [
-                  Expanded(
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut,
-                      decoration: BoxDecoration(
-                        color: colorScheme.brightness == Brightness.light
-                            ? Colors.white
-                            : Colors.white.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: _isFocused
-                              ? colorScheme.outline.withValues(alpha: 0.3)
-                              : colorScheme.outlineVariant.withValues(
-                                  alpha: 0.3,
-                                ),
-                        ),
-                      ),
-                      child: TextField(
-                        controller: _searchController,
-                        focusNode: _focusNode,
-                        onChanged: _onSearchChanged,
-                        style: theme.textTheme.bodyMedium,
-                        textInputAction: TextInputAction.search,
-                        cursorColor: colorScheme.primary,
-                        decoration: InputDecoration(
-                          filled: false,
-                          hintText: l10n.searchLockerBays,
-                          hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant.withValues(
-                              alpha: 0.5,
-                            ),
-                          ),
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: Icon(
-                              LucideIcons.search,
-                              size: 20,
-                              color: _isFocused
-                                  ? colorScheme.onSurface
-                                  : colorScheme.onSurfaceVariant.withValues(
-                                      alpha: 0.5,
-                                    ),
-                            ),
-                          ),
-                          prefixIconConstraints: const BoxConstraints(
-                            minWidth: 44,
-                          ),
-                          suffixIcon: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 150),
-                            transitionBuilder: (child, animation) =>
-                                FadeTransition(
-                                  opacity: animation,
-                                  child: ScaleTransition(
-                                    scale: animation,
-                                    child: child,
-                                  ),
-                                ),
-                            child: searchQuery.isNotEmpty
-                                ? GestureDetector(
-                                    key: const ValueKey('clear'),
-                                    onTap: _clearSearch,
-                                    child: Container(
-                                      width: 44,
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                        padding: const EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          color: colorScheme.onSurfaceVariant
-                                              .withValues(alpha: 0.15),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Icon(
-                                          LucideIcons.x,
-                                          size: 14,
-                                          color: colorScheme.onSurfaceVariant,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox.square(
-                                    key: ValueKey('empty'),
-                                    dimension: 44,
-                                  ),
-                          ),
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 0,
-                            vertical: 14,
+                  HomeSearchEmptyState(
+                    query: searchQuery,
+                    hasActiveFilters: filter.isActive,
+                  ),
+                  if (filter.isActive)
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
+                      child: FilledButton.icon(
+                        onPressed: () =>
+                            ref.read(lockerFilterProvider.notifier).state =
+                                LockerFilter.empty,
+                        icon: const Icon(LucideIcons.trash2, size: 16),
+                        label: Text(l10n.clearFilters),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: theme.colorScheme.error,
+                          foregroundColor: theme.colorScheme.onError,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  _FilterButton(
-                    activeCount: filter.activeFilterCount,
-                    onTap: () => FilterBottomSheet.show(context),
-                  ),
                 ],
-              ),
-            ),
-            Expanded(
-              child: filteredAsync.when(
-                loading: () => const LockerBaySkeleton(),
-                error: (error, _) => ErrorView(
-                  message: l10n.errorNetwork,
-                  onRetry: () =>
-                      ref.read(lockerBaySummariesProvider.notifier).refresh(),
-                ),
-                data: (summaries) {
-                  if (summaries.isEmpty &&
-                      (searchQuery.isNotEmpty || filter.isActive)) {
-                    return HomeSearchEmptyState(
-                      query: searchQuery,
-                      hasActiveFilters: filter.isActive,
-                    );
-                  }
+              );
+            }
 
-                  if (summaries.isEmpty) {
-                    return EmptyStateView(
-                      icon: LucideIcons.packageOpen,
-                      title: l10n.noLockersTitle,
-                      subtitle: l10n.noLockersSubtitle,
-                    );
-                  }
+            if (summaries.isEmpty) {
+              return EmptyStateView(
+                icon: LucideIcons.packageOpen,
+                title: l10n.noLockersTitle,
+                subtitle: l10n.noLockersSubtitle,
+              );
+            }
 
-                  return RefreshIndicator(
-                    onRefresh: () =>
-                        ref.read(lockerBaySummariesProvider.notifier).refresh(),
-                    child: ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      itemCount: summaries.length,
-                      separatorBuilder: (_, _) => const SizedBox(height: 12),
-                      itemBuilder: (context, index) {
-                        final summary = summaries[index];
-                        return AnimatedListItem(
-                          index: index,
-                          child: LockerBayCard(
-                            summary: summary,
-                            onTap: () =>
-                                context.go('/home/${summary.lockerBay.id}'),
-                          ),
-                        );
-                      },
+            final distances = ref.watch(bayDistancesProvider);
+            final nearby = List.of(summaries)
+              ..sort((a, b) {
+                final da = distances[a.lockerBay.id];
+                final db = distances[b.lockerBay.id];
+                if (da == null && db == null) return 0;
+                if (da == null) return 1;
+                if (db == null) return -1;
+                return da.compareTo(db);
+              });
+            final nearbyTop = nearby.take(5).toList();
+
+            return Stack(
+              children: [
+                ListView(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
+                      child: Text(
+                        l10n.homeGreeting,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
                     ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _FilterButton extends StatelessWidget {
-  const _FilterButton({required this.activeCount, required this.onTap});
-
-  final int activeCount;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final isActive = activeCount > 0;
-
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        width: 48,
-        height: 48,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: isActive
-                    ? colorScheme.primary
-                    : colorScheme.brightness == Brightness.light
-                    ? Colors.white
-                    : Colors.white.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: isActive
-                      ? colorScheme.primary
-                      : colorScheme.outlineVariant.withValues(alpha: 0.3),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                      child: Text(
+                        l10n.homeTitle,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                    HomeSearchBar(
+                      controller: _searchController,
+                      focusNode: _focusNode,
+                      isFocused: _isFocused,
+                      searchQuery: searchQuery,
+                      activeFilterCount: filter.activeFilterCount,
+                      onChanged: _onSearchChanged,
+                      onClear: _clearSearch,
+                    ),
+                    if (filter.isActive)
+                      FilteredResultsView(
+                        summaries: summaries,
+                        gradients: _gradients,
+                      )
+                    else ...[
+                      NearbyCarousel(
+                        summaries: nearbyTop,
+                        gradients: _gradients,
+                      ),
+                      const SizedBox(height: 28),
+                      AllBaysByCity(
+                        gradients: _gradients,
+                        selectedCity: _selectedCity,
+                        showAll: _showAllBaysForCity,
+                        onCitySelected: (city) => setState(() {
+                          _selectedCity = city;
+                          _showAllBaysForCity = false;
+                        }),
+                        onShowAll: () =>
+                            setState(() => _showAllBaysForCity = true),
+                      ),
+                    ],
+                  ],
                 ),
-              ),
-              child: Icon(
-                LucideIcons.slidersHorizontal,
-                size: 20,
-                color: isActive
-                    ? colorScheme.onPrimary
-                    : colorScheme.onSurfaceVariant,
-              ),
-            ),
-            if (isActive)
-              Positioned(
-                top: -4,
-                right: -4,
-                child: Container(
-                  width: 18,
-                  height: 18,
-                  decoration: BoxDecoration(
-                    color: colorScheme.primary,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: colorScheme.surface, width: 2),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    '$activeCount',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      color: colorScheme.onPrimary,
+                if (filter.isActive)
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                    child: FilledButton.icon(
+                      onPressed: () =>
+                          ref.read(lockerFilterProvider.notifier).state =
+                              LockerFilter.empty,
+                      icon: const Icon(LucideIcons.trash2, size: 16),
+                      label: Text(l10n.clearFilters),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: const Color(0xFFDC2626),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

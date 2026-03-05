@@ -62,6 +62,7 @@
     }
   },
   "rechargeable": "Aufladen",
+  "notRechargeable": "Nicht aufladbar",
   "noLockersTitle": "Keine Schließfächer verfügbar",
   "noLockersSubtitle": "Derzeit sind keine Schließfachpunkte verfügbar. Bitte versuchen Sie es später erneut.",
   "lockerBays": "Schließfachpunkte",
@@ -81,6 +82,12 @@
   "filterSizeSmall": "S",
   "filterSizeMedium": "M",
   "filterSizeLarge": "L",
+  "filterDistance": "Entfernung",
+  "filterDistanceMax": "Max. {distance} km",
+  "@filterDistanceMax": {
+    "placeholders": { "distance": { "type": "String" } }
+  },
+  "filterDistanceNoLimit": "Unbegrenzt",
   "showResults": "{count} Ergebnisse anzeigen",
   "@showResults": {
     "placeholders": {
@@ -98,6 +105,8 @@
       "number": { "type": "int" }
     }
   },
+  "dimensions": "Maße",
+  "lockerType": "Typ",
   "lockerSize": "{width} × {height} × {depth} cm",
   "@lockerSize": {
     "placeholders": {
@@ -127,8 +136,7 @@
   },
   "mapSeeDetails": "Details anzeigen",
   "mapAroundMe": "In meiner Nähe",
-  "mapSortByProximity": "Nach Entfernung sortieren",
-  "mapSortDefault": "Standardsortierung",
+  "mapNearest": "Nächstgelegene",
   "mapDistance": "{distance}",
   "@mapDistance": {
     "placeholders": {
@@ -240,6 +248,9 @@
   "profileHelp": "Hilfe & Support",
   "profileLogoutConfirm": "Möchten Sie sich wirklich abmelden?",
   "profileEdit": "Profil bearbeiten",
+  "profileChangePassword": "Passwort ändern",
+  "profileCurrentPassword": "Aktuelles Passwort",
+  "profileNewPassword": "Neues Passwort",
   "profileEditSuccess": "Profil erfolgreich aktualisiert",
   "profileEditError": "Fehler beim Aktualisieren des Profils",
   "notifications": "Benachrichtigungen",
@@ -260,5 +271,12 @@
 
   "errorNetwork": "Verbindung nicht möglich. Überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
   "errorServer": "Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
-  "errorUnknown": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  "errorUnknown": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+  "filteredResults": "{count} Schließfächer gefunden",
+  "@filteredResults": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "clearFilters": "Filter löschen"
 }

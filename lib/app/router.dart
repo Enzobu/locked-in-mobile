@@ -67,7 +67,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             const NoTransitionPage(child: RegisterScreen()),
       ),
       GoRoute(
-        path: '/home/:id',
+        path: '/bay/:id',
         pageBuilder: (context, state) {
           final id = int.parse(state.pathParameters['id']!);
           return _buildSlideTransitionPage(

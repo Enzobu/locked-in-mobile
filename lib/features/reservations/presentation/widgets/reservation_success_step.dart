@@ -101,77 +101,71 @@ class _ReservationSuccessStepState extends State<ReservationSuccessStep>
           const SizedBox(height: 32),
 
           // Reservation code card
-          Card(
+          Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  Text(
-                    l10n.reservationCode,
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      fontWeight: FontWeight.w500,
-                    ),
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: colorScheme.primary.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: colorScheme.primary.withValues(alpha: 0.15),
+              ),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  l10n.reservationCode,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.w500,
                   ),
-                  const SizedBox(height: 12),
-                  // QR-like code display
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 16,
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      LucideIcons.qrCode,
+                      size: 24,
+                      color: colorScheme.primary,
                     ),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surfaceContainerHighest,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: colorScheme.outlineVariant),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LucideIcons.qrCode,
-                          size: 28,
-                          color: colorScheme.primary,
-                        ),
-                        const SizedBox(width: 16),
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              widget.publicForm,
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: 2,
-                                fontFamily: 'monospace',
-                              ),
-                            ),
+                    const SizedBox(width: 14),
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          widget.publicForm,
+                          style: theme.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 3,
+                            color: colorScheme.primary,
                           ),
                         ),
-                      ],
+                      ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // Copy button
+                TextButton.icon(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: widget.publicForm));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(widget.publicForm),
+                        behavior: SnackBarBehavior.floating,
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                  icon: const Icon(LucideIcons.copy, size: 16),
+                  label: Text(
+                    l10n.reservationCode,
+                    style: const TextStyle(fontSize: 13),
                   ),
-                  const SizedBox(height: 12),
-                  // Copy button
-                  TextButton.icon(
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: widget.publicForm));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(widget.publicForm),
-                          behavior: SnackBarBehavior.floating,
-                          duration: const Duration(seconds: 2),
-                        ),
-                      );
-                    },
-                    icon: const Icon(LucideIcons.copy, size: 16),
-                    label: Text(
-                      l10n.reservationCode,
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
@@ -207,6 +201,7 @@ class _ReservationSuccessStepState extends State<ReservationSuccessStep>
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
+                    side: BorderSide(color: colorScheme.primary),
                   ),
                   child: Text(
                     l10n.reservationBackToHome,

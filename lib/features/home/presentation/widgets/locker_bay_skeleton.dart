@@ -33,106 +33,160 @@ class _LockerBaySkeletonState extends State<LockerBaySkeleton>
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, _) {
-        return ListView.separated(
-          padding: const EdgeInsets.all(16),
+        final shimmerColor = colorScheme.onSurface.withValues(
+          alpha: _animation.value * 0.12,
+        );
+        return ListView(
+          padding: const EdgeInsets.only(bottom: 24),
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 5,
-          separatorBuilder: (_, _) => const SizedBox(height: 12),
-          itemBuilder: (context, _) => _SkeletonCard(opacity: _animation.value),
+          children: [
+            // Greeting skeleton
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
+              child: _ShimmerBox(width: 140, height: 14, color: shimmerColor),
+            ),
+            // Title skeleton
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+              child: _ShimmerBox(width: 220, height: 22, color: shimmerColor),
+            ),
+            // Search bar skeleton
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+              child: Container(
+                height: 48,
+                decoration: BoxDecoration(
+                  color: shimmerColor,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+            // Nearby section title skeleton
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
+              child: _ShimmerBox(width: 160, height: 16, color: shimmerColor),
+            ),
+            // Nearby carousel skeleton
+            SizedBox(
+              height: 170,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: 2,
+                separatorBuilder: (_, _) => const SizedBox(width: 12),
+                itemBuilder: (_, _) => Container(
+                  width: 280,
+                  decoration: BoxDecoration(
+                    color: shimmerColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 28),
+            // City chips skeleton
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
+              child: _ShimmerBox(width: 120, height: 16, color: shimmerColor),
+            ),
+            SizedBox(
+              height: 60,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: 4,
+                separatorBuilder: (_, _) => const SizedBox(width: 10),
+                itemBuilder: (_, _) => Column(
+                  children: [
+                    CircleAvatar(radius: 20, backgroundColor: shimmerColor),
+                    const SizedBox(height: 4),
+                    _ShimmerBox(width: 40, height: 10, color: shimmerColor),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            // Bay list items skeleton
+            ...List.generate(
+              3,
+              (_) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        CircleAvatar(radius: 20, backgroundColor: shimmerColor),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _ShimmerBox(
+                                width: 140,
+                                height: 14,
+                                color: shimmerColor,
+                              ),
+                              const SizedBox(height: 6),
+                              _ShimmerBox(
+                                width: 90,
+                                height: 12,
+                                color: shimmerColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                        _ShimmerBox(
+                          width: 50,
+                          height: 22,
+                          color: shimmerColor,
+                          radius: 6,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
   }
 }
 
-class _SkeletonCard extends StatelessWidget {
-  const _SkeletonCard({required this.opacity});
+class _ShimmerBox extends StatelessWidget {
+  const _ShimmerBox({
+    required this.width,
+    required this.height,
+    required this.color,
+    this.radius = 4,
+  });
 
-  final double opacity;
+  final double width;
+  final double height;
+  final Color color;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final shimmerColor = colorScheme.onSurface.withValues(
-      alpha: opacity * 0.12,
-    );
-
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: shimmerColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 16,
-                        width: 160,
-                        decoration: BoxDecoration(
-                          color: shimmerColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Container(
-                        height: 12,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: shimmerColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            Divider(
-              height: 1,
-              color: colorScheme.outlineVariant.withValues(alpha: 0.3),
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                Container(
-                  height: 14,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: shimmerColor,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Container(
-                  height: 14,
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: shimmerColor,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(radius),
       ),
     );
   }

@@ -15,8 +15,8 @@ class LockerFilter {
     this.minPriceCents,
     this.maxPriceCents,
     this.sizes = const {},
-    this.materials = const {},
     this.rechargeableOnly = false,
+    this.maxDistanceKm,
   });
 
   static const empty = LockerFilter();
@@ -24,22 +24,22 @@ class LockerFilter {
   final int? minPriceCents;
   final int? maxPriceCents;
   final Set<LockerSize> sizes;
-  final Set<String> materials;
   final bool rechargeableOnly;
+  final double? maxDistanceKm;
 
   bool get isActive =>
       minPriceCents != null ||
       maxPriceCents != null ||
       sizes.isNotEmpty ||
-      materials.isNotEmpty ||
-      rechargeableOnly;
+      rechargeableOnly ||
+      maxDistanceKm != null;
 
   int get activeFilterCount {
     var count = 0;
     if (minPriceCents != null || maxPriceCents != null) count++;
     if (sizes.isNotEmpty) count++;
-    if (materials.isNotEmpty) count++;
     if (rechargeableOnly) count++;
+    if (maxDistanceKm != null) count++;
     return count;
   }
 
@@ -47,8 +47,8 @@ class LockerFilter {
     int? Function()? minPriceCents,
     int? Function()? maxPriceCents,
     Set<LockerSize>? sizes,
-    Set<String>? materials,
     bool? rechargeableOnly,
+    double? Function()? maxDistanceKm,
   }) {
     return LockerFilter(
       minPriceCents: minPriceCents != null
@@ -58,8 +58,10 @@ class LockerFilter {
           ? maxPriceCents()
           : this.maxPriceCents,
       sizes: sizes ?? this.sizes,
-      materials: materials ?? this.materials,
       rechargeableOnly: rechargeableOnly ?? this.rechargeableOnly,
+      maxDistanceKm: maxDistanceKm != null
+          ? maxDistanceKm()
+          : this.maxDistanceKm,
     );
   }
 
@@ -70,8 +72,8 @@ class LockerFilter {
     return other.minPriceCents == minPriceCents &&
         other.maxPriceCents == maxPriceCents &&
         _setEquals(other.sizes, sizes) &&
-        _setEquals(other.materials, materials) &&
-        other.rechargeableOnly == rechargeableOnly;
+        other.rechargeableOnly == rechargeableOnly &&
+        other.maxDistanceKm == maxDistanceKm;
   }
 
   @override
@@ -79,8 +81,8 @@ class LockerFilter {
     minPriceCents,
     maxPriceCents,
     Object.hashAll(sizes.toList()..sort((a, b) => a.index.compareTo(b.index))),
-    Object.hashAll(materials.toList()..sort()),
     rechargeableOnly,
+    maxDistanceKm,
   );
 
   static bool _setEquals<T>(Set<T> a, Set<T> b) {

@@ -86,7 +86,15 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     final updateState = ref.watch(profileUpdateProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.profileEdit)),
+      appBar: AppBar(
+        title: Text(
+          l10n.profileEdit,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
           Expanded(

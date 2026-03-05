@@ -7,15 +7,39 @@ const _primaryColor = Color(0xFFC10000);
 class AppTheme {
   AppTheme._();
 
-  static final _lightColorScheme = ColorScheme.fromSeed(
-    seedColor: _primaryColor,
-    brightness: Brightness.light,
-  ).copyWith(primary: _primaryColor, onPrimary: Colors.white);
+  static final _lightColorScheme =
+      ColorScheme.fromSeed(
+        seedColor: _primaryColor,
+        brightness: Brightness.light,
+      ).copyWith(
+        primary: _primaryColor,
+        onPrimary: Colors.white,
+        surface: const Color(0xFFF8F9FA),
+        onSurface: const Color(0xFF1A1A1A),
+        surfaceContainerLowest: Colors.white,
+        surfaceContainerLow: const Color(0xFFF3F4F6),
+        surfaceContainer: const Color(0xFFEEEFF1),
+        surfaceContainerHigh: const Color(0xFFE5E7EB),
+        surfaceContainerHighest: const Color(0xFFD1D5DB),
+        outlineVariant: const Color(0xFFD1D5DB),
+      );
 
-  static final _darkColorScheme = ColorScheme.fromSeed(
-    seedColor: _primaryColor,
-    brightness: Brightness.dark,
-  ).copyWith(primary: const Color(0xFFFF4444), onPrimary: Colors.white);
+  static final _darkColorScheme =
+      ColorScheme.fromSeed(
+        seedColor: _primaryColor,
+        brightness: Brightness.dark,
+      ).copyWith(
+        primary: const Color(0xFFFF4444),
+        onPrimary: Colors.white,
+        surface: const Color(0xFF121214),
+        onSurface: const Color(0xFFF0F0F0),
+        surfaceContainerLowest: const Color(0xFF0E0E10),
+        surfaceContainerLow: const Color(0xFF1A1A1E),
+        surfaceContainer: const Color(0xFF1E1E22),
+        surfaceContainerHigh: const Color(0xFF252528),
+        surfaceContainerHighest: const Color(0xFF2E2E32),
+        outlineVariant: const Color(0xFF3A3A3E),
+      );
 
   static final light = ThemeData(
     useMaterial3: true,
@@ -23,8 +47,13 @@ class AppTheme {
     fontFamily: 'Poppins',
     appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
     cardTheme: CardThemeData(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 0,
+      color: const Color(0xFFFCFBF9),
+      shadowColor: Colors.black.withValues(alpha: 0.04),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(color: Color(0xFFE7E5E0)),
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -51,6 +80,8 @@ class AppTheme {
       backgroundColor: _lightColorScheme.surface,
       surfaceTintColor: Colors.transparent,
       indicatorColor: Colors.transparent,
+      indicatorShape: const RoundedRectangleBorder(),
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return const IconThemeData(color: _primaryColor, size: 22);
@@ -77,7 +108,6 @@ class AppTheme {
         );
       }),
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      indicatorShape: const StadiumBorder(),
     ),
   );
 
@@ -87,8 +117,12 @@ class AppTheme {
     fontFamily: 'Poppins',
     appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
     cardTheme: CardThemeData(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 0,
+      color: const Color(0xFF1A1A1E),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.white.withValues(alpha: 0.07)),
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -114,6 +148,8 @@ class AppTheme {
       backgroundColor: _darkColorScheme.surface,
       surfaceTintColor: Colors.transparent,
       indicatorColor: Colors.transparent,
+      indicatorShape: const RoundedRectangleBorder(),
+      overlayColor: WidgetStateProperty.all(Colors.transparent),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return const IconThemeData(color: Color(0xFFFF4444), size: 22);
@@ -140,7 +176,6 @@ class AppTheme {
         );
       }),
       labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-      indicatorShape: const StadiumBorder(),
     ),
   );
 }
