@@ -28,6 +28,12 @@ class MockLockerBayDatasource implements LockerBayDatasource {
   }
 
   @override
+  Future<List<Map<String, dynamic>>> getAllLockers() async {
+    await Future<void>.delayed(const Duration(milliseconds: 200));
+    return MockData.lockers;
+  }
+
+  @override
   Future<List<Map<String, dynamic>>> searchLockerBays(String query) async {
     await Future<void>.delayed(const Duration(milliseconds: 200));
     final lowerQuery = query.toLowerCase();

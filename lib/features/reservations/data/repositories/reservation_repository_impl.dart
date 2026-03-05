@@ -3,8 +3,8 @@ import '../../../../core/models/reservation.dart';
 import '../../domain/repositories/reservation_repository.dart';
 import '../datasources/reservation_datasource.dart';
 
-class MockReservationRepository implements ReservationRepository {
-  const MockReservationRepository({required this.datasource});
+class ReservationRepositoryImpl implements ReservationRepository {
+  const ReservationRepositoryImpl({required this.datasource});
 
   final ReservationDatasource datasource;
 

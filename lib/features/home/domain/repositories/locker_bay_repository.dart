@@ -8,5 +8,7 @@ abstract class LockerBayRepository {
 
   Future<List<Locker>> getLockersByBayId(int lockerBayId);
 
+  Future<List<Locker>> getAllLockers();
+
   Future<List<LockerBay>> searchLockerBays(String query);
 }
