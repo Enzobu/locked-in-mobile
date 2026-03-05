@@ -106,9 +106,68 @@ class LockerBayCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 12),
+                // Size tags + rechargeable badge
+                Row(
+                  children: [
+                    if (summary.availableSizes.isNotEmpty)
+                      ...summary.availableSizes.map(
+                        (size) => Padding(
+                          padding: const EdgeInsets.only(right: 6),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorScheme.surfaceContainerHighest,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              size,
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (summary.hasRechargeableLockers) ...[
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFF3CD),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              LucideIcons.zap,
+                              size: 12,
+                              color: Color(0xFFD97706),
+                            ),
+                            const SizedBox(width: 3),
+                            Text(
+                              l10n.rechargeable,
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: const Color(0xFFD97706),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: 10),
                 Divider(height: 1, color: colorScheme.outlineVariant),
-                const SizedBox(height: 14),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     _InfoChip(
@@ -128,36 +187,14 @@ class LockerBayCard extends StatelessWidget {
                         label: summary.priceRange,
                         color: colorScheme.primary,
                       ),
-                    const Spacer(),
-                    if (summary.hasRechargeableLockers)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFF3CD),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              LucideIcons.zap,
-                              size: 12,
-                              color: Color(0xFFD97706),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              l10n.rechargeable,
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                color: const Color(0xFFD97706),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
+                    if (summary.durationRange.isNotEmpty) ...[
+                      const SizedBox(width: 12),
+                      _InfoChip(
+                        icon: LucideIcons.clock,
+                        label: summary.durationRange,
+                        color: colorScheme.onSurfaceVariant,
                       ),
+                    ],
                   ],
                 ),
               ],
