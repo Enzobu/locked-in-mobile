@@ -561,4 +561,32 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get errorUnknown =>
       'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get nearbyBays => 'Autour de vous';
+
+  @override
+  String get allBays => 'Tous les points';
+
+  @override
+  String get seeAll => 'Voir tout';
+
+  @override
+  String get nearbyDescription =>
+      'Les points de casiers les plus proches de vous';
+
+  @override
+  String totalLockers(int count) {
+    return '$count casiers au total';
+  }
+
+  @override
+  String cities(int count) {
+    return '$count villes';
+  }
+
+  @override
+  String fromPrice(String price) {
+    return 'dès $price €';
+  }
 }

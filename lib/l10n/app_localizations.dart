@@ -1115,6 +1115,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Une erreur inattendue est survenue. Veuillez réessayer.'**
   String get errorUnknown;
+
+  /// Section baies proches
+  ///
+  /// In fr, this message translates to:
+  /// **'Autour de vous'**
+  String get nearbyBays;
+
+  /// Section toutes les baies
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les points'**
+  String get allBays;
+
+  /// Bouton voir tout
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir tout'**
+  String get seeAll;
+
+  /// Description section proximité
+  ///
+  /// In fr, this message translates to:
+  /// **'Les points de casiers les plus proches de vous'**
+  String get nearbyDescription;
+
+  /// Nombre total de casiers
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} casiers au total'**
+  String totalLockers(int count);
+
+  /// Nombre de villes
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} villes'**
+  String cities(int count);
+
+  /// Prix à partir de
+  ///
+  /// In fr, this message translates to:
+  /// **'dès {price} €'**
+  String fromPrice(String price);
 }
 
 class _AppLocalizationsDelegate

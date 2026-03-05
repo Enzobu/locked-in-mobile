@@ -429,5 +429,35 @@
   "errorServer": "Une erreur serveur est survenue. Veuillez réessayer plus tard.",
   "@errorServer": { "description": "Message erreur serveur" },
   "errorUnknown": "Une erreur inattendue est survenue. Veuillez réessayer.",
-  "@errorUnknown": { "description": "Message erreur inconnue" }
+  "@errorUnknown": { "description": "Message erreur inconnue" },
+
+  "nearbyBays": "Autour de vous",
+  "@nearbyBays": { "description": "Section baies proches" },
+  "allBays": "Tous les points",
+  "@allBays": { "description": "Section toutes les baies" },
+  "seeAll": "Voir tout",
+  "@seeAll": { "description": "Bouton voir tout" },
+  "nearbyDescription": "Les points de casiers les plus proches de vous",
+  "@nearbyDescription": { "description": "Description section proximité" },
+  "totalLockers": "{count} casiers au total",
+  "@totalLockers": {
+    "description": "Nombre total de casiers",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "cities": "{count} villes",
+  "@cities": {
+    "description": "Nombre de villes",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "fromPrice": "dès {price} €",
+  "@fromPrice": {
+    "description": "Prix à partir de",
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  }
 }

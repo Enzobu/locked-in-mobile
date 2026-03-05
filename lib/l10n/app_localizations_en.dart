@@ -553,4 +553,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorUnknown => 'An unexpected error occurred. Please try again.';
+
+  @override
+  String get nearbyBays => 'Near you';
+
+  @override
+  String get allBays => 'All points';
+
+  @override
+  String get seeAll => 'See all';
+
+  @override
+  String get nearbyDescription => 'Locker points closest to you';
+
+  @override
+  String totalLockers(int count) {
+    return '$count lockers total';
+  }
+
+  @override
+  String cities(int count) {
+    return '$count cities';
+  }
+
+  @override
+  String fromPrice(String price) {
+    return 'from $price €';
+  }
 }
