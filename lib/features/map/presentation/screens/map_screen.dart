@@ -215,10 +215,26 @@ class _MapScreenState extends ConsumerState<MapScreen>
                 onTap: (_, _) => _onCardClosed(),
               ),
               children: [
-                TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'com.lockedin.mobile',
-                ),
+                if (Theme.of(context).brightness == Brightness.dark)
+                  ColorFiltered(
+                    colorFilter: const ColorFilter.matrix(<double>[
+                      1.3, 0, 0, 0, 15,
+                      0, 1.3, 0, 0, 15,
+                      0, 0, 1.3, 0, 15,
+                      0, 0, 0, 1, 0,
+                    ]),
+                    child: TileLayer(
+                      urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
+                      subdomains: const ['a', 'b', 'c', 'd'],
+                      userAgentPackageName: 'com.lockedin.mobile',
+                    ),
+                  )
+                else
+                  TileLayer(
+                    urlTemplate: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png',
+                    subdomains: const ['a', 'b', 'c', 'd'],
+                    userAgentPackageName: 'com.lockedin.mobile',
+                  ),
                 MarkerLayer(
                   markers: [
                     // User position marker
