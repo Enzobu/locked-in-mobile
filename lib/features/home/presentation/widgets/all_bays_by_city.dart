@@ -136,8 +136,8 @@ class AllBaysByCity extends ConsumerWidget {
                             child: Text(
                               '${s.availableCount} ${l10n.lockerAvailable.toLowerCase()}${s.availableCount > 1 ? 's' : ''}',
                               style: TextStyle(
-                                fontSize: 8,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 9,
+                                fontWeight: FontWeight.w700,
                                 color: accent,
                               ),
                             ),
