@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:locked_in_mobile/features/home/data/datasources/mock_locker_bay_datasource.dart';
-import 'package:locked_in_mobile/features/home/data/repositories/mock_locker_bay_repository.dart';
+import 'package:locked_in_mobile/features/home/data/repositories/locker_bay_repository_impl.dart';
 import 'package:locked_in_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:locked_in_mobile/features/map/presentation/providers/map_provider.dart';
 
@@ -17,7 +17,7 @@ void main() {
         ),
         lockerBayRepositoryProvider.overrideWith((ref) {
           final ds = ref.watch(lockerBayDatasourceProvider);
-          return MockLockerBayRepository(datasource: ds);
+          return LockerBayRepositoryImpl(datasource: ds);
         }),
       ],
     );
