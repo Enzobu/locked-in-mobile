@@ -411,10 +411,17 @@ class _LogoutButton extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              Icon(
-                LucideIcons.logOut,
-                size: 48,
-                color: theme.colorScheme.error,
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE60024).withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  LucideIcons.logOut,
+                  size: 32,
+                  color: Color(0xFFE60024),
+                ),
               ),
               const SizedBox(height: 16),
               Text(
@@ -451,7 +458,8 @@ class _LogoutButton extends ConsumerWidget {
                         ref.read(authProvider.notifier).logout();
                       },
                       style: FilledButton.styleFrom(
-                        backgroundColor: theme.colorScheme.error,
+                        backgroundColor: const Color(0xFFE60024),
+                        foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
                       child: Text(l10n.logout),
