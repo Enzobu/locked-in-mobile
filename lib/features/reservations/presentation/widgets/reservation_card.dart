@@ -39,13 +39,16 @@ class ReservationCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: colorScheme.primaryContainer,
+                        color: colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: colorScheme.primary.withValues(alpha: 0.3),
+                        ),
                       ),
                       child: Icon(
                         LucideIcons.box,
                         size: 20,
-                        color: colorScheme.onPrimaryContainer,
+                        color: colorScheme.primary,
                       ),
                     ),
                     const SizedBox(width: 12),

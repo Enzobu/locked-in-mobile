@@ -213,6 +213,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
                 minZoom: 3.0,
                 maxZoom: 18.0,
                 onTap: (_, _) => _onCardClosed(),
+                interactionOptions: const InteractionOptions(
+                  flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+                ),
               ),
               children: [
                 if (Theme.of(context).brightness == Brightness.dark)
