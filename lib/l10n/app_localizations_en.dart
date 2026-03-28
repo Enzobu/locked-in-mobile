@@ -614,4 +614,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clearFilters => 'Clear filters';
+
+  @override
+  String get openLocker => 'Open locker';
+
+  @override
+  String get openLockerOpening => 'Opening your locker...';
+
+  @override
+  String get openLockerSuccess => 'Locker open!';
+
+  @override
+  String get openLockerSuccessSubtitle =>
+      'Your locker is now unlocked. You can access it.';
+
+  @override
+  String get openLockerError => 'Failed to open the locker. Please try again.';
+
+  @override
+  String get openLockerDone => 'Done';
 }

@@ -485,5 +485,18 @@
     }
   },
   "clearFilters": "Supprimer les filtres",
-  "@clearFilters": { "description": "Bouton supprimer les filtres" }
+  "@clearFilters": { "description": "Bouton supprimer les filtres" },
+
+  "openLocker": "Ouvrir le casier",
+  "@openLocker": { "description": "Bouton ouvrir le casier" },
+  "openLockerOpening": "Ouverture du casier...",
+  "@openLockerOpening": { "description": "Message pendant l'ouverture du casier" },
+  "openLockerSuccess": "Casier ouvert !",
+  "@openLockerSuccess": { "description": "Titre succès ouverture casier" },
+  "openLockerSuccessSubtitle": "Votre casier est maintenant déverrouillé. Vous pouvez y accéder.",
+  "@openLockerSuccessSubtitle": { "description": "Sous-titre succès ouverture casier" },
+  "openLockerError": "Impossible d'ouvrir le casier. Veuillez réessayer.",
+  "@openLockerError": { "description": "Message erreur ouverture casier" },
+  "openLockerDone": "Terminé",
+  "@openLockerDone": { "description": "Bouton terminé après ouverture casier" }
 }

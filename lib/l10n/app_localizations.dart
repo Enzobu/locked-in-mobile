@@ -1217,6 +1217,42 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Supprimer les filtres'**
   String get clearFilters;
+
+  /// Bouton ouvrir le casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir le casier'**
+  String get openLocker;
+
+  /// Message pendant l'ouverture du casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouverture du casier...'**
+  String get openLockerOpening;
+
+  /// Titre succès ouverture casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Casier ouvert !'**
+  String get openLockerSuccess;
+
+  /// Sous-titre succès ouverture casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre casier est maintenant déverrouillé. Vous pouvez y accéder.'**
+  String get openLockerSuccessSubtitle;
+
+  /// Message erreur ouverture casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'ouvrir le casier. Veuillez réessayer.'**
+  String get openLockerError;
+
+  /// Bouton terminé après ouverture casier
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get openLockerDone;
 }
 
 class _AppLocalizationsDelegate

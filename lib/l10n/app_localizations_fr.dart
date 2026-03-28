@@ -622,4 +622,24 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get clearFilters => 'Supprimer les filtres';
+
+  @override
+  String get openLocker => 'Ouvrir le casier';
+
+  @override
+  String get openLockerOpening => 'Ouverture du casier...';
+
+  @override
+  String get openLockerSuccess => 'Casier ouvert !';
+
+  @override
+  String get openLockerSuccessSubtitle =>
+      'Votre casier est maintenant déverrouillé. Vous pouvez y accéder.';
+
+  @override
+  String get openLockerError =>
+      'Impossible d\'ouvrir le casier. Veuillez réessayer.';
+
+  @override
+  String get openLockerDone => 'Terminé';
 }
