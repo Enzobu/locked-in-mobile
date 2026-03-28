@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,11 +11,28 @@ import '../../../../core/models/reservation.dart';
 import '../../../../core/models/reservation_status.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../providers/reservation_provider.dart';
+import '../widgets/open_locker_overlay.dart';
 
-class ReservationDetailScreen extends ConsumerWidget {
+class ReservationDetailScreen extends ConsumerStatefulWidget {
   const ReservationDetailScreen({required this.reservation, super.key});
 
   final Reservation reservation;
+
+  @override
+  ConsumerState<ReservationDetailScreen> createState() =>
+      _ReservationDetailScreenState();
+}
+
+class _ReservationDetailScreenState
+    extends ConsumerState<ReservationDetailScreen> {
+  OpenLockerState? _openLockerState;
+
+  Reservation get reservation => widget.reservation;
+
+  bool get _isActive {
+    return reservation.status == ReservationStatus.active &&
+        reservation.endsAt.isAfter(DateTime.now());
+  }
 
   bool get _isCancellable {
     return (reservation.status == ReservationStatus.active ||
@@ -22,49 +41,85 @@ class ReservationDetailScreen extends ConsumerWidget {
         reservation.endsAt.isAfter(DateTime.now());
   }
 
+  Future<void> _onOpenLocker() async {
+    setState(() => _openLockerState = OpenLockerState.loading);
+
+    try {
+      await ref
+          .read(reservationsProvider.notifier)
+          .openLocker(reservation.locker.id)
+          .timeout(const Duration(seconds: 15));
+      if (mounted) {
+        setState(() => _openLockerState = OpenLockerState.success);
+      }
+    } on TimeoutException {
+      if (mounted) {
+        setState(() => _openLockerState = OpenLockerState.error);
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _openLockerState = OpenLockerState.error);
+      }
+    }
+  }
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(LucideIcons.arrowLeft),
-          onPressed: () => context.pop(),
-        ),
-        title: Text(
-          l10n.reservationDetailTitle,
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w700,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(LucideIcons.arrowLeft),
+              onPressed: () => context.pop(),
+            ),
+            title: Text(
+              l10n.reservationDetailTitle,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            centerTitle: true,
+          ),
+          body: ListView(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            children: [
+              _StatusHeader(reservation: reservation),
+              const SizedBox(height: 20),
+              _ReservationCodeSection(reservation: reservation),
+              const SizedBox(height: 20),
+              _LockerSection(reservation: reservation),
+              const SizedBox(height: 20),
+              _LocationSection(reservation: reservation),
+              const SizedBox(height: 20),
+              _PeriodSection(reservation: reservation),
+              const SizedBox(height: 20),
+              _SpecificationsSection(reservation: reservation),
+              if (_isActive) ...[
+                const SizedBox(height: 32),
+                _OpenLockerButton(onPressed: _onOpenLocker),
+              ],
+              if (_isCancellable) ...[
+                SizedBox(height: _isActive ? 12 : 32),
+                _CancelButton(onPressed: () => _showCancelDialog(context)),
+              ],
+            ],
           ),
         ),
-        centerTitle: true,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-        children: [
-          _StatusHeader(reservation: reservation),
-          const SizedBox(height: 20),
-          _ReservationCodeSection(reservation: reservation),
-          const SizedBox(height: 20),
-          _LockerSection(reservation: reservation),
-          const SizedBox(height: 20),
-          _LocationSection(reservation: reservation),
-          const SizedBox(height: 20),
-          _PeriodSection(reservation: reservation),
-          const SizedBox(height: 20),
-          _SpecificationsSection(reservation: reservation),
-          if (_isCancellable) ...[
-            const SizedBox(height: 32),
-            _CancelButton(onPressed: () => _showCancelDialog(context, ref)),
-          ],
-        ],
-      ),
+        if (_openLockerState != null)
+          OpenLockerOverlay(
+            state: _openLockerState!,
+            onDone: () => setState(() => _openLockerState = null),
+            onRetry: _onOpenLocker,
+          ),
+      ],
     );
   }
 
-  void _showCancelDialog(BuildContext context, WidgetRef ref) {
+  void _showCancelDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -580,6 +635,35 @@ class _SpecificationsSection extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _OpenLockerButton extends StatelessWidget {
+  const _OpenLockerButton({required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
+    return SizedBox(
+      width: double.infinity,
+      child: FilledButton.icon(
+        onPressed: onPressed,
+        icon: const Icon(LucideIcons.unlock, size: 20),
+        label: Text(l10n.openLocker),
+        style: FilledButton.styleFrom(
+          backgroundColor: const Color(0xFF16A34A),
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          textStyle: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
     );
   }
 }
