@@ -623,4 +623,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get clearFilters => 'Filter löschen';
+
+  @override
+  String get openLocker => 'Schließfach öffnen';
+
+  @override
+  String get openLockerOpening => 'Schließfach wird geöffnet...';
+
+  @override
+  String get openLockerSuccess => 'Schließfach geöffnet!';
+
+  @override
+  String get openLockerSuccessSubtitle =>
+      'Ihr Schließfach ist jetzt entriegelt. Sie können darauf zugreifen.';
+
+  @override
+  String get openLockerError =>
+      'Schließfach konnte nicht geöffnet werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get openLockerDone => 'Fertig';
 }

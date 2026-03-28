@@ -69,4 +69,9 @@ class MockReservationDatasource implements ReservationDatasource {
     reservation['updated_at'] = DateTime.now().toIso8601String();
     _reservations[index] = reservation;
   }
+
+  @override
+  Future<void> openLocker(int lockerId) async {
+    await Future<void>.delayed(const Duration(seconds: 2));
+  }
 }

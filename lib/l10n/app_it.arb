@@ -278,5 +278,12 @@
       "count": { "type": "int" }
     }
   },
-  "clearFilters": "Cancella filtri"
+  "clearFilters": "Cancella filtri",
+
+  "openLocker": "Apri armadietto",
+  "openLockerOpening": "Apertura dell'armadietto...",
+  "openLockerSuccess": "Armadietto aperto!",
+  "openLockerSuccessSubtitle": "Il tuo armadietto è ora sbloccato. Puoi accedervi.",
+  "openLockerError": "Impossibile aprire l'armadietto. Riprova.",
+  "openLockerDone": "Fatto"
 }

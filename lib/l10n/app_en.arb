@@ -301,5 +301,12 @@
       "count": { "type": "int" }
     }
   },
-  "clearFilters": "Clear filters"
+  "clearFilters": "Clear filters",
+
+  "openLocker": "Open locker",
+  "openLockerOpening": "Opening your locker...",
+  "openLockerSuccess": "Locker open!",
+  "openLockerSuccessSubtitle": "Your locker is now unlocked. You can access it.",
+  "openLockerError": "Failed to open the locker. Please try again.",
+  "openLockerDone": "Done"
 }

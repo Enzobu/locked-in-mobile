@@ -619,4 +619,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get clearFilters => 'Cancella filtri';
+
+  @override
+  String get openLocker => 'Apri armadietto';
+
+  @override
+  String get openLockerOpening => 'Apertura dell\'armadietto...';
+
+  @override
+  String get openLockerSuccess => 'Armadietto aperto!';
+
+  @override
+  String get openLockerSuccessSubtitle =>
+      'Il tuo armadietto è ora sbloccato. Puoi accedervi.';
+
+  @override
+  String get openLockerError => 'Impossibile aprire l\'armadietto. Riprova.';
+
+  @override
+  String get openLockerDone => 'Fatto';
 }

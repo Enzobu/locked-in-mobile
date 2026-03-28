@@ -10,4 +10,6 @@ abstract class ReservationDatasource {
   });
 
   Future<void> cancelReservation(int id);
+
+  Future<void> openLocker(int lockerId);
 }

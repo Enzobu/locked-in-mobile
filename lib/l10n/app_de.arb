@@ -278,5 +278,12 @@
       "count": { "type": "int" }
     }
   },
-  "clearFilters": "Filter löschen"
+  "clearFilters": "Filter löschen",
+
+  "openLocker": "Schließfach öffnen",
+  "openLockerOpening": "Schließfach wird geöffnet...",
+  "openLockerSuccess": "Schließfach geöffnet!",
+  "openLockerSuccessSubtitle": "Ihr Schließfach ist jetzt entriegelt. Sie können darauf zugreifen.",
+  "openLockerError": "Schließfach konnte nicht geöffnet werden. Bitte versuchen Sie es erneut.",
+  "openLockerDone": "Fertig"
 }

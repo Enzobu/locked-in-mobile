@@ -42,4 +42,8 @@ class ReservationsNotifier extends AsyncNotifier<List<Reservation>> {
     await _repository.cancelReservation(id);
     state = await AsyncValue.guard(_fetch);
   }
+
+  Future<void> openLocker(int lockerId) async {
+    await _repository.openLocker(lockerId);
+  }
 }
