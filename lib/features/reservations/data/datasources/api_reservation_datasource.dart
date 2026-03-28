@@ -49,7 +49,7 @@ class ApiReservationDatasource implements ReservationDatasource {
 
   @override
   Future<void> openLocker(int lockerId) async {
-    await dioClient.post<dynamic>(ApiConstants.openLocker(lockerId));
+    await dioClient.get<dynamic>(ApiConstants.openLocker(lockerId));
   }
 
   /// Resolves IRI relations (customer, locker) to full objects.
