@@ -30,8 +30,12 @@ class _ReservationDetailScreenState
   Reservation get reservation => widget.reservation;
 
   bool get _isActive {
-    return reservation.status == ReservationStatus.active &&
-        reservation.endsAt.isAfter(DateTime.now());
+    final now = DateTime.now();
+    final isInTimeWindow =
+        reservation.startsAt.isBefore(now) && reservation.endsAt.isAfter(now);
+    return (reservation.status == ReservationStatus.active ||
+            reservation.status == ReservationStatus.confirmed) &&
+        isInTimeWindow;
   }
 
   bool get _isCancellable {
