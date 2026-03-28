@@ -40,4 +40,9 @@ class ReservationRepositoryImpl implements ReservationRepository {
   Future<void> cancelReservation(int id) async {
     await datasource.cancelReservation(id);
   }
+
+  @override
+  Future<void> openLocker(int lockerId) async {
+    await datasource.openLocker(lockerId);
+  }
 }

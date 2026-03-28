@@ -47,6 +47,11 @@ class ApiReservationDatasource implements ReservationDatasource {
     );
   }
 
+  @override
+  Future<void> openLocker(int lockerId) async {
+    await dioClient.post<dynamic>(ApiConstants.openLocker(lockerId));
+  }
+
   /// Resolves IRI relations (customer, locker) to full objects.
   /// API Platform returns relations as IRIs (e.g., "/api/customers/1")
   /// when no serialization groups embed them.

@@ -12,4 +12,6 @@ abstract class ReservationRepository {
   });
 
   Future<void> cancelReservation(int id);
+
+  Future<void> openLocker(int lockerId);
 }

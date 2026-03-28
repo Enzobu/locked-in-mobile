@@ -23,6 +23,9 @@ class ApiConstants {
   static String lockerById(int id) => '/api/lockers/$id';
   static String customerMe = '/api/customers/me';
 
+  // Locker endpoints
+  static String openLocker(int id) => '/api/locker/$id/open';
+
   // Payment endpoints
   static const paymentIntents = '/api/payments/intents';
   static String closeReservation(int id) => '/api/reservations/$id/close';
