@@ -142,26 +142,32 @@ class _OpenLockerOverlayState extends State<OpenLockerOverlay>
 
     return PopScope(
       canPop: false,
-      child: Material(
-        color: Colors.black.withValues(alpha: 0.85),
-        child: SafeArea(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildIcon(colorScheme),
-                  const SizedBox(height: 32),
-                  _buildTitle(theme, l10n),
-                  const SizedBox(height: 12),
-                  _buildSubtitle(theme, l10n),
-                  if (widget.state == OpenLockerState.success ||
-                      widget.state == OpenLockerState.error) ...[
-                    const SizedBox(height: 40),
-                    _buildButton(theme, l10n),
+      child: Positioned.fill(
+        child: Material(
+          color: Colors.black.withValues(alpha: 0.85),
+          child: SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildIcon(colorScheme),
+                    const SizedBox(height: 32),
+                    _buildTitle(theme, l10n),
+                    const SizedBox(height: 12),
+                    _buildSubtitle(theme, l10n),
+                    if (widget.state == OpenLockerState.success ||
+                        widget.state == OpenLockerState.error) ...[
+                      const SizedBox(height: 40),
+                      _buildButton(theme, l10n),
+                      if (widget.state == OpenLockerState.error) ...[
+                        const SizedBox(height: 12),
+                        _buildCloseButton(theme, l10n),
+                      ],
+                    ],
                   ],
-                ],
+                ),
               ),
             ),
           ),
@@ -453,7 +459,7 @@ class _OpenLockerOverlayState extends State<OpenLockerOverlay>
       builder: (context, value, child) {
         return Transform.scale(
           scale: value,
-          child: Opacity(opacity: value, child: child),
+          child: Opacity(opacity: value.clamp(0.0, 1.0), child: child),
         );
       },
       child: SizedBox(
@@ -476,6 +482,20 @@ class _OpenLockerOverlayState extends State<OpenLockerOverlay>
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildCloseButton(ThemeData theme, AppLocalizations l10n) {
+    return SizedBox(
+      width: double.infinity,
+      child: TextButton(
+        onPressed: widget.onDone,
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.white.withValues(alpha: 0.7),
+          padding: const EdgeInsets.symmetric(vertical: 14),
+        ),
+        child: Text(l10n.cancel),
       ),
     );
   }
