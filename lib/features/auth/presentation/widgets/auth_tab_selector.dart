@@ -35,9 +35,10 @@ class _AuthTabSelectorState extends State<AuthTabSelector>
     final from = widget.selectedIndex == 0 ? 1.0 : 0.0;
     final to = widget.selectedIndex.toDouble();
 
-    _slideAnimation = Tween<double>(begin: from, end: to).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
-    );
+    _slideAnimation = Tween<double>(
+      begin: from,
+      end: to,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
 
     _controller.forward();
   }
