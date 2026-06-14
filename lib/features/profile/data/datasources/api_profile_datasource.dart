@@ -15,6 +15,17 @@ class ApiProfileDatasource implements ProfileDatasource {
   }
 
   @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    await dioClient.post<void>(
+      '/api/customers/me/password',
+      data: {'currentPassword': currentPassword, 'newPassword': newPassword},
+    );
+  }
+
+  @override
   // TODO: Remplacer par PATCH /api/customers/me quand le backend le supportera
   Future<Map<String, dynamic>> updateProfile({
     required int customerId,

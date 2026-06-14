@@ -104,7 +104,11 @@ class AuthNotifier extends Notifier<AuthState> {
       final customer = CustomerDto.fromJson(customerData).toDomain();
       state = AuthState(status: AuthStatus.authenticated, customer: customer);
     } on ApiException catch (e) {
-      final message = e.isUnauthorized ? 'invalidCredentials' : e.message;
+      final message = switch (e.statusCode) {
+        401 => 'invalidCredentials',
+        429 => 'tooManyAttempts',
+        _ => e.message,
+      };
       state = AuthState(status: AuthStatus.error, errorMessage: message);
     } on Exception catch (e) {
       state = AuthState(
@@ -131,7 +135,8 @@ class AuthNotifier extends Notifier<AuthState> {
       );
       state = const AuthState(status: AuthStatus.registerSuccess);
     } on ApiException catch (e) {
-      state = AuthState(status: AuthStatus.error, errorMessage: e.message);
+      final message = e.statusCode == 429 ? 'tooManyAttempts' : e.message;
+      state = AuthState(status: AuthStatus.error, errorMessage: message);
     } on Exception catch (e) {
       state = AuthState(
         status: AuthStatus.error,

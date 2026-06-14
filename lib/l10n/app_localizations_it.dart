@@ -638,4 +638,61 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get openLockerDone => 'Fatto';
+
+  @override
+  String get profilePasswordChangeSuccess => 'Password modificata con successo';
+
+  @override
+  String get profileCurrentPasswordIncorrect =>
+      'La password attuale non è corretta';
+
+  @override
+  String get profileNewPasswordInvalid => 'La nuova password non è valida';
+
+  @override
+  String get profilePasswordChangeError =>
+      'Impossibile modificare la password. Riprova.';
+
+  @override
+  String get profileNewPasswordTooShort =>
+      'La password deve contenere almeno 8 caratteri';
+
+  @override
+  String get profileNewPasswordSameAsCurrent =>
+      'La nuova password deve essere diversa da quella attuale';
+
+  @override
+  String get bookingSlotUnavailable =>
+      'Questa fascia oraria non è più disponibile per questo armadietto. Scegline un\'altra.';
+
+  @override
+  String get bookingInvalidDuration =>
+      'La durata selezionata non è valida per questo armadietto.';
+
+  @override
+  String get bookingNetworkError =>
+      'Connessione non riuscita. Controlla la rete e riprova.';
+
+  @override
+  String get authTooManyAttempts => 'Troppi tentativi. Riprova tra un minuto.';
+
+  @override
+  String get reservationRefundLabel => 'Rimborso';
+
+  @override
+  String get reservationRefundSucceeded => 'Completato';
+
+  @override
+  String get reservationRefundPending => 'In corso';
+
+  @override
+  String get reservationRefundFailed => 'Non riuscito';
+
+  @override
+  String get reservationRefundNotApplicable => 'Non applicabile';
+
+  @override
+  String reservationCancelledOn(String date) {
+    return 'Annullata il $date';
+  }
 }

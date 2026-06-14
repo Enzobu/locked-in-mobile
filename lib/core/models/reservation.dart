@@ -22,6 +22,8 @@ class Reservation {
     this.overtimeAmountCents,
     this.overtimePaymentIntentId,
     this.overtimePaymentStatus,
+    this.refundStatus,
+    this.cancelledAt,
   });
 
   final int id;
@@ -47,6 +49,10 @@ class Reservation {
   final String? overtimePaymentIntentId;
   final String? overtimePaymentStatus;
 
+  // Cancellation / refund fields
+  final String? refundStatus;
+  final DateTime? cancelledAt;
+
   /// Duration in minutes
   int get durationMinutes => endsAt.difference(startsAt).inMinutes;
 
@@ -69,6 +75,8 @@ class Reservation {
     int? Function()? overtimeAmountCents,
     String? Function()? overtimePaymentIntentId,
     String? Function()? overtimePaymentStatus,
+    String? Function()? refundStatus,
+    DateTime? Function()? cancelledAt,
   }) {
     return Reservation(
       id: id ?? this.id,
@@ -103,6 +111,8 @@ class Reservation {
       overtimePaymentStatus: overtimePaymentStatus != null
           ? overtimePaymentStatus()
           : this.overtimePaymentStatus,
+      refundStatus: refundStatus != null ? refundStatus() : this.refundStatus,
+      cancelledAt: cancelledAt != null ? cancelledAt() : this.cancelledAt,
     );
   }
 

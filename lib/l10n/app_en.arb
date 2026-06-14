@@ -308,5 +308,21 @@
   "openLockerSuccess": "Locker open!",
   "openLockerSuccessSubtitle": "Your locker is now unlocked. You can access it.",
   "openLockerError": "Failed to open the locker. Please try again.",
-  "openLockerDone": "Done"
+  "openLockerDone": "Done",
+  "profilePasswordChangeSuccess": "Password changed successfully",
+  "profileCurrentPasswordIncorrect": "The current password is incorrect",
+  "profileNewPasswordInvalid": "The new password is invalid",
+  "profilePasswordChangeError": "Could not change the password. Please try again.",
+  "profileNewPasswordTooShort": "Password must be at least 8 characters",
+  "profileNewPasswordSameAsCurrent": "The new password must be different from the current one",
+  "bookingSlotUnavailable": "This slot is no longer available for this locker. Please pick another one.",
+  "bookingInvalidDuration": "The selected duration is not valid for this locker.",
+  "bookingNetworkError": "Connection failed. Check your network and try again.",
+  "authTooManyAttempts": "Too many attempts. Try again in a minute.",
+  "reservationRefundLabel": "Refund",
+  "reservationRefundSucceeded": "Completed",
+  "reservationRefundPending": "In progress",
+  "reservationRefundFailed": "Failed",
+  "reservationRefundNotApplicable": "Not applicable",
+  "reservationCancelledOn": "Cancelled on {date}"
 }

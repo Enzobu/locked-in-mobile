@@ -643,4 +643,62 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get openLockerDone => 'Fertig';
+
+  @override
+  String get profilePasswordChangeSuccess => 'Passwort erfolgreich geändert';
+
+  @override
+  String get profileCurrentPasswordIncorrect =>
+      'Das aktuelle Passwort ist falsch';
+
+  @override
+  String get profileNewPasswordInvalid => 'Das neue Passwort ist ungültig';
+
+  @override
+  String get profilePasswordChangeError =>
+      'Passwort konnte nicht geändert werden. Bitte erneut versuchen.';
+
+  @override
+  String get profileNewPasswordTooShort =>
+      'Das Passwort muss mindestens 8 Zeichen lang sein';
+
+  @override
+  String get profileNewPasswordSameAsCurrent =>
+      'Das neue Passwort muss sich vom aktuellen unterscheiden';
+
+  @override
+  String get bookingSlotUnavailable =>
+      'Dieser Zeitraum ist für dieses Schließfach nicht mehr verfügbar. Bitte wähle einen anderen.';
+
+  @override
+  String get bookingInvalidDuration =>
+      'Die gewählte Dauer ist für dieses Schließfach ungültig.';
+
+  @override
+  String get bookingNetworkError =>
+      'Verbindung fehlgeschlagen. Prüfe dein Netzwerk und versuche es erneut.';
+
+  @override
+  String get authTooManyAttempts =>
+      'Zu viele Versuche. Versuche es in einer Minute erneut.';
+
+  @override
+  String get reservationRefundLabel => 'Erstattung';
+
+  @override
+  String get reservationRefundSucceeded => 'Abgeschlossen';
+
+  @override
+  String get reservationRefundPending => 'In Bearbeitung';
+
+  @override
+  String get reservationRefundFailed => 'Fehlgeschlagen';
+
+  @override
+  String get reservationRefundNotApplicable => 'Nicht zutreffend';
+
+  @override
+  String reservationCancelledOn(String date) {
+    return 'Storniert am $date';
+  }
 }

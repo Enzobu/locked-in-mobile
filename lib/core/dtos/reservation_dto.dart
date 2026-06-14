@@ -24,6 +24,8 @@ class ReservationDto {
     this.overtimeAmountCents,
     this.overtimePaymentIntentId,
     this.overtimePaymentStatus,
+    this.refundStatus,
+    this.cancelledAt,
   });
 
   final int id;
@@ -44,6 +46,8 @@ class ReservationDto {
   final int? overtimeAmountCents;
   final String? overtimePaymentIntentId;
   final String? overtimePaymentStatus;
+  final String? refundStatus;
+  final DateTime? cancelledAt;
 
   factory ReservationDto.fromJson(Map<String, dynamic> json) {
     final id = json['id'] as int;
@@ -83,6 +87,12 @@ class ReservationDto {
       overtimePaymentStatus:
           (json['overtimePaymentStatus'] ?? json['overtime_payment_status'])
               as String?,
+      refundStatus: (json['refundStatus'] ?? json['refund_status']) as String?,
+      cancelledAt: json['cancelledAt'] != null || json['cancelled_at'] != null
+          ? DateTime.parse(
+              (json['cancelledAt'] ?? json['cancelled_at']) as String,
+            )
+          : null,
     );
   }
 
@@ -109,6 +119,8 @@ class ReservationDto {
         'overtimePaymentIntentId': overtimePaymentIntentId,
       if (overtimePaymentStatus != null)
         'overtimePaymentStatus': overtimePaymentStatus,
+      if (refundStatus != null) 'refundStatus': refundStatus,
+      if (cancelledAt != null) 'cancelledAt': cancelledAt!.toIso8601String(),
     };
   }
 
@@ -132,6 +144,8 @@ class ReservationDto {
       overtimeAmountCents: overtimeAmountCents,
       overtimePaymentIntentId: overtimePaymentIntentId,
       overtimePaymentStatus: overtimePaymentStatus,
+      refundStatus: refundStatus,
+      cancelledAt: cancelledAt,
     );
   }
 
@@ -155,6 +169,8 @@ class ReservationDto {
       overtimeAmountCents: reservation.overtimeAmountCents,
       overtimePaymentIntentId: reservation.overtimePaymentIntentId,
       overtimePaymentStatus: reservation.overtimePaymentStatus,
+      refundStatus: reservation.refundStatus,
+      cancelledAt: reservation.cancelledAt,
     );
   }
 }

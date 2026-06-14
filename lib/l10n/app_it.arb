@@ -285,5 +285,21 @@
   "openLockerSuccess": "Armadietto aperto!",
   "openLockerSuccessSubtitle": "Il tuo armadietto è ora sbloccato. Puoi accedervi.",
   "openLockerError": "Impossibile aprire l'armadietto. Riprova.",
-  "openLockerDone": "Fatto"
+  "openLockerDone": "Fatto",
+  "profilePasswordChangeSuccess": "Password modificata con successo",
+  "profileCurrentPasswordIncorrect": "La password attuale non è corretta",
+  "profileNewPasswordInvalid": "La nuova password non è valida",
+  "profilePasswordChangeError": "Impossibile modificare la password. Riprova.",
+  "profileNewPasswordTooShort": "La password deve contenere almeno 8 caratteri",
+  "profileNewPasswordSameAsCurrent": "La nuova password deve essere diversa da quella attuale",
+  "bookingSlotUnavailable": "Questa fascia oraria non è più disponibile per questo armadietto. Scegline un'altra.",
+  "bookingInvalidDuration": "La durata selezionata non è valida per questo armadietto.",
+  "bookingNetworkError": "Connessione non riuscita. Controlla la rete e riprova.",
+  "authTooManyAttempts": "Troppi tentativi. Riprova tra un minuto.",
+  "reservationRefundLabel": "Rimborso",
+  "reservationRefundSucceeded": "Completato",
+  "reservationRefundPending": "In corso",
+  "reservationRefundFailed": "Non riuscito",
+  "reservationRefundNotApplicable": "Non applicabile",
+  "reservationCancelledOn": "Annullata il {date}"
 }

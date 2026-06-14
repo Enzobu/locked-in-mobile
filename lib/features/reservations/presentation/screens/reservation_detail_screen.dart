@@ -29,14 +29,27 @@ class _ReservationDetailScreenState
 
   Reservation get reservation => widget.reservation;
 
-  // TODO: restore proper condition after testing
-  bool get _isActive => true;
+  /// The locker can be opened only while the reservation is confirmed/active
+  /// and the current time falls within the booked window.
+  bool get _isActive {
+    final now = DateTime.now();
+    return (reservation.status == ReservationStatus.confirmed ||
+            reservation.status == ReservationStatus.active) &&
+        now.isAfter(reservation.startsAt) &&
+        now.isBefore(reservation.endsAt);
+  }
 
   bool get _isCancellable {
     return (reservation.status == ReservationStatus.active ||
             reservation.status == ReservationStatus.confirmed ||
             reservation.status == ReservationStatus.pending) &&
         reservation.endsAt.isAfter(DateTime.now());
+  }
+
+  bool get _showRefund {
+    if (reservation.status != ReservationStatus.cancelled) return false;
+    final status = reservation.refundStatus;
+    return status != null && status.isNotEmpty && status != 'none';
   }
 
   Future<void> _onOpenLocker() async {
@@ -86,6 +99,10 @@ class _ReservationDetailScreenState
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
               _StatusHeader(reservation: reservation),
+              if (_showRefund) ...[
+                const SizedBox(height: 16),
+                _RefundSection(reservation: reservation),
+              ],
               const SizedBox(height: 20),
               _ReservationCodeSection(reservation: reservation),
               const SizedBox(height: 20),
@@ -743,5 +760,90 @@ class _InfoRow extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _RefundSection extends StatelessWidget {
+  const _RefundSection({required this.reservation});
+
+  final Reservation reservation;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final (label, color) = _refundInfo(l10n);
+
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: color.withValues(alpha: 0.3)),
+              ),
+              child: Icon(LucideIcons.receipt, size: 20, color: color),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.reservationRefundLabel,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  if (reservation.cancelledAt != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      l10n.reservationCancelledOn(
+                        DateFormat.yMMMd(
+                          locale,
+                        ).format(reservation.cancelledAt!),
+                      ),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                label,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  (String, Color) _refundInfo(AppLocalizations l10n) {
+    return switch (reservation.refundStatus) {
+      'succeeded' => (l10n.reservationRefundSucceeded, const Color(0xFF16A34A)),
+      'pending' => (l10n.reservationRefundPending, const Color(0xFFD97706)),
+      'failed' => (l10n.reservationRefundFailed, const Color(0xFFDC2626)),
+      _ => (l10n.reservationRefundNotApplicable, const Color(0xFF6B7280)),
+    };
   }
 }

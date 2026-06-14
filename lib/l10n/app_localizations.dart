@@ -1253,6 +1253,102 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Terminé'**
   String get openLockerDone;
+
+  /// Snackbar succès changement de mot de passe
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe modifié avec succès'**
+  String get profilePasswordChangeSuccess;
+
+  /// Erreur mot de passe actuel incorrect (403)
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mot de passe actuel est incorrect'**
+  String get profileCurrentPasswordIncorrect;
+
+  /// Erreur nouveau mot de passe invalide (422)
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nouveau mot de passe n\'est pas valide'**
+  String get profileNewPasswordInvalid;
+
+  /// Erreur générique changement de mot de passe
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de modifier le mot de passe. Réessayez.'**
+  String get profilePasswordChangeError;
+
+  /// Validation nouveau mot de passe trop court
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mot de passe doit contenir au moins 8 caractères'**
+  String get profileNewPasswordTooShort;
+
+  /// Validation nouveau == actuel
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nouveau mot de passe doit être différent de l\'actuel'**
+  String get profileNewPasswordSameAsCurrent;
+
+  /// Erreur créneau indisponible (409)
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce créneau n\'est plus disponible pour ce casier. Choisissez-en un autre.'**
+  String get bookingSlotUnavailable;
+
+  /// Erreur durée invalide (422)
+  ///
+  /// In fr, this message translates to:
+  /// **'La durée sélectionnée n\'est pas valide pour ce casier.'**
+  String get bookingInvalidDuration;
+
+  /// Erreur réseau lors de la réservation
+  ///
+  /// In fr, this message translates to:
+  /// **'Connexion impossible. Vérifiez votre réseau et réessayez.'**
+  String get bookingNetworkError;
+
+  /// Erreur trop de tentatives auth (429)
+  ///
+  /// In fr, this message translates to:
+  /// **'Trop de tentatives. Réessayez dans une minute.'**
+  String get authTooManyAttempts;
+
+  /// Libellé section remboursement
+  ///
+  /// In fr, this message translates to:
+  /// **'Remboursement'**
+  String get reservationRefundLabel;
+
+  /// Statut remboursement effectué
+  ///
+  /// In fr, this message translates to:
+  /// **'Effectué'**
+  String get reservationRefundSucceeded;
+
+  /// Statut remboursement en cours
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get reservationRefundPending;
+
+  /// Statut remboursement échoué
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec'**
+  String get reservationRefundFailed;
+
+  /// Statut remboursement non applicable
+  ///
+  /// In fr, this message translates to:
+  /// **'Non applicable'**
+  String get reservationRefundNotApplicable;
+
+  /// Date d'annulation
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulée le {date}'**
+  String reservationCancelledOn(String date);
 }
 
 class _AppLocalizationsDelegate

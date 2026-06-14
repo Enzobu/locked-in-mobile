@@ -242,7 +242,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         if (authState.status == AuthStatus.error &&
                             authState.errorMessage != null) ...[
                           const SizedBox(height: 12),
-                          AuthErrorBanner(message: authState.errorMessage!),
+                          AuthErrorBanner(
+                            message: authState.errorMessage == 'tooManyAttempts'
+                                ? l10n.authTooManyAttempts
+                                : authState.errorMessage!,
+                          ),
                         ],
                         const SizedBox(height: 24),
                         SizedBox(

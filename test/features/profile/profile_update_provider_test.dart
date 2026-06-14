@@ -188,6 +188,12 @@ class _FakeProfileRepository implements ProfileRepository {
     required String email,
     String? phone,
   }) async => _customer;
+
+  @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {}
 }
 
 class _ErrorProfileRepository implements ProfileRepository {
@@ -205,5 +211,11 @@ class _ErrorProfileRepository implements ProfileRepository {
     required String lastname,
     required String email,
     String? phone,
+  }) => throw _exception;
+
+  @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
   }) => throw _exception;
 }

@@ -2,10 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/locker.dart';
+import '../../../../core/network/api_exception.dart';
 import '../../../payment/presentation/providers/payment_provider.dart';
 import 'reservation_provider.dart';
 
 enum ReservationFlowStep { dateSelection, summary, payment, confirmed }
+
+/// Semantic booking failures, mapped to a localized message in the UI.
+enum BookingError {
+  /// The slot is already booked or the locker is out of service (HTTP 409).
+  slotUnavailable,
+
+  /// The requested duration is invalid for this locker (HTTP 422).
+  invalidDuration,
+
+  /// Network/connectivity problem.
+  network,
+
+  /// The Stripe payment failed or was cancelled.
+  paymentFailed,
+
+  /// Anything else.
+  generic,
+}
+
+BookingError mapBookingError(Object error) {
+  if (error is ApiException) {
+    return switch (error.statusCode) {
+      409 => BookingError.slotUnavailable,
+      422 => BookingError.invalidDuration,
+      null => BookingError.network,
+      _ => BookingError.generic,
+    };
+  }
+  return BookingError.generic;
+}
 
 class ReservationFlowState {
   const ReservationFlowState({
@@ -28,7 +59,7 @@ class ReservationFlowState {
   final bool isSubmitting;
   final int? reservationId;
   final String? publicForm;
-  final String? error;
+  final BookingError? error;
 
   bool get canProceed =>
       selectedDate != null && selectedTime != null && durationMinutes != null;
@@ -76,7 +107,7 @@ class ReservationFlowState {
     bool? isSubmitting,
     int? Function()? reservationId,
     String? Function()? publicForm,
-    String? Function()? error,
+    BookingError? Function()? error,
   }) {
     return ReservationFlowState(
       locker: locker ?? this.locker,
@@ -163,7 +194,7 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
       if (!sheetResult.isSuccess) {
         state = state.copyWith(
           isSubmitting: false,
-          error: () => sheetResult.errorMessage ?? 'Payment cancelled',
+          error: () => BookingError.paymentFailed,
         );
         return;
       }
@@ -177,7 +208,10 @@ class ReservationFlowNotifier extends StateNotifier<ReservationFlowState> {
 
       _ref.read(reservationsProvider.notifier).refresh();
     } catch (e) {
-      state = state.copyWith(isSubmitting: false, error: () => e.toString());
+      state = state.copyWith(
+        isSubmitting: false,
+        error: () => mapBookingError(e),
+      );
     }
   }
 }

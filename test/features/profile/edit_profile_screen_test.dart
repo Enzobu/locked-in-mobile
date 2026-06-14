@@ -70,6 +70,12 @@ class _FakeProfileRepository implements ProfileRepository {
       phone: phone,
     );
   }
+
+  @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {}
 }
 
 void main() {
