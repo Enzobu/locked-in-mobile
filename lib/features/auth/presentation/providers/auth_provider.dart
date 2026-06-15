@@ -5,6 +5,7 @@ import '../../../../core/models/customer.dart';
 import '../../../../core/network/api_exception.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/network/token_storage.dart';
+import '../../../home/presentation/providers/home_provider.dart';
 import '../../data/datasources/api_auth_datasource.dart';
 import '../../data/datasources/auth_datasource.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -103,6 +104,8 @@ class AuthNotifier extends Notifier<AuthState> {
       final customerData = await _datasource.getCurrentCustomer();
       final customer = CustomerDto.fromJson(customerData).toDomain();
       state = AuthState(status: AuthStatus.authenticated, customer: customer);
+      // Fresh session: drop cached locker availability so the home re-fetches.
+      ref.invalidate(lockerBaySummariesProvider);
     } on ApiException catch (e) {
       final message = switch (e.statusCode) {
         401 => 'invalidCredentials',
@@ -152,5 +155,7 @@ class AuthNotifier extends Notifier<AuthState> {
   Future<void> logout() async {
     await _tokenStorage.clearTokens();
     state = const AuthState(status: AuthStatus.unauthenticated);
+    // Avoid leaking the previous session's cached locker availability.
+    ref.invalidate(lockerBaySummariesProvider);
   }
 }

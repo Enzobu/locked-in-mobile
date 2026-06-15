@@ -139,60 +139,64 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
             return Stack(
               children: [
-                ListView(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
-                      child: Text(
-                        l10n.homeGreeting,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
+                RefreshIndicator(
+                  onRefresh: () =>
+                      ref.read(lockerBaySummariesProvider.notifier).reload(),
+                  child: ListView(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
+                        child: Text(
+                          l10n.homeGreeting,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-                      child: Text(
-                        l10n.homeTitle,
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w800,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                        child: Text(
+                          l10n.homeTitle,
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                       ),
-                    ),
-                    HomeSearchBar(
-                      controller: _searchController,
-                      focusNode: _focusNode,
-                      isFocused: _isFocused,
-                      searchQuery: searchQuery,
-                      activeFilterCount: filter.activeFilterCount,
-                      onChanged: _onSearchChanged,
-                      onClear: _clearSearch,
-                    ),
-                    if (filter.isActive)
-                      FilteredResultsView(
-                        summaries: summaries,
-                        gradients: _gradients,
-                      )
-                    else ...[
-                      NearbyCarousel(
-                        summaries: nearbyTop,
-                        gradients: _gradients,
+                      HomeSearchBar(
+                        controller: _searchController,
+                        focusNode: _focusNode,
+                        isFocused: _isFocused,
+                        searchQuery: searchQuery,
+                        activeFilterCount: filter.activeFilterCount,
+                        onChanged: _onSearchChanged,
+                        onClear: _clearSearch,
                       ),
-                      const SizedBox(height: 28),
-                      AllBaysByCity(
-                        gradients: _gradients,
-                        selectedCity: _selectedCity,
-                        showAll: _showAllBaysForCity,
-                        onCitySelected: (city) => setState(() {
-                          _selectedCity = city;
-                          _showAllBaysForCity = false;
-                        }),
-                        onShowAll: () =>
-                            setState(() => _showAllBaysForCity = true),
-                      ),
+                      if (filter.isActive)
+                        FilteredResultsView(
+                          summaries: summaries,
+                          gradients: _gradients,
+                        )
+                      else ...[
+                        NearbyCarousel(
+                          summaries: nearbyTop,
+                          gradients: _gradients,
+                        ),
+                        const SizedBox(height: 28),
+                        AllBaysByCity(
+                          gradients: _gradients,
+                          selectedCity: _selectedCity,
+                          showAll: _showAllBaysForCity,
+                          onCitySelected: (city) => setState(() {
+                            _selectedCity = city;
+                            _showAllBaysForCity = false;
+                          }),
+                          onShowAll: () =>
+                              setState(() => _showAllBaysForCity = true),
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
                 if (filter.isActive)
                   Positioned(

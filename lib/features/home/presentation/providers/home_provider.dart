@@ -58,6 +58,12 @@ class LockerBaySummariesNotifier extends AsyncNotifier<List<LockerBaySummary>> {
     state = const AsyncLoading();
     state = await AsyncValue.guard(_fetchSummaries);
   }
+
+  /// Re-fetches without clearing the current data first, so the existing list
+  /// stays visible (used for pull-to-refresh).
+  Future<void> reload() async {
+    state = await AsyncValue.guard(_fetchSummaries);
+  }
 }
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
