@@ -84,119 +84,108 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ref.read(lockerBaySummariesProvider.notifier).refresh(),
           ),
           data: (summaries) {
-            if (summaries.isEmpty &&
-                (searchQuery.isNotEmpty || filter.isActive)) {
-              return Stack(
-                children: [
-                  HomeSearchEmptyState(
-                    query: searchQuery,
-                    hasActiveFilters: filter.isActive,
-                  ),
-                  if (filter.isActive)
-                    Positioned(
-                      left: 16,
-                      right: 16,
-                      bottom: 16,
-                      child: FilledButton.icon(
-                        onPressed: () =>
-                            ref.read(lockerFilterProvider.notifier).state =
-                                LockerFilter.empty,
-                        icon: const Icon(LucideIcons.trash2, size: 16),
-                        label: Text(l10n.clearFilters),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: theme.colorScheme.error,
-                          foregroundColor: theme.colorScheme.onError,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              );
-            }
+            final isEmptySearch =
+                summaries.isEmpty &&
+                (searchQuery.isNotEmpty || filter.isActive);
+            final isNoLockers = summaries.isEmpty && !isEmptySearch;
 
-            if (summaries.isEmpty) {
-              return EmptyStateView(
+            Widget content;
+            if (isEmptySearch) {
+              content = HomeSearchEmptyState(
+                query: searchQuery,
+                hasActiveFilters: filter.isActive,
+              );
+            } else if (isNoLockers) {
+              content = EmptyStateView(
                 icon: LucideIcons.packageOpen,
                 title: l10n.noLockersTitle,
                 subtitle: l10n.noLockersSubtitle,
               );
+            } else {
+              final distances = ref.watch(bayDistancesProvider);
+              final nearby = List.of(summaries)
+                ..sort((a, b) {
+                  final da = distances[a.lockerBay.id];
+                  final db = distances[b.lockerBay.id];
+                  if (da == null && db == null) return 0;
+                  if (da == null) return 1;
+                  if (db == null) return -1;
+                  return da.compareTo(db);
+                });
+              final nearbyTop = nearby.take(5).toList();
+
+              content = RefreshIndicator(
+                onRefresh: () =>
+                    ref.read(lockerBaySummariesProvider.notifier).reload(),
+                child: ListView(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  children: [
+                    if (filter.isActive)
+                      FilteredResultsView(
+                        summaries: summaries,
+                        gradients: _gradients,
+                      )
+                    else ...[
+                      NearbyCarousel(
+                        summaries: nearbyTop,
+                        gradients: _gradients,
+                      ),
+                      const SizedBox(height: 28),
+                      AllBaysByCity(
+                        gradients: _gradients,
+                        selectedCity: _selectedCity,
+                        showAll: _showAllBaysForCity,
+                        onCitySelected: (city) => setState(() {
+                          _selectedCity = city;
+                          _showAllBaysForCity = false;
+                        }),
+                        onShowAll: () =>
+                            setState(() => _showAllBaysForCity = true),
+                      ),
+                    ],
+                  ],
+                ),
+              );
             }
 
-            final distances = ref.watch(bayDistancesProvider);
-            final nearby = List.of(summaries)
-              ..sort((a, b) {
-                final da = distances[a.lockerBay.id];
-                final db = distances[b.lockerBay.id];
-                if (da == null && db == null) return 0;
-                if (da == null) return 1;
-                if (db == null) return -1;
-                return da.compareTo(db);
-              });
-            final nearbyTop = nearby.take(5).toList();
-
+            // The greeting, title and search bar form a fixed header that stays
+            // mounted in every state — so the search field never disappears (and
+            // keeps its focus) even when a query returns no results. Clearing the
+            // field brings back the classic home.
             return Stack(
               children: [
-                RefreshIndicator(
-                  onRefresh: () =>
-                      ref.read(lockerBaySummariesProvider.notifier).reload(),
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
-                        child: Text(
-                          l10n.homeGreeting,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 4),
+                      child: Text(
+                        l10n.homeGreeting,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-                        child: Text(
-                          l10n.homeTitle,
-                          style: theme.textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w800,
-                          ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                      child: Text(
+                        l10n.homeTitle,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
-                      HomeSearchBar(
-                        controller: _searchController,
-                        focusNode: _focusNode,
-                        isFocused: _isFocused,
-                        searchQuery: searchQuery,
-                        activeFilterCount: filter.activeFilterCount,
-                        onChanged: _onSearchChanged,
-                        onClear: _clearSearch,
-                      ),
-                      if (filter.isActive)
-                        FilteredResultsView(
-                          summaries: summaries,
-                          gradients: _gradients,
-                        )
-                      else ...[
-                        NearbyCarousel(
-                          summaries: nearbyTop,
-                          gradients: _gradients,
-                        ),
-                        const SizedBox(height: 28),
-                        AllBaysByCity(
-                          gradients: _gradients,
-                          selectedCity: _selectedCity,
-                          showAll: _showAllBaysForCity,
-                          onCitySelected: (city) => setState(() {
-                            _selectedCity = city;
-                            _showAllBaysForCity = false;
-                          }),
-                          onShowAll: () =>
-                              setState(() => _showAllBaysForCity = true),
-                        ),
-                      ],
-                    ],
-                  ),
+                    ),
+                    HomeSearchBar(
+                      controller: _searchController,
+                      focusNode: _focusNode,
+                      isFocused: _isFocused,
+                      searchQuery: searchQuery,
+                      activeFilterCount: filter.activeFilterCount,
+                      onChanged: _onSearchChanged,
+                      onClear: _clearSearch,
+                    ),
+                    Expanded(child: content),
+                  ],
                 ),
                 if (filter.isActive)
                   Positioned(
