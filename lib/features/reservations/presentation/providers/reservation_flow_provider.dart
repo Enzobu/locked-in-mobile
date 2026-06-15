@@ -84,6 +84,18 @@ class ReservationFlowState {
     return start.add(Duration(minutes: durationMinutes!));
   }
 
+  /// Total amount actually charged, computed exactly like the backend
+  /// ReservationPricingService: priceCents is the hourly rate, so the total is
+  /// ceil(durationMinutes * hourlyPriceCents / 60). This must match what Stripe
+  /// charges at checkout.
+  int get plannedAmountCents {
+    final minutes = durationMinutes ?? 0;
+    final effectiveMinutes = minutes < 1 ? 1 : minutes;
+    return (effectiveMinutes * locker.priceCents / 60).ceil();
+  }
+
+  double get plannedAmountEuros => plannedAmountCents / 100;
+
   String formatDuration(
     String Function(int) formatMinutes,
     String Function(int, String) formatHoursMinutes,

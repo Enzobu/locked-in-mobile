@@ -57,7 +57,9 @@ class PaymentStep extends ConsumerWidget {
                 ),
               ),
               Text(
-                l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
+                l10n.reservationPrice(
+                  state.plannedAmountEuros.toStringAsFixed(2),
+                ),
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w800,
                   color: colorScheme.primary,
@@ -176,7 +178,7 @@ class PaymentStep extends ConsumerWidget {
                   ),
                 )
               : Text(
-                  l10n.paymentPay(locker.priceEuros.toStringAsFixed(2)),
+                  l10n.paymentPay(state.plannedAmountEuros.toStringAsFixed(2)),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

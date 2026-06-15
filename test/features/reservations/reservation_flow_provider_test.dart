@@ -102,6 +102,27 @@ void main() {
       expect(state.maxDuration, 120);
     });
 
+    test('plannedAmount matches the backend pricing formula', () {
+      // priceCents = 500 (5 €/h). Total = ceil(durationMinutes * 500 / 60).
+      final notifier = container.read(
+        reservationFlowProvider(testLocker).notifier,
+      );
+      int amountFor(int minutes) {
+        notifier.setDuration(minutes);
+        return container
+            .read(reservationFlowProvider(testLocker))
+            .plannedAmountCents;
+      }
+
+      expect(amountFor(30), 250); // 30 min -> 2.50 €
+      expect(amountFor(45), 375); // 45 min -> 3.75 €
+      expect(amountFor(90), 750); // 90 min -> 7.50 €
+      expect(
+        container.read(reservationFlowProvider(testLocker)).plannedAmountEuros,
+        7.5,
+      );
+    });
+
     test('startsAt combines date and time', () {
       final notifier = container.read(
         reservationFlowProvider(testLocker).notifier,
