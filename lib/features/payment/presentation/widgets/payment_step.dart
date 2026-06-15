@@ -57,7 +57,9 @@ class PaymentStep extends ConsumerWidget {
                 ),
               ),
               Text(
-                l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
+                l10n.reservationPrice(
+                  state.plannedAmountEuros.toStringAsFixed(2),
+                ),
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w800,
                   color: colorScheme.primary,
@@ -117,7 +119,7 @@ class PaymentStep extends ConsumerWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      l10n.paymentError,
+                      _bookingErrorMessage(l10n, state.error!),
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: colorScheme.onErrorContainer,
                       ),
@@ -176,7 +178,7 @@ class PaymentStep extends ConsumerWidget {
                   ),
                 )
               : Text(
-                  l10n.paymentPay(locker.priceEuros.toStringAsFixed(2)),
+                  l10n.paymentPay(state.plannedAmountEuros.toStringAsFixed(2)),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -185,5 +187,15 @@ class PaymentStep extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  String _bookingErrorMessage(AppLocalizations l10n, BookingError error) {
+    return switch (error) {
+      BookingError.slotUnavailable => l10n.bookingSlotUnavailable,
+      BookingError.invalidDuration => l10n.bookingInvalidDuration,
+      BookingError.network => l10n.bookingNetworkError,
+      BookingError.paymentFailed => l10n.paymentError,
+      BookingError.generic => l10n.paymentError,
+    };
   }
 }

@@ -3,7 +3,7 @@ class ApiConstants {
 
   static const baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'https://openinnov-backend.enzo-palermo.com',
+    defaultValue: 'https://api-lockedin.enzo-palermo.com',
   );
 
   static const stripePublishableKey = String.fromEnvironment(

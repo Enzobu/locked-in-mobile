@@ -112,5 +112,33 @@ void main() {
       expect(restored.id, dto.id);
       expect(restored.status, 'active');
     });
+
+    test('parses cancellation/refund fields and survives round-trip', () {
+      final cancelledJson = {
+        ...json,
+        'status': 'cancelled',
+        'refund_status': 'succeeded',
+        'cancelled_at': '2026-03-02T20:00:00.000',
+      };
+
+      final dto = ReservationDto.fromJson(cancelledJson);
+      expect(dto.refundStatus, 'succeeded');
+      expect(dto.cancelledAt, DateTime.parse('2026-03-02T20:00:00.000'));
+
+      final domain = dto.toDomain();
+      expect(domain.status, ReservationStatus.cancelled);
+      expect(domain.refundStatus, 'succeeded');
+      expect(domain.cancelledAt, DateTime.parse('2026-03-02T20:00:00.000'));
+
+      final restored = ReservationDto.fromJson(dto.toJson());
+      expect(restored.refundStatus, 'succeeded');
+      expect(restored.cancelledAt, dto.cancelledAt);
+    });
+
+    test('refund fields default to null when absent', () {
+      final dto = ReservationDto.fromJson(json);
+      expect(dto.refundStatus, isNull);
+      expect(dto.cancelledAt, isNull);
+    });
   });
 }

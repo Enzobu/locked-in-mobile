@@ -15,6 +15,17 @@ class ApiProfileRepository implements ProfileRepository {
   }
 
   @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) {
+    return datasource.changePassword(
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+    );
+  }
+
+  @override
   Future<Customer> updateProfile({
     required int customerId,
     required String firstname,

@@ -243,13 +243,14 @@ class _DurationSlider extends ConsumerWidget {
   }
 }
 
-class _LockerInfoHeader extends StatelessWidget {
+class _LockerInfoHeader extends ConsumerWidget {
   const _LockerInfoHeader({required this.locker});
 
   final Locker locker;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(reservationFlowProvider(locker));
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final l10n = AppLocalizations.of(context)!;
@@ -298,7 +299,9 @@ class _LockerInfoHeader extends StatelessWidget {
               ),
             ),
             Text(
-              l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
+              l10n.reservationPrice(
+                state.plannedAmountEuros.toStringAsFixed(2),
+              ),
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w800,
                 color: colorScheme.primary,

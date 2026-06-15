@@ -633,4 +633,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openLockerDone => 'Done';
+
+  @override
+  String get profilePasswordChangeSuccess => 'Password changed successfully';
+
+  @override
+  String get profileCurrentPasswordIncorrect =>
+      'The current password is incorrect';
+
+  @override
+  String get profileNewPasswordInvalid => 'The new password is invalid';
+
+  @override
+  String get profilePasswordChangeError =>
+      'Could not change the password. Please try again.';
+
+  @override
+  String get profileNewPasswordTooShort =>
+      'Password must be at least 8 characters';
+
+  @override
+  String get profileNewPasswordSameAsCurrent =>
+      'The new password must be different from the current one';
+
+  @override
+  String get bookingSlotUnavailable =>
+      'This slot is no longer available for this locker. Please pick another one.';
+
+  @override
+  String get bookingInvalidDuration =>
+      'The selected duration is not valid for this locker.';
+
+  @override
+  String get bookingNetworkError =>
+      'Connection failed. Check your network and try again.';
+
+  @override
+  String get authTooManyAttempts => 'Too many attempts. Try again in a minute.';
+
+  @override
+  String get reservationRefundLabel => 'Refund';
+
+  @override
+  String get reservationRefundSucceeded => 'Completed';
+
+  @override
+  String get reservationRefundPending => 'In progress';
+
+  @override
+  String get reservationRefundFailed => 'Failed';
+
+  @override
+  String get reservationRefundNotApplicable => 'Not applicable';
+
+  @override
+  String reservationCancelledOn(String date) {
+    return 'Cancelled on $date';
+  }
 }

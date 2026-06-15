@@ -51,7 +51,9 @@ class ReservationSummaryStep extends ConsumerWidget {
                 ),
               ),
               Text(
-                l10n.reservationPrice(locker.priceEuros.toStringAsFixed(2)),
+                l10n.reservationPrice(
+                  state.plannedAmountEuros.toStringAsFixed(2),
+                ),
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w800,
                   color: colorScheme.primary,

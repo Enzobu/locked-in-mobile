@@ -168,10 +168,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             authState.errorMessage != null) ...[
                           const SizedBox(height: 8),
                           AuthErrorBanner(
-                            message:
-                                authState.errorMessage == 'invalidCredentials'
-                                ? l10n.invalidCredentials
-                                : authState.errorMessage!,
+                            message: switch (authState.errorMessage) {
+                              'invalidCredentials' => l10n.invalidCredentials,
+                              'tooManyAttempts' => l10n.authTooManyAttempts,
+                              _ => authState.errorMessage!,
+                            },
                           ),
                         ],
                         const SizedBox(height: 24),

@@ -7,8 +7,10 @@ import '../../../../app/locale_provider.dart';
 import '../../../../app/notification_provider.dart';
 import '../../../../app/theme.dart';
 import '../../../../core/models/customer.dart';
+import '../../../../core/network/api_exception.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
+import '../../../auth/presentation/widgets/auth_error_banner.dart';
 import '../../../auth/presentation/widgets/auth_text_field.dart';
 import '../providers/profile_provider.dart';
 import '../widgets/profile_header.dart';
@@ -475,14 +477,15 @@ class _LogoutButton extends ConsumerWidget {
   }
 }
 
-class _ChangePasswordSheet extends StatefulWidget {
+class _ChangePasswordSheet extends ConsumerStatefulWidget {
   const _ChangePasswordSheet();
 
   @override
-  State<_ChangePasswordSheet> createState() => _ChangePasswordSheetState();
+  ConsumerState<_ChangePasswordSheet> createState() =>
+      _ChangePasswordSheetState();
 }
 
-class _ChangePasswordSheetState extends State<_ChangePasswordSheet> {
+class _ChangePasswordSheetState extends ConsumerState<_ChangePasswordSheet> {
   final _formKey = GlobalKey<FormState>();
   final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
@@ -490,6 +493,8 @@ class _ChangePasswordSheetState extends State<_ChangePasswordSheet> {
   bool _obscureCurrent = true;
   bool _obscureNew = true;
   bool _obscureConfirm = true;
+  bool _isSubmitting = false;
+  String? _errorToken;
 
   @override
   void dispose() {
@@ -499,11 +504,55 @@ class _ChangePasswordSheetState extends State<_ChangePasswordSheet> {
     super.dispose();
   }
 
-  void _submit() {
+  String _errorMessage(AppLocalizations l10n) => switch (_errorToken) {
+    'incorrect' => l10n.profileCurrentPasswordIncorrect,
+    'invalid' => l10n.profileNewPasswordInvalid,
+    _ => l10n.profilePasswordChangeError,
+  };
+
+  Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    // TODO: Implement password change API call
-    Navigator.pop(context);
+    setState(() {
+      _isSubmitting = true;
+      _errorToken = null;
+    });
+
+    final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
+    try {
+      await ref
+          .read(profileRepositoryProvider)
+          .changePassword(
+            currentPassword: _currentPasswordController.text.trim(),
+            newPassword: _newPasswordController.text.trim(),
+          );
+      if (!mounted) return;
+      Navigator.pop(context);
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l10n.profilePasswordChangeSuccess),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } on ApiException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _isSubmitting = false;
+        _errorToken = switch (e.statusCode) {
+          403 => 'incorrect',
+          422 => 'invalid',
+          _ => 'generic',
+        };
+      });
+    } on Exception {
+      if (!mounted) return;
+      setState(() {
+        _isSubmitting = false;
+        _errorToken = 'generic';
+      });
+    }
   }
 
   @override
@@ -578,8 +627,11 @@ class _ChangePasswordSheetState extends State<_ChangePasswordSheet> {
                 if (value == null || value.trim().isEmpty) {
                   return l10n.passwordRequired;
                 }
-                if (value.trim().length < 6) {
-                  return l10n.passwordTooShort;
+                if (value.trim().length < 8) {
+                  return l10n.profileNewPasswordTooShort;
+                }
+                if (value.trim() == _currentPasswordController.text.trim()) {
+                  return l10n.profileNewPasswordSameAsCurrent;
                 }
                 return null;
               },
@@ -610,24 +662,37 @@ class _ChangePasswordSheetState extends State<_ChangePasswordSheet> {
               },
               onFieldSubmitted: (_) => _submit(),
             ),
+            if (_errorToken != null) ...[
+              const SizedBox(height: 16),
+              AuthErrorBanner(message: _errorMessage(l10n)),
+            ],
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               child: FilledButton(
-                onPressed: _submit,
+                onPressed: _isSubmitting ? null : _submit,
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: Text(
-                  l10n.save,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: theme.colorScheme.onPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                child: _isSubmitting
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        l10n.save,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: theme.colorScheme.onPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
               ),
             ),
           ],

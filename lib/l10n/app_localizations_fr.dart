@@ -642,4 +642,63 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get openLockerDone => 'Terminé';
+
+  @override
+  String get profilePasswordChangeSuccess => 'Mot de passe modifié avec succès';
+
+  @override
+  String get profileCurrentPasswordIncorrect =>
+      'Le mot de passe actuel est incorrect';
+
+  @override
+  String get profileNewPasswordInvalid =>
+      'Le nouveau mot de passe n\'est pas valide';
+
+  @override
+  String get profilePasswordChangeError =>
+      'Impossible de modifier le mot de passe. Réessayez.';
+
+  @override
+  String get profileNewPasswordTooShort =>
+      'Le mot de passe doit contenir au moins 8 caractères';
+
+  @override
+  String get profileNewPasswordSameAsCurrent =>
+      'Le nouveau mot de passe doit être différent de l\'actuel';
+
+  @override
+  String get bookingSlotUnavailable =>
+      'Ce créneau n\'est plus disponible pour ce casier. Choisissez-en un autre.';
+
+  @override
+  String get bookingInvalidDuration =>
+      'La durée sélectionnée n\'est pas valide pour ce casier.';
+
+  @override
+  String get bookingNetworkError =>
+      'Connexion impossible. Vérifiez votre réseau et réessayez.';
+
+  @override
+  String get authTooManyAttempts =>
+      'Trop de tentatives. Réessayez dans une minute.';
+
+  @override
+  String get reservationRefundLabel => 'Remboursement';
+
+  @override
+  String get reservationRefundSucceeded => 'Effectué';
+
+  @override
+  String get reservationRefundPending => 'En cours';
+
+  @override
+  String get reservationRefundFailed => 'Échec';
+
+  @override
+  String get reservationRefundNotApplicable => 'Non applicable';
+
+  @override
+  String reservationCancelledOn(String date) {
+    return 'Annulée le $date';
+  }
 }
