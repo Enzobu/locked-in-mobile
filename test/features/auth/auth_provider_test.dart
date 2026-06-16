@@ -292,9 +292,7 @@ void main() {
       );
       addTearDown(c.dispose);
 
-      await c
-          .read(authProvider.notifier)
-          .login('test@test.com', 'password123');
+      await c.read(authProvider.notifier).login('test@test.com', 'password123');
 
       final token = await storage.getAccessToken();
       expect(token, isNotNull);
