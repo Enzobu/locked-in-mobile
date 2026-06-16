@@ -115,6 +115,37 @@ class _FakeAuthDatasource implements AuthDatasource {
   Future<void> logout() async {}
 }
 
+/// In-memory [TokenStorage] so a test can keep its own isolated token state
+/// instead of sharing the global static SharedPreferences, which other tests
+/// (and the fire-and-forget _checkAuth) can clobber under CI timing.
+class _InMemoryTokenStorage implements TokenStorage {
+  final Map<String, String> _store = {};
+
+  @override
+  Future<String?> getAccessToken() async => _store['access_token'];
+
+  @override
+  Future<String?> getRefreshToken() async => _store['refresh_token'];
+
+  @override
+  Future<void> saveTokens({
+    required String accessToken,
+    String? refreshToken,
+  }) async {
+    _store['access_token'] = accessToken;
+    if (refreshToken != null) _store['refresh_token'] = refreshToken;
+  }
+
+  @override
+  Future<void> clearTokens() async => _store.clear();
+
+  @override
+  Future<bool> hasTokens() async {
+    final token = _store['access_token'];
+    return token != null && token.isNotEmpty;
+  }
+}
+
 void main() {
   late ProviderContainer container;
   late _FakeAuthDatasource fakeDatasource;
@@ -249,14 +280,21 @@ void main() {
     });
 
     test('login saves token to storage', () async {
-      await Future<void>.delayed(const Duration(milliseconds: 300));
+      // Use an isolated in-memory token storage so this assertion can't be
+      // clobbered by background work from other tests on the shared static
+      // SharedPreferences (a race that only surfaced under CI timing).
+      final storage = _InMemoryTokenStorage();
+      final c = ProviderContainer(
+        overrides: [
+          authDatasourceProvider.overrideWithValue(_FakeAuthDatasource()),
+          tokenStorageProvider.overrideWithValue(storage),
+        ],
+      );
+      addTearDown(c.dispose);
 
-      await container
-          .read(authProvider.notifier)
-          .login('test@test.com', 'password123');
+      await c.read(authProvider.notifier).login('test@test.com', 'password123');
 
-      final tokenStorage = container.read(tokenStorageProvider);
-      final token = await tokenStorage.getAccessToken();
+      final token = await storage.getAccessToken();
       expect(token, isNotNull);
       expect(token, contains('fake_jwt_token'));
     });

@@ -401,7 +401,7 @@ void main() {
     });
 
     test('empty summary never matches active filter', () {
-      final emptySummary = LockerBaySummary(lockerBay: bay, lockers: []);
+      const emptySummary = LockerBaySummary(lockerBay: bay, lockers: []);
       const filter = LockerFilter(maxPriceCents: 5000);
       expect(summaryMatchesFilter(emptySummary, filter), false);
     });
