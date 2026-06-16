@@ -29,14 +29,13 @@ class _ReservationDetailScreenState
 
   Reservation get reservation => widget.reservation;
 
-  /// The locker can be opened only while the reservation is confirmed/active
-  /// and the current time falls within the booked window.
+  /// The locker can be opened at any point while the reservation is still
+  /// ongoing (confirmed/active and not yet ended), so the customer can pick up
+  /// their belongings whenever they want before it expires.
   bool get _isActive {
-    final now = DateTime.now();
     return (reservation.status == ReservationStatus.confirmed ||
             reservation.status == ReservationStatus.active) &&
-        now.isAfter(reservation.startsAt) &&
-        now.isBefore(reservation.endsAt);
+        reservation.endsAt.isAfter(DateTime.now());
   }
 
   bool get _isCancellable {
